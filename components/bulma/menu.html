@@ -1,7 +1,7 @@
-
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <title>Hello World</title>
     <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
@@ -9,55 +9,12 @@
 
     <!-- Don't use this in production: -->
     <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
-  </head>
-  <body>
+</head>
+
+<body>
     <div id="root"></div>
     <script type="text/babel">
 
-
-class Body extends React.Component {
-    constructor(props) {
-      super(props)
-      this.state = { pw : '', hash : 'hash' }
-      this.handleSubmit = this.handleSubmit.bind(this)
-      this.handleChange = this.handleChange.bind(this)
-      //this.activateLasers = this.activateLasers.bind(this)
-
-    }
-
-
-    handleSubmit(e) {
-      e.preventDefault()
-    }
-
-    handleChange(e) {
-      this.setState({pw: event.target.value})
-      this.setState({hash : this.state.pw.toUpperCase() })
-      console.log(this.state.pw)
-    }
-
-    render() { 
-  
-      return <form onSubmit={this.handleSubmit}>
-        <h1>Brain Wallet</h1>
-      <hr/>
-      PW : 
-      <input type="text" placeholder="I am a teapot" 
-      value={this.state.pw}
-      onChange={this.handleChange} />
-      <hr/>
-      Upper Case : 
-      <input placeholder="Sha2 Hash of a teapot!"
-      value={this.state.hash}/>
-      <hr/>
-      <button>
-      Compressed
-      </button>      
-      </form>
-    }
-  }
-</script>
-<script type="text/babel">
 
 
 var isLoggedIn = true
@@ -153,7 +110,7 @@ ReactDOM.render(
 
     </script>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" defer>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" defer>
 
     <!--
       Note: this page is a great way to try React but it's not suitable for production.
@@ -168,5 +125,6 @@ ReactDOM.render(
       You can also use React without JSX, in which case you can remove Babel:
       https://reactjs.org/docs/react-without-jsx.html
     -->
-  </body>
+</body>
+
 </html>
