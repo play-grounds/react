@@ -150,9 +150,7 @@ class InputUri extends React.Component {
     handleChange(e) {
       this.setState({uri: e.target.value })
       gUri = getQueryStringParam("uri")
-      console.log("gUri", gUri)
       console.log("this.state.uri", this.state.uri)
-      console.log("this.uri", this.uri)
     }
 
     render() {
@@ -177,7 +175,6 @@ function Body(props) {
         Mark Book!
       </h1>
         <InputUri />
-        <Bookmark/>
       </section>
 
     </div>
