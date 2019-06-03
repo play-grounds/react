@@ -109,21 +109,17 @@ function Menu(props) {
 class Bookmark extends React.Component {
     constructor(props) {
         super(props)
-        var uri = getQueryStringParam("uri") || defaultUri
-        this.state = { uri : uri }
+        this.state = { uri : props.uri }
         this.handleChange = this.handleChange.bind(this)
     }
 
     handleChange(e) {
       this.setState({uri: event.target.value})
-      gUri = getQueryStringParam("uri")
-      console.log("gUri", gUri)
-      console.log("this.state.uri", this.state.uri)
     }
 
     render() {
     return <div>
-    <img src={this.uri}/>
+    <img src={this.state.uri}/>
         </div>
     }
 
@@ -165,7 +161,7 @@ class InputUri extends React.Component {
         Uri : <input size="80" onChange={this.handleChange} placeholder="uri" value={this.uri}/>
         <hr/>
 
-        <img src={this.state.uri}/>
+        <Bookmark uri={this.state.uri}/>
         </div>
     }
 
