@@ -15,8 +15,6 @@
     <div id="root"></div>
     <script type="text/babel">
 
-
-
 var isLoggedIn = true
 
 function GuestGreeting(props) {
@@ -42,13 +40,15 @@ function Greeting(props) {
   return <GuestGreeting isLoggedIn={isLoggedIn} />;
 }
 
-function Menu() {
+function Menu(props) {
+    var title = props.title || 'Welcome'
+    var className = props.className || 'navbar is-link'
 
-  return   <nav className="navbar is-info" role="navigation" aria-label="main navigation">
+  return <nav className={className} role="navigation" aria-label="main navigation">
     <div className="navbar-brand">
 
       <a id="add" className="navbar-item" href="#">
-        Welcome
+        {title}
       </a>
 
       <a role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -98,7 +98,17 @@ function Menu() {
 function App() {
   return (
     <div>
-      <Menu />
+      <Menu className="navbar is-link" title="Welcome App"/>
+
+
+      Classnames : 
+
+is-primary
+is-link
+is-info
+is-success
+is-warning
+is-danger
     </div>
   );
 }
@@ -112,19 +122,6 @@ ReactDOM.render(
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" defer>
 
-    <!--
-      Note: this page is a great way to try React but it's not suitable for production.
-      It slowly compiles JSX with Babel in the browser and uses a large development build of React.
-
-      Read this section for a production-ready setup with JSX:
-      https://reactjs.org/docs/add-react-to-a-website.html#add-jsx-to-a-project
-
-      In a larger project, you can use an integrated toolchain that includes JSX instead:
-      https://reactjs.org/docs/create-a-new-react-app.html
-
-      You can also use React without JSX, in which case you can remove Babel:
-      https://reactjs.org/docs/react-without-jsx.html
-    -->
 </body>
 
 </html>
