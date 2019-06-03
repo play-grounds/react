@@ -104,6 +104,40 @@ function Menu(props) {
   </nav>
 }
 
+function Bookmark(props) {
+    return         <div>
+        Render bookmark here:
+        </div>
+
+}
+
+function getQueryStringParam(param) {
+      var url = window.location.toString();
+      url.match(/\?(.+)$/);
+      var params = RegExp.$1;
+      params = params.split("&");
+      var queryStringList = {};
+      for (var i = 0; i < params.length; i++) {
+        var tmp = params[i].split("=");
+        queryStringList[tmp[0]] = unescape(tmp[1]);
+      }
+      return queryStringList[param];
+    }
+
+function InputUri(props) {
+    const defaultUri = "foo"
+    var uri = getQueryStringParam("uri") || defaultUri
+    return         <div>
+        <input onChange={nullr} placeholder="uri" value={uri}/>
+        </div>
+}
+
+function nullr() {
+    var uri = getQueryStringParam("uri")
+    console.log(uri)
+    return false
+}
+
 function Body(props) {
     return (
     <div>
@@ -116,12 +150,8 @@ function Body(props) {
 
       <section className="section">
         Welcome to social bookmarking!
-        <div>
-        <input placeholder="uri"/>
-        </div>
-        <div>
-        Render bookmark here!
-        </div>
+        <InputUri />
+        <Bookmark/>
       </section>
 
     </div>
