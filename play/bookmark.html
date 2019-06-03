@@ -129,7 +129,7 @@ function getQueryStringParam(param) {
 function InputUri(props) {
     var uri = getQueryStringParam("uri") || defaultUri
     return         <div>
-        <input onChange={nullr} placeholder="uri" value={uri}/>
+        Uri : <input onChange={nullr} placeholder="uri" value={uri}/>
         </div>
 }
 
@@ -147,10 +147,6 @@ function Body(props) {
       <h1 id="welcome" className="title">
         Mark Book!
       </h1>
-      </section>
-
-      <section className="section">
-        Welcome to social bookmarking!
         <InputUri />
         <Bookmark/>
       </section>
