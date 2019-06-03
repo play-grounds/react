@@ -42,7 +42,10 @@ function Greeting(props) {
 
 function Menu(props) {
     var title = props.title || 'Welcome'
-    var className = props.className || 'navbar is-link'
+    var className = props.className || 'is-link'
+
+    // init
+    className = 'navbar ' + className
 
   return <nav className={className} role="navigation" aria-label="main navigation">
     <div className="navbar-brand">
@@ -98,7 +101,7 @@ function Menu(props) {
 function App() {
   return (
     <div>
-      <Menu className="navbar is-link" title="Welcome App"/>
+      <Menu className="is-link" title="Welcome App"/>
 
 
       Classnames : 
