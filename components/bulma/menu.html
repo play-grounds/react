@@ -53,7 +53,7 @@ function MenuAbout(props) {
     return         <div className="navbar-item has-dropdown is-hoverable">
           <a className="navbar-link">
             About
-          </a>
+          </a>        
 
           <div className="navbar-dropdown">
 
@@ -128,6 +128,22 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
+    </script>
+    <script>
+    function hamburgerHelper() {
+      document.querySelector(".navbar-burger").addEventListener("click", toggleNav);
+
+      function toggleNav() {
+        var nav = document.querySelector(".navbar-menu");
+        if (nav.className == "navbar-menu") {
+          nav.className = "navbar-menu is-active";
+        } else {
+          nav.className = "navbar-menu";
+        }
+      }
+    }
+    // @TODO : move this into Menu class
+    setTimeout(hamburgerHelper, 1000)
     </script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" defer>
