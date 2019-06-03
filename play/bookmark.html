@@ -122,7 +122,7 @@ class Bookmark extends React.Component {
     }
 
     render() {
-    return         <div>
+    return <div>
     <img src={this.uri}/>
         </div>
     }
@@ -163,8 +163,9 @@ class InputUri extends React.Component {
 
         return <div>
         Uri : <input size="80" onChange={this.handleChange} placeholder="uri" value={this.uri}/>
+        <hr/>
 
-    <img src={this.state.uri}/>
+        <img src={this.state.uri}/>
         </div>
     }
 
