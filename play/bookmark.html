@@ -130,6 +130,7 @@ class InputUri extends React.Component {
         super(props)
         var uri = getQueryStringParam("uri") || defaultUri
         this.state = { uri : uri }
+        console.log('constructor', this.state.uri)
         this.handleChange = this.handleChange.bind(this)
     }
 
@@ -139,7 +140,6 @@ class InputUri extends React.Component {
     }
 
     render() {
-        console.log('render', this.state.uri)
 
         return <div>
         Uri : <input size="80" onChange={this.handleChange} placeholder="uri" value={this.state.uri}/>
