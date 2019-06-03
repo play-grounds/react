@@ -104,18 +104,27 @@ function Menu(props) {
   </nav>
 }
 
-
-function App() {
-  return (
+function Body(props) {
+    return (
     <div>
-      <Menu className="is-link" title="Bookmark App"/>
 
       <section className="section">
       <h1 id="welcome" className="title">
         Mark Book!
       </h1>
       </section>
-      
+
+    </div>
+  );
+}
+
+
+function App() {
+  return (
+    <div>
+      <Menu className="is-link" title="Bookmark App"/>
+      <Body/>
+
     </div>
   );
 }
