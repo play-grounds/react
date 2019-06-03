@@ -40,6 +40,37 @@ function Greeting(props) {
   return <GuestGreeting isLoggedIn={isLoggedIn} />;
 }
 
+function MenuGreeting(props) {
+    return <div className="navbar-item">
+<div className="buttons">
+  <Greeting isLoggedIn={isLoggedIn} />
+</div>
+</div>
+
+}
+
+function MenuAbout(props) {
+    return         <div className="navbar-item has-dropdown is-hoverable">
+          <a className="navbar-link">
+            About
+          </a>
+
+          <div className="navbar-dropdown">
+
+            <a className="navbar-item">
+                About
+            </a>
+
+            <hr />
+
+            <a target="_blank" href="">
+              Help
+            </a>
+
+          </div>
+        </div>
+}
+
 function Menu(props) {
     var title = props.title || 'Welcome'
     var className = props.className || 'is-link'
@@ -63,35 +94,11 @@ function Menu(props) {
 
     <div id="navbarBasicExample" className="navbar-menu">
       <div className="navbar-start">
-
-        <div className="navbar-item has-dropdown is-hoverable">
-          <a className="navbar-link">
-            About
-          </a>
-
-          <div className="navbar-dropdown">
-
-            <a className="navbar-item">
-                About
-            </a>
-
-            <hr />
-
-            <a target="_blank" href="">
-              Help
-            </a>
-
-          </div>
-        </div>
+        <MenuAbout/>
       </div>
 
       <div className="navbar-end">
-        <div className="navbar-item">
-
-          <div className="buttons">
-            <Greeting isLoggedIn={isLoggedIn} />
-          </div>
-        </div>
+        <MenuGreeting/>
       </div>
     </div>
   </nav>
