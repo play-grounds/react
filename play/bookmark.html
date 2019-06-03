@@ -106,10 +106,26 @@ function Menu(props) {
   </nav>
 }
 
-function Bookmark(props) {
+class Bookmark extends React.Component {
+    constructor(props) {
+        super(props)
+        var uri = getQueryStringParam("uri") || defaultUri
+        this.state = { uri : uri }
+        this.handleChange = this.handleChange.bind(this)
+    }
+
+    handleChange(e) {
+      this.setState({uri: event.target.value})
+      gUri = getQueryStringParam("uri")
+      console.log("gUri", gUri)
+      console.log("this.state.uri", this.state.uri)
+    }
+
+    render() {
     return         <div>
-    <img src={gUri}/>
+    <img src={this.uri}/>
         </div>
+    }
 
 }
 
@@ -126,18 +142,34 @@ function getQueryStringParam(param) {
       return queryStringList[param];
     }
 
-function InputUri(props) {
-    var uri = getQueryStringParam("uri") || defaultUri
-    return         <div>
-        Uri : <input onChange={nullr} placeholder="uri" value={uri}/>
+
+class InputUri extends React.Component {
+    constructor(props) {
+        super(props)
+        var uri = getQueryStringParam("uri") || defaultUri
+        this.state = { uri : uri }
+        this.handleChange = this.handleChange.bind(this)
+    }
+
+    handleChange(e) {
+      this.setState({uri: e.target.value })
+      gUri = getQueryStringParam("uri")
+      console.log("gUri", gUri)
+      console.log("this.state.uri", this.state.uri)
+      console.log("this.uri", this.uri)
+    }
+
+    render() {
+
+        return <div>
+        Uri : <input size="80" onChange={this.handleChange} placeholder="uri" value={this.uri}/>
+
+    <img src={this.state.uri}/>
         </div>
+    }
+
 }
 
-function nullr() {
-    var uri = getQueryStringParam("uri")
-    console.log(uri)
-    return false
-}
 
 function Body(props) {
     return (
@@ -173,20 +205,20 @@ ReactDOM.render(
 
     </script>
     <script>
-    function hamburgerHelper() {
-      document.querySelector(".navbar-burger").addEventListener("click", toggleNav);
+        function hamburgerHelper() {
+            document.querySelector(".navbar-burger").addEventListener("click", toggleNav);
 
-      function toggleNav() {
-        var nav = document.querySelector(".navbar-menu");
-        if (nav.className == "navbar-menu") {
-          nav.className = "navbar-menu is-active";
-        } else {
-          nav.className = "navbar-menu";
+            function toggleNav() {
+                var nav = document.querySelector(".navbar-menu");
+                if (nav.className == "navbar-menu") {
+                    nav.className = "navbar-menu is-active";
+                } else {
+                    nav.className = "navbar-menu";
+                }
+            }
         }
-      }
-    }
-    // @TODO : move this into Menu class
-    setTimeout(hamburgerHelper, 1000)
+        // @TODO : move this into Menu class
+        setTimeout(hamburgerHelper, 1000)
     </script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" defer>
