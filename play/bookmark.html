@@ -19,6 +19,19 @@ var isLoggedIn = true
 const defaultUri = "https://external-preview.redd.it/TcSzPOpGNxov4-zHd11YfCQP95CXM5aCY2FXxW8lwnU.jpg?auto=webp&s=1c4120f8d6c8a794b21d67d5b390db34f623ccf1"
 var gUri = defaultUri
 
+function hamburgerHelper() {
+            document.querySelector(".navbar-burger").addEventListener("click", toggleNav);
+
+            function toggleNav() {
+                var nav = document.querySelector(".navbar-menu");
+                if (nav.className == "navbar-menu") {
+                    nav.className = "navbar-menu is-active";
+                } else {
+                    nav.className = "navbar-menu";
+                }
+            }
+        }
+
 function GuestGreeting(props) {
   return (<div><a id="register" href="https://solid.inrupt.com/get-a-solid-pod" target="_blank" className="button is-primary">
               <strong>Sign up</strong>
@@ -183,18 +196,6 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-        function hamburgerHelper() {
-            document.querySelector(".navbar-burger").addEventListener("click", toggleNav);
-
-            function toggleNav() {
-                var nav = document.querySelector(".navbar-menu");
-                if (nav.className == "navbar-menu") {
-                    nav.className = "navbar-menu is-active";
-                } else {
-                    nav.className = "navbar-menu";
-                }
-            }
-        }
         // @TODO : move this into Menu class
         setTimeout(hamburgerHelper, 1000)
     </script>
