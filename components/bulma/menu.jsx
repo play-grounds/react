@@ -44,11 +44,11 @@ class Menu extends React.Component {
   }
 
   render () {
-    return <nav className={this.className} role='navigation' aria-label='main navigation'>
+    return <nav className={'navbar ' + this.props.className} role='navigation' aria-label='main navigation'>
       <div className='navbar-brand'>
 
         <a id='add' className='navbar-item' href='#'>
-          {this.title}
+          {this.props.title}
         </a>
 
         <a role='button' className='navbar-burger burger' aria-label='menu' aria-expanded='false' data-target='navbarBasicExample'>
