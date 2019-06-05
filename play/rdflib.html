@@ -115,8 +115,55 @@ function getQueryStringParam(param) {
     }
 
 
-function Subject (props) {
-    return <div><img src={props.uri}/></div>
+    function NumberList(props) {
+  var numbers = props.numbers;
+  if (numbers) {
+    var listItems = numbers.map((number) =>
+    <li>{number.object.value}</li>
+  );
+  return (
+    <ul>{listItems}</ul>
+  );
+  } else {
+      return 0
+  }
+}
+
+class Subject extends React.Component {
+    constructor(props) {
+        super(props)
+
+        var triples = [0, 1, 2]
+        var defaultUri = "https://melvincarvalho.com/#me"
+        var uri = getQueryStringParam("uri") || defaultUri
+        this.state = { uri : uri, triples : this.triples }
+        this.handleChange = this.handleChange.bind(this)
+
+    }
+
+    componentDidMount() {
+
+        fetcher.load(this.state.uri).then(response => {
+            this.triples = store.statementsMatching(store.sym(this.state.uri), null, null, store.sym(this.state.uri.split('#')[0]))
+            for (var i=0; i < this.triples.length; i++) {
+                var triple = this.triples[i]
+                //console.log('object', triple.object.value);
+            }
+            this.setState({triples: this.triples})
+        }, err => {
+            console.log(err);
+        });
+    }
+
+    handleChange(e) {
+      this.setState({uri: e.target.value })
+      console.log("this.state.uri", this.state.uri)
+    }
+
+
+    render() {
+        return <NumberList numbers={this.state.triples} />
+    }
 } 
 
 
@@ -124,10 +171,9 @@ class InputUri extends React.Component {
     constructor(props) {
         super(props)
 
-        const defaultUri = "https://external-preview.redd.it/TcSzPOpGNxov4-zHd11YfCQP95CXM5aCY2FXxW8lwnU.jpg?auto=webp&s=1c4120f8d6c8a794b21d67d5b390db34f623ccf1"
+        var defaultUri = "https://melvincarvalho.com/#me"
         var uri = getQueryStringParam("uri") || defaultUri
         this.state = { uri : uri }
-        console.log('constructor', this.state.uri)
         this.handleChange = this.handleChange.bind(this)
     }
 
@@ -208,15 +254,6 @@ ReactDOM.render(
         const fetcher = new $rdf.Fetcher(store)
         const updater = new $rdf.UpdateManager(store)
 
-        var uri = getQueryStringParam("uri")
-        console.log("uri", uri)
-
-        fetcher.load(uri).then(response => {
-            var triple = store.any(null, null, null, store.sym(uri.split('#')[0]))
-            console.log('triple', triple);
-        }, err => {
-            console.log(err);
-        });
 
     </script>
 
