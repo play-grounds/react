@@ -122,7 +122,7 @@ function NamedNode(props) {
         if (node.object.termType == "Literal") {
           return <li>{node.object.value}</li>
         } else {
-          return <li><a target="_blank">{node.object.value}</a></li>
+          return <li><a href={node.object.value} target="_blank">{node.object.value}</a></li>
         }
     })
     return (
