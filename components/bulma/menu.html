@@ -2,55 +2,34 @@
 <html>
 
 <head>
-    <meta charset="UTF-8" />
-    <title>Hello World</title>
-    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <meta charset="UTF-8" />
+  <title>Menu Component</title>
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 
-    <!-- Don't use this in production: -->
-    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <!-- Don't use this in production: -->
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
 </head>
 
 <body>
-    <div id="root"></div>
-    <script type="text/babel">
+  <div id="root"></div>
 
-var isLoggedIn = true
+  <script type="text/babel">
 
-function GuestGreeting(props) {
-  return (<div><a id="register" href="https://solid.inrupt.com/get-a-solid-pod" target="_blank" className="button is-primary">
-              <strong>Sign up</strong>
-            </a>
-            <a id="login" className="button is-light">
-              Login
-            </a></div>);
-}
+function hamburgerHelper() {
+      document.querySelector(".navbar-burger").addEventListener("click", toggleNav);
 
-function UserGreeting(props) {
-  return (<div><a id="logout" className="button is-light" >
-              Logout
-            </a></div>)
-}
+      function toggleNav() {
+        var nav = document.querySelector(".navbar-menu");
+        if (nav.className == "navbar-menu") {
+          nav.className = "navbar-menu is-active";
+        } else {
+          nav.className = "navbar-menu";
+        }
+      }
+    }
 
-function Greeting(props) {
-  const isLoggedIn = props.isLoggedIn;
-  if (isLoggedIn) {
-    return <UserGreeting isLoggedIn={isLoggedIn} />;
-  }
-  return <GuestGreeting isLoggedIn={isLoggedIn} />;
-}
-
-function MenuGreeting(props) {
-    return <div className="navbar-item">
-<div className="buttons">
-  <Greeting isLoggedIn={isLoggedIn} />
-</div>
-</div>
-
-}
-
-function MenuAbout(props) {
-    return         <div className="navbar-item has-dropdown is-hoverable">
+function MenuAbout (props) { return <div className="navbar-item has-dropdown is-hoverable">
           <a className="navbar-link">
             About
           </a>        
@@ -58,7 +37,7 @@ function MenuAbout(props) {
           <div className="navbar-dropdown">
 
             <a className="navbar-item">
-                About
+                Source
             </a>
 
             <hr />
@@ -71,18 +50,27 @@ function MenuAbout(props) {
         </div>
 }
 
-function Menu(props) {
-    var title = props.title || 'Welcome'
-    var className = props.className || 'is-link'
+class Menu extends React.Component {
+  constructor(props) {
+    super(props)
+    this.title = props.title || 'Welcome'
+    this.className = props.className || 'is-link'
 
     // init
-    className = 'navbar ' + className
+    this.className = 'navbar ' + this.className
+  }
 
-  return <nav className={className} role="navigation" aria-label="main navigation">
+  componentDidMount() {
+    hamburgerHelper()
+  }
+
+
+    render() {
+      return <nav className={this.className} role="navigation" aria-label="main navigation">
     <div className="navbar-brand">
 
       <a id="add" className="navbar-item" href="#">
-        {title}
+        {this.title}
       </a>
 
       <a role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -98,11 +86,16 @@ function Menu(props) {
       </div>
 
       <div className="navbar-end">
-        <MenuGreeting/>
       </div>
     </div>
   </nav>
+
+    }
 }
+
+</script>
+
+  <script type="text/babel">
 
 
 function App() {
@@ -118,25 +111,10 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-    </script>
-    <script>
-    function hamburgerHelper() {
-      document.querySelector(".navbar-burger").addEventListener("click", toggleNav);
-
-      function toggleNav() {
-        var nav = document.querySelector(".navbar-menu");
-        if (nav.className == "navbar-menu") {
-          nav.className = "navbar-menu is-active";
-        } else {
-          nav.className = "navbar-menu";
-        }
-      }
-    }
     // @TODO : move this into Menu class
-    setTimeout(hamburgerHelper, 1000)
     </script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" defer>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" defer>
 
 </body>
 
