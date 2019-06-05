@@ -10,7 +10,7 @@ function MenuAbout (props) {
         Source
       </a>
       <hr />
-      <a target='_blank' href=''>
+      <a className='navbar-item' target='_blank' href=''>
         Help
       </a>
     </div>
@@ -20,7 +20,7 @@ function MenuAbout (props) {
 function Menu (props) {
   function toggleNav () {
     var nav = document.querySelector('.navbar-menu')
-    if (nav.className == 'navbar-menu') {
+    if (nav.className === 'navbar-menu') {
       nav.className = 'navbar-menu is-active'
     } else {
       nav.className = 'navbar-menu'
