@@ -24,7 +24,6 @@ class InputUri extends React.Component {
       const defaultUri = "https://external-preview.redd.it/TcSzPOpGNxov4-zHd11YfCQP95CXM5aCY2FXxW8lwnU.jpg?auto=webp&s=1c4120f8d6c8a794b21d67d5b390db34f623ccf1"
       var uri = getQueryStringParam("uri") || defaultUri
       this.state = { uri : uri }
-      console.log('constructor', this.state.uri)
       this.handleChange = this.handleChange.bind(this)
   }
 
