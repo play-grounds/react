@@ -1,15 +1,3 @@
-function hamburgerHelper () {
-  document.querySelector('.navbar-burger').addEventListener('click', toggleNav)
-
-  function toggleNav () {
-    var nav = document.querySelector('.navbar-menu')
-    if (nav.className == 'navbar-menu') {
-      nav.className = 'navbar-menu is-active'
-    } else {
-      nav.className = 'navbar-menu'
-    }
-  }
-}
 
 function MenuAbout (props) {
   return <div className='navbar-item has-dropdown is-hoverable'>
@@ -29,43 +17,37 @@ function MenuAbout (props) {
   </div>
 }
 
-class Menu extends React.Component {
-  constructor (props) {
-    super(props)
-    this.title = props.title || 'Welcome'
-    this.className = props.className || 'is-link'
-
-    // init
-    this.className = 'navbar ' + this.className
+function Menu (props) {
+  function toggleNav () {
+    var nav = document.querySelector('.navbar-menu')
+    if (nav.className == 'navbar-menu') {
+      nav.className = 'navbar-menu is-active'
+    } else {
+      nav.className = 'navbar-menu'
+    }
   }
 
-  componentDidMount () {
-    hamburgerHelper()
-  }
+  return <nav className={'navbar ' + props.className} role='navigation' aria-label='main navigation'>
+    <div className='navbar-brand'>
 
-  render () {
-    return <nav className={'navbar ' + this.props.className} role='navigation' aria-label='main navigation'>
-      <div className='navbar-brand'>
+      <a id='add' className='navbar-item' href='#'>
+        {props.title}
+      </a>
 
-        <a id='add' className='navbar-item' href='#'>
-          {this.props.title}
-        </a>
+      <a role='button' className='navbar-burger burger' aria-label='menu' aria-expanded='false' data-target='navbarBasicExample' onClick={toggleNav}>
+        <span aria-hidden='true' />
+        <span aria-hidden='true' />
+        <span aria-hidden='true' />
+      </a>
+    </div>
 
-        <a role='button' className='navbar-burger burger' aria-label='menu' aria-expanded='false' data-target='navbarBasicExample'>
-          <span aria-hidden='true' />
-          <span aria-hidden='true' />
-          <span aria-hidden='true' />
-        </a>
+    <div id='navbarBasicExample' className='navbar-menu'>
+      <div className='navbar-start'>
+        <MenuAbout />
       </div>
 
-      <div id='navbarBasicExample' className='navbar-menu'>
-        <div className='navbar-start'>
-          <MenuAbout />
-        </div>
-
-        <div className='navbar-end' />
-      </div>
-    </nav>
-  }
+      <div className='navbar-end' />
+    </div>
+  </nav>
 }
 
