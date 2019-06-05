@@ -14,21 +14,17 @@ function hamburgerHelper () {
 function MenuAbout (props) {
   return <div className='navbar-item has-dropdown is-hoverable'>
     <a className='navbar-link'>
-            About
-        </a>
+      About
+    </a>
 
     <div className='navbar-dropdown'>
-
       <a className='navbar-item'>
-                Source
-          </a>
-
+        Source
+      </a>
       <hr />
-
       <a target='_blank' href=''>
-                Help
-          </a>
-
+        Help
+      </a>
     </div>
   </div>
 }
@@ -39,7 +35,7 @@ class Menu extends React.Component {
     this.title = props.title || 'Welcome'
     this.className = props.className || 'is-link'
 
-        // init
+    // init
     this.className = 'navbar ' + this.className
   }
 
@@ -72,3 +68,4 @@ class Menu extends React.Component {
     </nav>
   }
 }
+
