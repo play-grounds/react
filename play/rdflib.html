@@ -115,17 +115,17 @@ function getQueryStringParam(param) {
     }
 
 
-    function NumberList(props) {
-  var numbers = props.numbers;
-  if (numbers) {
-    var listItems = numbers.map((number) =>
-    <li>{number.object.value}</li>
-  );
-  return (
-    <ul>{listItems}</ul>
-  );
+function NamedNode(props) {
+  var nodes = props.nodes;
+  if (nodes) {
+    var listItems = nodes.map((node) => {
+        return <li>{node.object.uri}</li>
+    })
+    return (
+      <ul>{listItems}</ul>
+    );
   } else {
-      return 0
+    return <div>Empty</div>
   }
 }
 
@@ -158,11 +158,22 @@ class Subject extends React.Component {
     handleChange(e) {
       this.setState({uri: e.target.value })
       console.log("this.state.uri", this.state.uri)
+      fetcher.load(this.state.uri).then(response => {
+            this.triples = store.statementsMatching(store.sym(this.state.uri), null, null, store.sym(this.state.uri.split('#')[0]))
+            for (var i=0; i < this.triples.length; i++) {
+                var triple = this.triples[i]
+                console.log('object', triple.object.value);
+            }
+            this.setState({triples: this.triples})
+        }, err => {
+            console.log(err);
+        });
+
     }
 
 
     render() {
-        return <NumberList numbers={this.state.triples} />
+        return <NamedNode nodes={this.state.triples} />
     }
 } 
 
