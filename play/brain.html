@@ -14,6 +14,11 @@
     <div id="root"></div>
     <script type="text/babel">
 
+async function sha256(str) {
+        const buf = await crypto.subtle.digest("SHA-256", new TextEncoder("utf-8").encode(str));
+        return Array.prototype.map.call(new Uint8Array(buf), x=>(('00'+x.toString(16)).slice(-2))).join('');
+      }
+
 
 class Body extends React.Component {
     constructor(props) {
@@ -30,10 +35,17 @@ class Body extends React.Component {
       e.preventDefault()
     }
 
-    handleChange(e) {
+
+    async handleChange(e) {
+
       this.setState({pw: event.target.value})
-      this.setState({hash : this.state.pw.toUpperCase() })
-      console.log(this.state.pw)
+      var h = 'h'
+      var that = this
+      await sha256(this.state.pw).then( (r) => { 
+        console.log(r), 
+        h = r.toString() 
+        that.setState({hash : h })
+      } )
     }
 
     render() { 
