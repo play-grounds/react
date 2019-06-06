@@ -50,32 +50,27 @@ class Body extends React.Component {
     }
 
     render() { 
-  
       return <section className="section">
-
         <form onSubmit={this.handleSubmit}>
+          <div class="columns">
+            <div class="column">
+            Passphrase
+            <br/> 
+            <input size="60" type="text" placeholder="Enter passphrase" 
+              value={this.state.pw}
+              onChange={this.handleChange} />
+            <br/>
 
-
-        <div class="columns">
-  <div class="column">
-    Passphrase
-    <br/> 
-    <input size="60" type="text" placeholder="Enter passphrase" 
-      value={this.state.pw}
-      onChange={this.handleChange} />
-      <br/>
-
-      Secret Exponent 
-      <br/>
-      <input size="60" placeholder="Sha256 hash as bytes"
-      value={this.state.hash}/>
-  </div>
-</div>      
-      
-</form>
-
+            Secret Exponent 
+            <br/>
+            <input size="60" placeholder="Sha256 hash as bytes"
+              value={this.state.hash}/>
+            </div>
+          </div>            
+        </form>
       </section>
     }
+    
   }
 </script>
   <script type="text/babel" src="../components/bulma/menu.jsx"></script>
