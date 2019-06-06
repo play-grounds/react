@@ -41,7 +41,7 @@ class Body extends React.Component {
       this.setState({pw: event.target.value})
       var h = 'h'
       var that = this
-      await sha256(this.state.pw).then( (r) => { 
+      await sha256(event.target.value).then( (r) => { 
         console.log(r), 
         h = r.toString() 
         that.setState({hash : h })
