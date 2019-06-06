@@ -13,7 +13,7 @@ function getQueryStringParam(param) {
 
 
 function Bookmark (props) {
-  return <div><img src={props.uri}/></div>
+  return <div><img src={props.uri} /></div>
 } 
 
 
