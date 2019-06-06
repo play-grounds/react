@@ -1,18 +1,19 @@
-
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Hello World</title>
-    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 
-    <!-- Don't use this in production: -->
-    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="text/babel">
+<head>
+  <meta charset="UTF-8" />
+  <title>Brain Wallet</title>
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+  <!-- Don't use this in production: -->
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
 
 async function sha256(str) {
         const buf = await crypto.subtle.digest("SHA-256", new TextEncoder("utf-8").encode(str));
@@ -23,7 +24,7 @@ async function sha256(str) {
 class Body extends React.Component {
     constructor(props) {
       super(props)
-      this.state = { pw : '', hash : 'hash' }
+      this.state = { pw : '', hash : '' }
       this.handleSubmit = this.handleSubmit.bind(this)
       this.handleChange = this.handleChange.bind(this)
       //this.activateLasers = this.activateLasers.bind(this)
@@ -50,110 +51,35 @@ class Body extends React.Component {
 
     render() { 
   
-      return <form onSubmit={this.handleSubmit}>
-        <h1>Brain Wallet</h1>
-      <hr/>
+      return <section><form onSubmit={this.handleSubmit}>
+
+        <hr/>
       PW : 
-      <input type="text" placeholder="I am a teapot" 
+      <input type="text" placeholder="Enter passphrase" 
       value={this.state.pw}
       onChange={this.handleChange} />
       <hr/>
-      Upper Case : 
-      <input placeholder="Sha2 Hash of a teapot!"
+      SHA256 : 
+      <input placeholder="Sha256 hash as bytes"
       value={this.state.hash}/>
       <hr/>
       <button>
-      Compressed
+      Go
       </button>      
       </form>
+      </section>
     }
   }
 </script>
+  <script type="text/babel" src="../components/bulma/menu.jsx"></script>
+
 <script type="text/babel">
-
-
-var isLoggedIn = true
-
-function GuestGreeting(props) {
-  return (<div><a id="register" href="https://solid.inrupt.com/get-a-solid-pod" target="_blank" className="button is-primary">
-              <strong>Sign up</strong>
-            </a>
-            <a id="login" className="button is-light">
-              Login
-            </a></div>);
-}
-
-function UserGreeting(props) {
-  return (<div><a id="logout" className="button is-light" >
-              Logout
-            </a></div>)
-}
-
-function Greeting(props) {
-  const isLoggedIn = props.isLoggedIn;
-  if (isLoggedIn) {
-    return <UserGreeting isLoggedIn={isLoggedIn} />;
-  }
-  return <GuestGreeting isLoggedIn={isLoggedIn} />;
-}
-
-function Menu() {
-
-  return   <nav className="navbar is-info" role="navigation" aria-label="main navigation">
-    <div className="navbar-brand">
-
-      <a id="add" className="navbar-item" href="#">
-        Welcome
-      </a>
-
-      <a role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
-    </div>
-
-    <div id="navbarBasicExample" className="navbar-menu">
-      <div className="navbar-start">
-
-        <div className="navbar-item has-dropdown is-hoverable">
-          <a className="navbar-link">
-            About
-          </a>
-
-          <div className="navbar-dropdown">
-
-            <a className="navbar-item">
-                About
-            </a>
-
-            <hr />
-
-            <a target="_blank" href="">
-              Help
-            </a>
-
-          </div>
-        </div>
-      </div>
-
-      <div className="navbar-end">
-        <div className="navbar-item">
-
-          <div className="buttons">
-            <Greeting isLoggedIn={isLoggedIn} />
-          </div>
-        </div>
-      </div>
-    </div>
-  </nav>
-}
 
 
 function App() {
   return (
     <div>
-      <Menu />
+      <Menu className="is-link" title="Brain Wallet" />
       <Body />
     </div>
   );
@@ -166,20 +92,8 @@ ReactDOM.render(
 
     </script>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" defer>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" defer>
 
-    <!--
-      Note: this page is a great way to try React but it's not suitable for production.
-      It slowly compiles JSX with Babel in the browser and uses a large development build of React.
+</body>
 
-      Read this section for a production-ready setup with JSX:
-      https://reactjs.org/docs/add-react-to-a-website.html#add-jsx-to-a-project
-
-      In a larger project, you can use an integrated toolchain that includes JSX instead:
-      https://reactjs.org/docs/create-a-new-react-app.html
-
-      You can also use React without JSX, in which case you can remove Babel:
-      https://reactjs.org/docs/react-without-jsx.html
-    -->
-  </body>
 </html>
