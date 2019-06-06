@@ -55,12 +55,12 @@ class Body extends React.Component {
 
         <hr/>
       PW : 
-      <input type="text" placeholder="Enter passphrase" 
+      <input size="80" type="text" placeholder="Enter passphrase" 
       value={this.state.pw}
       onChange={this.handleChange} />
       <hr/>
       SHA256 : 
-      <input placeholder="Sha256 hash as bytes"
+      <input size="80" placeholder="Sha256 hash as bytes"
       value={this.state.hash}/>
       <hr/>
       <button>
