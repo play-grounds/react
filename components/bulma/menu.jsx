@@ -17,7 +17,7 @@ function MenuAbout (props) {
   </div>
 }
 
-function Menu (props) {
+export function Menu (props) {
   function toggleNav () {
     var nav = document.querySelector('.navbar-menu')
     if (nav.className === 'navbar-menu') {
