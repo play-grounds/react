@@ -46,12 +46,10 @@ function Body(props) {
     return (
     <div>
 
-      <section className="section">
       <h1 id="welcome" className="title">
-        play!
+        Play apps!
       </h1>
 
-      </section>
 
     </div>
   );
@@ -66,7 +64,9 @@ function App() {
   return (
     <div>
       <Menu className="is-link" title="Play index"/>
-      <Body/>
+      <section className="section">
+        <Body/>
+        <hr/>
       <ul>
         <Li href="bookmark.html" text="Bookmarks" />
         <Li href="brain.html" text="Brain Wallet" />
@@ -74,6 +74,8 @@ function App() {
         <Li href="rdflib.html" text="Test RDFLib" />
         <Li href="tipjar.html" text="Tipjars" />
       </ul>
+      <hr/>
+      </section>
 
     </div>
   );
