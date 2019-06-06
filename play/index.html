@@ -57,6 +57,9 @@ function Body(props) {
   );
 }
 
+function Li (props) {
+  return <li><a target="_blank" href={props.href}>{props.text}</a></li>
+}
 
 
 function App() {
@@ -64,21 +67,13 @@ function App() {
     <div>
       <Menu className="is-link" title="Play index"/>
       <Body/>
-      <section>
-        <a href="bookmark.html">Bookmarks</a>
-      </section>
-      <section>
-        <a href="brain.html">Brain Wallet</a>
-      </section>
-      <section>
-        <a href="friends.html">List of RDF friends</a>
-      </section>
-      <section>
-        <a href="rdflib.html">Test RDFLib</a>
-      </section>
-      <section>
-        <a href="tipjar.html">Tipjars</a>
-      </section>
+      <ul>
+        <Li href="bookmark.html" text="Bookmarks" />
+        <Li href="brain.html" text="Brain Wallet" />
+        <Li href="friends.html" text="Friends in RDF" />
+        <Li href="rdflib.html" text="Test RDFLib" />
+        <Li href="tipjar.html" text="Tipjars" />
+      </ul>
 
     </div>
   );
