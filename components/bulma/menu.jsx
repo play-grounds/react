@@ -6,8 +6,12 @@ function MenuAbout (props) {
     </a>
 
     <div className='navbar-dropdown'>
-      <a className='navbar-item'>
-        Source
+      <a href="index.html" className='navbar-item'>
+        Up
+      </a>
+      <hr />
+      <a className='navbar-item' target='_blank' href=''>
+        Help
       </a>
       <hr />
       <a className='navbar-item' target='_blank' href=''>
