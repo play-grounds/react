@@ -11,7 +11,7 @@ function MenuAbout (props) {
       </a>
       <hr />
       <a className='navbar-item' target='_blank' href=''>
-        Help
+        Source
       </a>
       <hr />
       <a className='navbar-item' target='_blank' href=''>
