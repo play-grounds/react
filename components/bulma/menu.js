@@ -19,8 +19,16 @@ function MenuAbout(props) {
     className: "navbar-item",
     target: "_blank",
     href: ""
-  }, "Source"), React.createElement("hr", null), React.createElement("a", {
-    className: "navbar-item",
+  }, "Source"), React.createE/** Displays a literal by value. */
+export function Literal (props) {
+  return <span>{props.value}</span>
+}
+ement("hr", null), React.createElement("a", {
+    className: "navbar-item",/** Displays a literal by value. */
+export function Literal (props) {
+  return <span>{props.value}</span>
+}
+
     target: "_blank",
     href: ""
   }, "Help")));
