@@ -1,0 +1,22 @@
+{
+  "name": "@play-grounds/react",
+  "version": "0.0.2",
+  "description": "react play grounds",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/play-grounds/react.git"
+  },
+  "keywords": [
+    "react"
+  ],
+  "author": "Melvin Carvalho <melvincarvalho@gmail.com> (https://melvincarvalho.com/#me)",
+  "license": "AGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/play-grounds/react/issues"
+  },
+  "homepage": "https://github.com/play-grounds/react#readme"
+}
