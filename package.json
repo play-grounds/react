@@ -1,6 +1,6 @@
 {
   "name": "@play-grounds/react",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "react play grounds",
   "main": "index.js",
   "scripts": {
@@ -18,5 +18,11 @@
   "bugs": {
     "url": "https://github.com/play-grounds/react/issues"
   },
-  "homepage": "https://github.com/play-grounds/react#readme"
+  "homepage": "https://github.com/play-grounds/react#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0"
+  }
 }
