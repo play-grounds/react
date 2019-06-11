@@ -4,5 +4,3 @@ import React from 'react'
 export default function Literal ({value, ...props}) {
   return <span>{value}</span>
 }
-
-
