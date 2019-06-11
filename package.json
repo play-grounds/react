@@ -1,6 +1,6 @@
 {
   "name": "@play-grounds/react",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "react play grounds",
   "main": "index.js",
   "scripts": {
