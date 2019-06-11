@@ -1,4 +1,5 @@
+import React from 'react'
 
-function Literal (props) {
+export default function Literal (props) {
   return <span>{props.value}</span>
 }

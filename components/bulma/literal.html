@@ -4,16 +4,17 @@
 <head>
     <meta charset="UTF-8" />
     <title>Literal Component</title>
-    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <script type="module" src="../../node_modules/react/index.js"></script>
+    <script type="module" src="../../node_modules/react-dom/index.js"></script>
 
 <body>
     <div id="root"></div>
-    <script type="module" src="./literal.js"> </script>
+    <script type="module" src="./literal.jsx"> </script>
 
     <script type="module">
-  import Literal from "./literal.js"
+  import React from 'react'
+  import ReactDOM from 'react-dom'
+  import Literal from "./literal.jsx"
 
 
   function App() {
