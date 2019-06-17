@@ -15,6 +15,7 @@
 <body>
     <div id="root"></div>
     <script type="text/babel" src="../components/bulma/menu.jsx"></script>
+    <script type="text/babel" src="../components/bulma/card.jsx"></script>
     <script type="text/babel">
 
 
@@ -137,12 +138,12 @@ function Body(props) {
     return (
     <div>
 
-      <section className="section">
-      <h1 id="welcome" className="title">
-        Fwends!
-      </h1>
-        <InputUri />
-      </section>
+      <div>
+        <Card title="Friends">
+          <InputUri />
+        </Card>
+
+      </div>
 
     </div>
   );
