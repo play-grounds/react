@@ -14,5 +14,17 @@ function Literal(_ref) {
   var value = _ref.value,
       props = _objectWithoutProperties(_ref, ["value"]);
 
-  return React.createElement("span", null, value);
+  var contentType = 'text';
+
+  if (/.jpg$|.png$/.test(value)) {
+    contentType = 'image';
+  }
+
+  if (contentType === 'image') {
+    return React.createElement("img", {
+      src: value
+    });
+  } else {
+    return React.createElement("span", null, value);
+  }
 }
