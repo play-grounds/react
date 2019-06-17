@@ -17,9 +17,9 @@
   <div id="root"></div>
   <script type="text/babel" src="../components/bulma/menu.jsx"></script>
   <script type="text/babel" src="../components/bulma/bookmark.jsx"></script>
+  <script type="text/babel" src="../src/components/Literal.js"></script>
 
 <script type="text/babel">
-
 
 function Body(props) {
     return (
@@ -27,7 +27,7 @@ function Body(props) {
 
       <section className="section">
       <h1 id="welcome" className="title">
-        Mark Book!
+        <Literal value="Mark Book!" />
       </h1>
         <InputUri />
       </section>
