@@ -17,6 +17,7 @@
   <div id="root"></div>
   <script type="text/babel" src="../components/bulma/menu.jsx"></script>
   <script type="text/babel" src="../components/bulma/bookmark.jsx"></script>
+  <script type="text/babel" src="../components/bulma/card.jsx"></script>
   <script type="text/babel" src="../src/components/Literal.js"></script>
 
 <script type="text/babel">
@@ -24,26 +25,9 @@
 function Body(props) {
     return (
     <div>
-      <section className="section">
-      <h1 id="welcome" className="title">
-        <div class="card">
-          <header class="card-header">
-          <p class="card-header-title">
-          Bookmarks
-          </p>
-          <a href="#" class="card-header-icon" aria-label="more options">
-          <span class="icon">
-            <i class="fas fa-angle-down" aria-hidden="true"></i>
-          </span>
-          </a>
-          </header>
-         <div class="card-content">
+      <Card title="Bookmarks">
         <InputUri />
-      </div>
-      </div>
-
-      </h1>
-    </section>
+      </Card>
 
     </div>
   );
