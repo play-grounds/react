@@ -67,10 +67,17 @@ class Body extends React.Component {
               value={this.state.hash}/>
             <br/>
 
-            Bignum 
+            As Bignum 
             <br/>
             <input size="60" placeholder="Hash as Bignum"
               value={ this.state.hash ? '0x' + this.state.hash : '' }/>
+
+            <br/>
+
+            ECDSA Private Key 
+            <br/>
+            <input size="60" placeholder="ECDSA Private Key"
+              value={ '' }/>
 
             </div>
           </div>            
