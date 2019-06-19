@@ -70,7 +70,7 @@ class Body extends React.Component {
             As Bignum 
             <br/>
             <input size="60" placeholder="Hash as Bignum"
-              value={ this.state.hash ? '0x' + this.state.hash : '' }/>
+              value={ new TextEncoder().encode(this.state.hash).join('.') }/>
 
             <br/>
 
