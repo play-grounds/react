@@ -22,6 +22,19 @@ async function sha256(str) {
       }
 
 
+
+      function hexToBytes(str) { 
+    var result = [];
+    while (str.length >= 2) { 
+        result.push(parseInt(str.substring(0, 2), 16));
+
+        str = str.substring(2, str.length);
+    }
+
+    return result;
+}
+
+
 class Body extends React.Component {
     constructor(props) {
       super(props)
@@ -64,17 +77,17 @@ class Body extends React.Component {
       await sha256(event.target.value).then( (r) => { 
         console.log(r), 
         h = r.toString() 
-        eckey = new Bitcoin.ECKey(h)
+        eckey = new Bitcoin.ECKey(hexToBytes(h))
 
         var curve = getSECCurveByName("secp256k1");
             var gen_eckey = {}
             var gen_pt = curve.getG().multiply(eckey.priv);
-            gen_eckey.pub = getEncoded(gen_pt,  new TextEncoder().encode(this.state.hash));
+            gen_eckey.pub = getEncoded(gen_pt,  false);
             gen_eckey.pubKeyHash = Bitcoin.Util.sha256ripe160(gen_eckey.pub); 
             console.log(gen_eckey)
 
 
-        that.setState({hash : h, eckey_priv : eckey, eckey_pub : gen_eckey.pubKeyHash })
+        that.setState({hash : h, eckey_priv : eckey.priv, eckey_pub : gen_eckey.pubKeyHash, ripe : gen_eckey.pubKeyHash })
 
 
       } )
@@ -101,7 +114,7 @@ class Body extends React.Component {
             As BigInt 
             <br/>
             <input size="60" placeholder="Hash as Bignum"
-              value={ new TextEncoder().encode(this.state.hash).join('.') }/>
+              value={ hexToBytes(this.state.hash) }/>
 
             <br/>
 
@@ -115,6 +128,12 @@ class Body extends React.Component {
             <br/>
             <textarea cols="54" placeholder="ECDSA Public Key"
               value={ this.state.eckey_pub }/>
+            <br/>
+
+            Ripe 160
+            <br/>
+            <textarea cols="54" placeholder="Ripe160"
+              value={ this.state.ripe }/>
             <br/>
 
             </div>
