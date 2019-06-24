@@ -9,6 +9,7 @@
 
   <!-- Don't use this in production: -->
   <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <script src="./bitcoinjs-min.js"></script>
 </head>
 
 <body>
@@ -39,13 +40,43 @@ class Body extends React.Component {
 
     async handleChange(e) {
 
-      this.setState({pw: event.target.value})
+      function getEncoded(pt, compressed) {
+       var x = pt.getX().toBigInteger();
+       var y = pt.getY().toBigInteger();
+       var enc = integerToBytes(x, 32);
+       if (compressed) {
+         if (y.isEven()) {
+           enc.unshift(0x02);
+         } else {
+           enc.unshift(0x03);
+         }
+       } else {
+         enc.unshift(0x04);
+         enc = enc.concat(integerToBytes(y, 32));
+       }
+       return enc;
+    }
+
+      this.setState({pw: event.target.value, eckey : {} })
       var h = 'h'
       var that = this
+      var eckey
       await sha256(event.target.value).then( (r) => { 
         console.log(r), 
         h = r.toString() 
-        that.setState({hash : h })
+        eckey = new Bitcoin.ECKey(h)
+
+        var curve = getSECCurveByName("secp256k1");
+            var gen_eckey = {}
+            var gen_pt = curve.getG().multiply(eckey.priv);
+            gen_eckey.pub = getEncoded(gen_pt,  new TextEncoder().encode(this.state.hash));
+            gen_eckey.pubKeyHash = Bitcoin.Util.sha256ripe160(gen_eckey.pub); 
+            console.log(gen_eckey)
+
+
+        that.setState({hash : h, eckey_priv : eckey, eckey_pub : gen_eckey.pubKeyHash })
+
+
       } )
     }
 
@@ -58,7 +89,7 @@ class Body extends React.Component {
             <br/> 
             <input size="60" type="text" placeholder="Enter passphrase" 
               value={this.state.pw}
-              onChange={this.handleChange} />
+              onChange={this.handleChange} autoFocus="true" />
             <br/>
 
             Secret Exponent 
@@ -76,8 +107,15 @@ class Body extends React.Component {
 
             ECDSA Private Key 
             <br/>
-            <input size="60" placeholder="ECDSA Private Key"
-              value={ '' }/>
+            <textarea cols="54" placeholder="ECDSA Private Key"
+              value={ this.state.eckey_priv }/>
+            <br/>
+
+            ECDSA Public Key
+            <br/>
+            <textarea cols="54" placeholder="ECDSA Public Key"
+              value={ this.state.eckey_pub }/>
+            <br/>
 
             </div>
           </div>            
