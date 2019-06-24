@@ -86,8 +86,10 @@ class Body extends React.Component {
             gen_eckey.pubKeyHash = Bitcoin.Util.sha256ripe160(gen_eckey.pub); 
             console.log(gen_eckey)
 
+            var addr = new Bitcoin.Address(gen_eckey.pubKeyHash);
+        addr.version = 0;
 
-        that.setState({hash : h, eckey_priv : eckey.priv, eckey_pub : gen_eckey.pub, ripe : gen_eckey.pubKeyHash })
+        that.setState({hash : h, eckey_priv : eckey.priv, eckey_pub : gen_eckey.pub, ripe : gen_eckey.pubKeyHash, address : addr })
 
 
       } )
