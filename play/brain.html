@@ -38,7 +38,7 @@ async function sha256(str) {
 class Body extends React.Component {
     constructor(props) {
       super(props)
-      this.state = { pw : '', hash : '' }
+      this.state = { pw : '', hash : '', publicKeyVersion : 0 }
       this.handleSubmit = this.handleSubmit.bind(this)
       this.handleChange = this.handleChange.bind(this)
       //this.activateLasers = this.activateLasers.bind(this)
@@ -79,18 +79,17 @@ class Body extends React.Component {
         h = r.toString() 
         eckey = new Bitcoin.ECKey(hexToBytes(h))
 
-        var curve = getSECCurveByName("secp256k1");
-            var gen_eckey = {}
-            var gen_pt = curve.getG().multiply(eckey.priv);
-            gen_eckey.pub = getEncoded(gen_pt,  false);
-            gen_eckey.pubKeyHash = Bitcoin.Util.sha256ripe160(gen_eckey.pub); 
-            console.log(gen_eckey)
+        var curve = getSECCurveByName("secp256k1")
+        var gen_eckey = {}
+        var gen_pt = curve.getG().multiply(eckey.priv);
+        gen_eckey.pub = getEncoded(gen_pt,  false);
+        gen_eckey.pubKeyHash = Bitcoin.Util.sha256ripe160(gen_eckey.pub); 
+        console.log(gen_eckey)
 
-            var addr = new Bitcoin.Address(gen_eckey.pubKeyHash);
-        addr.version = 0;
+        var addr = new Bitcoin.Address(gen_eckey.pubKeyHash);
+        addr.version = this.state.publicKeyVersion;
 
         that.setState({hash : h, eckey_priv : eckey.priv, eckey_pub : gen_eckey.pub, ripe : gen_eckey.pubKeyHash, address : addr })
-
 
       } )
     }
@@ -100,47 +99,54 @@ class Body extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <div class="columns">
             <div class="column">
-            Passphrase
+              Passphrase
             <br/> 
             <input size="60" type="text" placeholder="Enter passphrase" 
               value={this.state.pw}
               onChange={this.handleChange} autoFocus="true" />
             <br/>
 
+            Public Key Version (decimal)
+            <br/> 
+            <input size="60" type="text" placeholder="0" 
+              value={this.state.publicKeyVersion}
+              onChange={this.handleChange} />
+            <br/>
+
             Secret Exponent (sha256)
             <br/>
-            <input size="60" placeholder="Secret Exponent (sha256)"
+            <input readonly size="60" placeholder="Secret Exponent (sha256)"
               value={this.state.hash}/>
             <br/>
 
             Secret Exponent (sha256) as Bytes 
             <br/>
-            <input size="60" placeholder="Secret Exponent (sha256) as Bytes"
+            <input readonly size="60" placeholder="Secret Exponent (sha256) as Bytes"
               value={ hexToBytes(this.state.hash) }/>
 
             <br/>
 
             ECDSA Private Key (BigInteger)
             <br/>
-            <input size="60" placeholder="ECDSA Private Key (BigInteger)"
+            <input readonly size="60" placeholder="ECDSA Private Key (BigInteger)"
               value={ this.state.eckey_priv }/>
             <br/>
 
             ECDSA Public Key as Bytes
             <br/>
-            <input size="60" placeholder="ECDSA Public Key as Bytes"
+            <input readonly size="60" placeholder="ECDSA Public Key as Bytes"
               value={ this.state.eckey_pub }/>
             <br/>
 
             Ripe 160 hash of Public Key as Bytes
             <br/>
-            <input size="60" placeholder="Ripe 160 hash of Public Key as Bytes"
+            <input readonly size="60" placeholder="Ripe 160 hash of Public Key as Bytes"
               value={ this.state.ripe }/>
             <br/>
 
             Public Key Base58 check Address (uncompressed)
             <br/>
-            <input size="60" placeholder="Public Key Base58 check Address (uncompressed)"
+            <input readonly size="60" placeholder="Public Key Base58 check Address (uncompressed)"
               value={ this.state.address }/>
             <br/>
 
