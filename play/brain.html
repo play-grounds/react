@@ -107,40 +107,40 @@ class Body extends React.Component {
               onChange={this.handleChange} autoFocus="true" />
             <br/>
 
-            Secret Exponent 
+            Secret Exponent (sha256)
             <br/>
-            <input size="60" placeholder="Sha256 hash as bytes"
+            <input size="60" placeholder="Secret Exponent (sha256)"
               value={this.state.hash}/>
             <br/>
 
-            Secret Exponent as Bytes 
+            Secret Exponent (sha256) as Bytes 
             <br/>
-            <input size="60" placeholder="Secret Exponent as Bytes"
+            <input size="60" placeholder="Secret Exponent (sha256) as Bytes"
               value={ hexToBytes(this.state.hash) }/>
 
             <br/>
 
-            ECDSA Private Key 
+            ECDSA Private Key (BigInteger)
             <br/>
-            <input size="60" placeholder="ECDSA Private Key"
+            <input size="60" placeholder="ECDSA Private Key (BigInteger)"
               value={ this.state.eckey_priv }/>
             <br/>
 
-            ECDSA Public Key
+            ECDSA Public Key as Bytes
             <br/>
-            <input size="60" placeholder="ECDSA Public Key"
+            <input size="60" placeholder="ECDSA Public Key as Bytes"
               value={ this.state.eckey_pub }/>
             <br/>
 
-            Ripe 160
+            Ripe 160 hash of Public Key as Bytes
             <br/>
-            <input size="60" placeholder="Ripe160"
+            <input size="60" placeholder="Ripe 160 hash of Public Key as Bytes"
               value={ this.state.ripe }/>
             <br/>
 
-            Address
+            Public Key Base58 check Address (uncompressed)
             <br/>
-            <input size="60" placeholder="Address"
+            <input size="60" placeholder="Public Key Base58 check Address (uncompressed)"
               value={ this.state.address }/>
             <br/>
 
