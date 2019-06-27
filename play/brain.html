@@ -54,8 +54,7 @@ class Body extends React.Component {
       super(props)
       this.state = { pw : '', hash : '', publicKeyVersion : 0 }
       this.handleSubmit = this.handleSubmit.bind(this)
-      this.handleChangePW = this.handleChangePW.bind(this)
-      this.handleChangeVersion = this.handleChangeVersion.bind(this)
+      this.handleChange = this.handleChange.bind(this)
 
     }
 
@@ -65,10 +64,19 @@ class Body extends React.Component {
     }
 
 
-    async handleChangePW(e) {
+    async handleChange(e) {
 
+      var target = e.target
+      if (e.target) {
+        var name = e.target.name
+      }
 
-      this.setState({pw: event.target.value, eckey : {} })
+      if (name === 'pw') {
+        this.setState({pw: event.target.value, eckey : {} })
+      } else if (name === 'publicKeyVersion') {
+        this.setState({publicKeyVersion: event.target.value, eckey : {} })
+      }
+
       var h = 'h'
       var that = this
       var eckey
@@ -97,36 +105,6 @@ class Body extends React.Component {
     }
 
 
-    async handleChangeVersion(e) {
-
-
-      this.setState({publicKeyVersion: event.target.value, eckey : {} })
-      var h = 'h'
-      var that = this
-      var eckey
-      await sha256(event.target.value).then( (r) => { 
-        console.log(r), 
-        h = r.toString() 
-        eckey = new Bitcoin.ECKey(hexToBytes(h))
-
-        var sec = new Bitcoin.Address(hexToBytes(h));
-        sec.version = this.state.publicKeyVersion + 128      
-
-        
-        var curve = getSECCurveByName("secp256k1")
-        var gen_eckey = {}
-        var gen_pt = curve.getG().multiply(eckey.priv);
-        gen_eckey.pub = getEncoded(gen_pt,  false);
-        gen_eckey.pubKeyHash = Bitcoin.Util.sha256ripe160(gen_eckey.pub); 
-        console.log(gen_eckey)
-
-        var addr = new Bitcoin.Address(gen_eckey.pubKeyHash);
-        addr.version = this.state.publicKeyVersion;
-
-        that.setState({hash : h, eckey_priv : eckey.priv, eckey_pub : gen_eckey.pub, ripe : gen_eckey.pubKeyHash, address : addr, priv_address : sec })
-
-      } )
-    }
 
 
     render() { 
@@ -136,16 +114,16 @@ class Body extends React.Component {
             <div class="column">
               Passphrase
             <br/> 
-            <input size="60" type="text" placeholder="Enter passphrase" 
+            <input name="pw" size="60" type="text" placeholder="Enter passphrase" 
               value={this.state.pw}
-              onChange={this.handleChangePW} autoFocus="true" />
+              onChange={this.handleChange} autoFocus="true" />
             <br/>
 
             Public Key Version (decimal)
             <br/> 
-            <input size="60" type="text" placeholder="0" 
+            <input name="publicKeyVersion" size="60" type="text" placeholder="0" 
               value={this.state.publicKeyVersion}
-              onChange={this.handleChangeVersion} />
+              onChange={this.handleChange} />
             <br/>
 
             Secret Exponent (sha256)
