@@ -71,6 +71,7 @@ class Body extends React.Component {
         var name = e.target.name
       }
 
+      console.log(target)
       if (name === 'pw') {
         this.setState({pw: event.target.value, eckey : {} })
       } else if (name === 'publicKeyVersion') {
@@ -81,7 +82,6 @@ class Body extends React.Component {
       var that = this
       var eckey
       await sha256(event.target.value).then( (r) => { 
-        console.log(r), 
         h = r.toString() 
         eckey = new Bitcoin.ECKey(hexToBytes(h))
 
@@ -94,7 +94,6 @@ class Body extends React.Component {
         var gen_pt = curve.getG().multiply(eckey.priv);
         gen_eckey.pub = getEncoded(gen_pt,  false);
         gen_eckey.pubKeyHash = Bitcoin.Util.sha256ripe160(gen_eckey.pub); 
-        console.log(gen_eckey)
 
         var addr = new Bitcoin.Address(gen_eckey.pubKeyHash);
         addr.version = this.state.publicKeyVersion;
