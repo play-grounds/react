@@ -109,13 +109,13 @@ class Body extends React.Component {
     render() { 
       return <section className="section">
         <form onSubmit={this.handleSubmit}>
-          <div class="columns">
-            <div class="column">
+          <div className="columns">
+            <div className="column">
               Passphrase
             <br/> 
             <input name="pw" size="60" type="text" placeholder="Enter passphrase" 
               value={this.state.pw}
-              onChange={this.handleChange} autoFocus="true" />
+              onChange={this.handleChange} autoFocus={true} />
             <br/>
 
             Public Key Version (decimal)
@@ -127,44 +127,44 @@ class Body extends React.Component {
 
             Secret Exponent (sha256)
             <br/>
-            <input readonly size="60" placeholder="Secret Exponent (sha256)"
+            <input readOnly size="60" placeholder="Secret Exponent (sha256)"
               value={this.state.hash}/>
             <br/>
 
             Secret Exponent (sha256) as Bytes 
             <br/>
-            <input readonly size="60" placeholder="Secret Exponent (sha256) as Bytes"
+            <input readOnly size="60" placeholder="Secret Exponent (sha256) as Bytes"
               value={ hexToBytes(this.state.hash) }/>
 
             <br/>
 
             ECDSA Private Key (BigInteger)
             <br/>
-            <input readonly size="60" placeholder="ECDSA Private Key (BigInteger)"
+            <input readOnly size="60" placeholder="ECDSA Private Key (BigInteger)"
               value={ this.state.eckey_priv }/>
             <br/>
 
             Private Key Base58 check Address (uncompressed)
             <br/>
-            <input readonly size="60" placeholder="ECDSA Private Key (BigInteger)"
+            <input readOnly size="60" placeholder="ECDSA Private Key (BigInteger)"
               value={ this.state.priv_address }/>
             <br/>
 
             ECDSA Public Key as Bytes
             <br/>
-            <input readonly size="60" placeholder="ECDSA Public Key as Bytes"
+            <input readOnly size="60" placeholder="ECDSA Public Key as Bytes"
               value={ this.state.eckey_pub }/>
             <br/>
 
             Ripe 160 hash of Public Key as Bytes
             <br/>
-            <input readonly size="60" placeholder="Ripe 160 hash of Public Key as Bytes"
+            <input readOnly size="60" placeholder="Ripe 160 hash of Public Key as Bytes"
               value={ this.state.ripe }/>
             <br/>
 
             Public Key Base58 check Address (uncompressed)
             <br/>
-            <input readonly size="60" placeholder="Public Key Base58 check Address (uncompressed)"
+            <input readOnly size="60" placeholder="Public Key Base58 check Address (uncompressed)"
               value={ this.state.address }/>
             <br/>
 
