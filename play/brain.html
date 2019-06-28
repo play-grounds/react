@@ -100,8 +100,13 @@ class Body extends React.Component {
       eckey = new Bitcoin.ECKey(hexToBytes(hash))
 
       // get privkey address
-      var sec = new Bitcoin.Address(hexToBytes(hash));
-      sec.version = this.state.publicKeyVersion + OFFSET      
+      var payload = hexToBytes(hash)
+      if (this.state.addressType === 'compressed') {
+        payload.push(0x01)
+      }
+      var sec = new Bitcoin.Address(payload);
+      sec.version = parseInt(this.state.publicKeyVersion) + OFFSET      
+      console.log('sec', sec, sec.toString())
       
       // get pub key
       var curve = getSECCurveByName("secp256k1")
@@ -119,7 +124,7 @@ class Body extends React.Component {
 
       // get pub key address
       var addr = new Bitcoin.Address(gen_eckey.pubKeyHash);
-      addr.version = this.state.publicKeyVersion;
+      addr.version = parseInt(this.state.publicKeyVersion);
 
       // benchmark
       var timeTaken = new Date().getTime() - startTime
@@ -131,7 +136,7 @@ class Body extends React.Component {
         eckey_pub : gen_eckey.pub, 
         ripe : gen_eckey.pubKeyHash, 
         address : addr, 
-        priv_address : sec, 
+        priv_address : sec.toString(), 
         timeTaken : timeTaken 
       })
 
