@@ -48,6 +48,9 @@ function getEncoded(pt, compressed) {
   return enc;
 }
 
+function getKeysFromHash() {
+  
+}
 
 class Body extends React.Component {
   constructor(props) {
@@ -78,13 +81,12 @@ class Body extends React.Component {
     var h = 'h'
     var that = this
     var eckey
-    await sha256(event.target.value).then( (r) => { 
+    await sha256(event.target.value).then( (hash) => { 
       // get privkey from hash
-      h = r.toString() 
-      eckey = new Bitcoin.ECKey(hexToBytes(h))
+      eckey = new Bitcoin.ECKey(hexToBytes(hash))
 
       // get privkey address
-      var sec = new Bitcoin.Address(hexToBytes(h));
+      var sec = new Bitcoin.Address(hexToBytes(hash));
       sec.version = this.state.publicKeyVersion + 128      
       
       // get pub key
