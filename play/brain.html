@@ -55,7 +55,7 @@ function getKeysFromHash() {
 class Body extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { pw : '', hash : '', publicKeyVersion : 0 }
+    this.state = { pw : '', hash : '', publicKeyVersion : 0, addressType : 'uncompressed' }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
@@ -79,6 +79,9 @@ class Body extends React.Component {
     } else if (name === 'publicKeyVersion') {
       pw = this.state.pw
       this.setState({publicKeyVersion: event.target.value, eckey : {} })
+    } else if (name === 'addressType') {
+      pw = this.state.pw
+      this.setState({addressType: event.target.value, eckey : {} })
     }
 
     var h = 'h'
@@ -96,7 +99,12 @@ class Body extends React.Component {
       var curve = getSECCurveByName("secp256k1")
       var gen_eckey = {}
       var gen_pt = curve.getG().multiply(eckey.priv);
-      gen_eckey.pub = getEncoded(gen_pt,  false);
+      var addressType
+      if (this.state.addressType === 'uncompressed') {
+        gen_eckey.pub = getEncoded(gen_pt, false);
+      } else {
+        gen_eckey.pub = getEncoded(gen_pt, true);
+      }
 
       // get pub key hash
       gen_eckey.pubKeyHash = Bitcoin.Util.sha256ripe160(gen_eckey.pub); 
@@ -119,6 +127,11 @@ class Body extends React.Component {
       <form onSubmit={this.handleSubmit}>
         <div className="columns">
           <div className="column">
+          <select name="addressType" onChange={this.handleChange} value={this.state.addressType}>
+            <option selected value="uncompressed">Uncompressed</option>
+            <option value="compressed">Compressed</option>
+          </select>
+          <hr/>
             Passphrase
           <br/> 
           <input name="pw" size="60" type="text" placeholder="Enter passphrase" 
