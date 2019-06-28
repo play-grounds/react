@@ -19,35 +19,35 @@
 var OFFSET = 128
 
 async function sha256(str) {
-  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder("utf-8").encode(str));
-  return Array.prototype.map.call(new Uint8Array(buf), x=>(('00'+x.toString(16)).slice(-2))).join('');
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder("utf-8").encode(str))
+  return Array.prototype.map.call(new Uint8Array(buf), x=>(('00'+x.toString(16)).slice(-2))).join('')
 }
 
 function hexToBytes(str) { 
-  var result = [];
+  var result = []
   while (str.length >= 2) { 
-    result.push(parseInt(str.substring(0, 2), 16));
-    str = str.substring(2, str.length);
+    result.push(parseInt(str.substring(0, 2), 16))
+    str = str.substring(2, str.length)
   }
-  return result;
+  return result
 }
 
 
 function getEncoded(pt, compressed) {
-  var x = pt.getX().toBigInteger();
-  var y = pt.getY().toBigInteger();
-  var enc = integerToBytes(x, 32);
+  var x = pt.getX().toBigInteger()
+  var y = pt.getY().toBigInteger()
+  var enc = integerToBytes(x, 32)
   if (compressed) {
     if (y.isEven()) {
-      enc.unshift(0x02);
+      enc.unshift(0x02)
     } else {
-      enc.unshift(0x03);
+      enc.unshift(0x03)
     }
   } else {
-    enc.unshift(0x04);
-    enc = enc.concat(integerToBytes(y, 32));
+    enc.unshift(0x04)
+    enc = enc.concat(integerToBytes(y, 32))
   }
-  return enc;
+  return enc
 }
 
 function getKeysFromHash() {
@@ -104,27 +104,27 @@ class Body extends React.Component {
       if (this.state.addressType === 'compressed') {
         payload.push(0x01)
       }
-      var sec = new Bitcoin.Address(payload);
+      var sec = new Bitcoin.Address(payload)
       sec.version = parseInt(this.state.publicKeyVersion) + OFFSET      
       console.log('sec', sec, sec.toString())
       
       // get pub key
       var curve = getSECCurveByName("secp256k1")
       var genEckey = {}
-      var genPt = curve.getG().multiply(eckey.priv);
+      var genPt = curve.getG().multiply(eckey.priv)
       var addressType
       if (this.state.addressType === 'uncompressed') {
-        genEckey.pub = getEncoded(genPt, false);
+        genEckey.pub = getEncoded(genPt, false)
       } else {
-        genEckey.pub = getEncoded(genPt, true);
+        genEckey.pub = getEncoded(genPt, true)
       }
 
       // get pub key hash
       genEckey.pubKeyHash = Bitcoin.Util.sha256ripe160(genEckey.pub); 
 
       // get pub key address
-      var addr = new Bitcoin.Address(genEckey.pubKeyHash);
-      addr.version = parseInt(this.state.publicKeyVersion);
+      var addr = new Bitcoin.Address(genEckey.pubKeyHash)
+      addr.version = parseInt(this.state.publicKeyVersion)
 
       // benchmark
       var timeTaken = new Date().getTime() - startTime
@@ -232,13 +232,13 @@ function App() {
       <Menu className="is-link" title="Brain Wallet" />
       <Body />
     </div>
-  );
+  )
 }
 
 ReactDOM.render(
   <App />,
   document.getElementById('root')
-);
+)
 
     </script>
 
