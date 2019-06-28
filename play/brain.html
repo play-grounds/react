@@ -66,6 +66,7 @@ class Body extends React.Component {
 
   async handleChange(e) {
 
+    var pw
     var target = e.target
     if (e.target) {
       var name = e.target.name
@@ -73,15 +74,17 @@ class Body extends React.Component {
 
     console.log(target)
     if (name === 'pw') {
-      this.setState({pw: event.target.value, eckey : {} })
+      pw = event.target.value
+      this.setState({pw: pw, eckey : {} })
     } else if (name === 'publicKeyVersion') {
+      pw = this.state.pw
       this.setState({publicKeyVersion: event.target.value, eckey : {} })
     }
 
     var h = 'h'
     var that = this
     var eckey
-    await sha256(event.target.value).then( (hash) => { 
+    await sha256(pw).then( (hash) => { 
       // get privkey from hash
       eckey = new Bitcoin.ECKey(hexToBytes(hash))
 
@@ -103,7 +106,7 @@ class Body extends React.Component {
       addr.version = this.state.publicKeyVersion;
 
       // update fields
-      that.setState({hash : h, eckey_priv : eckey.priv, eckey_pub : gen_eckey.pub, ripe : gen_eckey.pubKeyHash, address : addr, priv_address : sec })
+      that.setState({hash : hash, eckey_priv : eckey.priv, eckey_pub : gen_eckey.pub, ripe : gen_eckey.pubKeyHash, address : addr, priv_address : sec })
 
     })
   }
