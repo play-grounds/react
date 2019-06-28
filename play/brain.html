@@ -110,20 +110,20 @@ class Body extends React.Component {
       
       // get pub key
       var curve = getSECCurveByName("secp256k1")
-      var gen_eckey = {}
-      var gen_pt = curve.getG().multiply(eckey.priv);
+      var genEckey = {}
+      var genPt = curve.getG().multiply(eckey.priv);
       var addressType
       if (this.state.addressType === 'uncompressed') {
-        gen_eckey.pub = getEncoded(gen_pt, false);
+        genEckey.pub = getEncoded(genPt, false);
       } else {
-        gen_eckey.pub = getEncoded(gen_pt, true);
+        genEckey.pub = getEncoded(genPt, true);
       }
 
       // get pub key hash
-      gen_eckey.pubKeyHash = Bitcoin.Util.sha256ripe160(gen_eckey.pub); 
+      genEckey.pubKeyHash = Bitcoin.Util.sha256ripe160(genEckey.pub); 
 
       // get pub key address
-      var addr = new Bitcoin.Address(gen_eckey.pubKeyHash);
+      var addr = new Bitcoin.Address(genEckey.pubKeyHash);
       addr.version = parseInt(this.state.publicKeyVersion);
 
       // benchmark
@@ -132,11 +132,11 @@ class Body extends React.Component {
       // update state
       that.setState({
         hash : hash, 
-        eckey_priv : eckey.priv, 
-        eckey_pub : gen_eckey.pub, 
-        ripe : gen_eckey.pubKeyHash, 
+        eckeyPriv : eckey.priv, 
+        eckeyPub : genEckey.pub, 
+        ripe : genEckey.pubKeyHash, 
         address : addr, 
-        priv_address : sec.toString(), 
+        privAddress : sec, 
         timeTaken : timeTaken 
       })
 
@@ -184,19 +184,19 @@ class Body extends React.Component {
           ECDSA Private Key (BigInteger)
           <br/>
           <input readOnly size="60" placeholder="ECDSA Private Key (BigInteger)"
-            value={ this.state.eckey_priv }/>
+            value={ this.state.eckeyPriv }/>
           <br/>
 
           Private Key Base58 check Address
           <br/>
           <input readOnly size="60" placeholder="Private Key Base58 check Address"
-            value={ this.state.priv_address }/>
+            value={ this.state.privAddress }/>
           <hr/>
 
           ECDSA Public Key as Bytes
           <br/>
           <input readOnly size="60" placeholder="ECDSA Public Key as Bytes"
-            value={ this.state.eckey_pub }/>
+            value={ this.state.eckeyPub }/>
           <br/>
 
           Ripe 160 hash of Public Key as Bytes
