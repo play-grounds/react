@@ -16,6 +16,8 @@
   <div id="root"></div>
   <script type="text/babel">
 
+var OFFSET = 128
+
 async function sha256(str) {
   const buf = await crypto.subtle.digest("SHA-256", new TextEncoder("utf-8").encode(str));
   return Array.prototype.map.call(new Uint8Array(buf), x=>(('00'+x.toString(16)).slice(-2))).join('');
@@ -99,7 +101,7 @@ class Body extends React.Component {
 
       // get privkey address
       var sec = new Bitcoin.Address(hexToBytes(hash));
-      sec.version = this.state.publicKeyVersion + 128      
+      sec.version = this.state.publicKeyVersion + OFFSET      
       
       // get pub key
       var curve = getSECCurveByName("secp256k1")
@@ -119,18 +121,22 @@ class Body extends React.Component {
       var addr = new Bitcoin.Address(gen_eckey.pubKeyHash);
       addr.version = this.state.publicKeyVersion;
 
+      // benchmark
       var timeTaken = new Date().getTime() - startTime
 
-      // update fields
-      that.setState({hash : hash, eckey_priv : eckey.priv, eckey_pub : gen_eckey.pub, ripe : gen_eckey.pubKeyHash, address : addr, priv_address : sec, timeTaken : timeTaken })
-
-
+      // update state
+      that.setState({
+        hash : hash, 
+        eckey_priv : eckey.priv, 
+        eckey_pub : gen_eckey.pub, 
+        ripe : gen_eckey.pubKeyHash, 
+        address : addr, 
+        priv_address : sec, 
+        timeTaken : timeTaken 
+      })
 
     })
   }
-
-
-
 
   render() { 
     return <section className="section">
@@ -154,7 +160,7 @@ class Body extends React.Component {
           <input name="publicKeyVersion" size="60" type="text" placeholder="0" 
             value={this.state.publicKeyVersion}
             onChange={this.handleChange} />
-          <br/>
+          <hr/>
 
           Secret Exponent (sha256)
           <br/>
@@ -179,7 +185,7 @@ class Body extends React.Component {
           <br/>
           <input readOnly size="60" placeholder="Private Key Base58 check Address"
             value={ this.state.priv_address }/>
-          <br/>
+          <hr/>
 
           ECDSA Public Key as Bytes
           <br/>
