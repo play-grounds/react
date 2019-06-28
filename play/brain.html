@@ -55,7 +55,14 @@ function getKeysFromHash() {
 class Body extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { pw : '', hash : '', publicKeyVersion : 0, addressType : 'uncompressed' }
+    this.state = { 
+      pw : '', 
+      hash : '', 
+      publicKeyVersion : 0, 
+      addressType : 'uncompressed',
+      timeTaken : 0,
+      eckey : {}
+    }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
@@ -66,25 +73,24 @@ class Body extends React.Component {
 
   async handleChange(e) {
 
+    let startTime = new Date().getTime()
     var pw
     var target = e.target
     if (e.target) {
       var name = e.target.name
     }
 
-    console.log(target)
     if (name === 'pw') {
       pw = event.target.value
-      this.setState({pw: pw, eckey : {} })
+      this.setState({pw: pw })
     } else if (name === 'publicKeyVersion') {
       pw = this.state.pw
-      this.setState({publicKeyVersion: event.target.value, eckey : {} })
+      this.setState({publicKeyVersion: event.target.value })
     } else if (name === 'addressType') {
       pw = this.state.pw
-      this.setState({addressType: event.target.value, eckey : {} })
+      this.setState({addressType: event.target.value })
     }
 
-    var h = 'h'
     var that = this
     var eckey
     await sha256(pw).then( (hash) => { 
@@ -113,8 +119,12 @@ class Body extends React.Component {
       var addr = new Bitcoin.Address(gen_eckey.pubKeyHash);
       addr.version = this.state.publicKeyVersion;
 
+      var timeTaken = new Date().getTime() - startTime
+
       // update fields
-      that.setState({hash : hash, eckey_priv : eckey.priv, eckey_pub : gen_eckey.pub, ripe : gen_eckey.pubKeyHash, address : addr, priv_address : sec })
+      that.setState({hash : hash, eckey_priv : eckey.priv, eckey_pub : gen_eckey.pub, ripe : gen_eckey.pubKeyHash, address : addr, priv_address : sec, timeTaken : timeTaken })
+
+
 
     })
   }
@@ -188,6 +198,8 @@ class Body extends React.Component {
           <input readOnly size="60" placeholder="Public Key Base58 check Address"
             value={ this.state.address }/>
           <br/>
+          <hr/>
+          Computed in : {this.state.timeTaken} ms
 
           </div>
         </div>            
