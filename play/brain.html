@@ -152,6 +152,12 @@ class Body extends React.Component {
             <option selected value="uncompressed">Uncompressed</option>
             <option value="compressed">Compressed</option>
           </select>
+          <select name="publicKeyVersion" onChange={this.handleChange} value={this.state.publicKeyVersion}>
+            <option selected value="0">Bitcoin</option>
+            <option value="85">Bitmark</option>
+            <option value="111">Testnet3</option>
+          </select>
+
           <hr/>
             Passphrase
           <br/> 
@@ -160,11 +166,6 @@ class Body extends React.Component {
             onChange={this.handleChange} autoFocus={true} />
           <br/>
 
-          Public Key Version (decimal)
-          <br/> 
-          <input name="publicKeyVersion" size="60" type="text" placeholder="0" 
-            value={this.state.publicKeyVersion}
-            onChange={this.handleChange} />
           <hr/>
 
           Secret Exponent (sha256)
