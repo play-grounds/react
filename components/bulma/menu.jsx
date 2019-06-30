@@ -6,20 +6,23 @@ function MenuAbout (props) {
     </a>
 
     <div className='navbar-dropdown'>
-      <a href="index.html" className='navbar-item'>
-        Up
-      </a>
+      <Menu.Item href='index.html'>Up</Menu.Item>
       <hr />
-      <a className='navbar-item' target='_blank' href=''>
-        Source
-      </a>
+      <Menu.Item href=''>Source</Menu.Item>
       <hr />
-      <a className='navbar-item' target='_blank' href=''>
-        Help
-      </a>
+      <Menu.Item href=''>Help</Menu.Item>
     </div>
   </div>
 }
+
+function MenuItem ({href, ...props}) {
+  return (
+    <a href={href} className='navbar-item'>
+    {props.children}
+    </a>    
+  )
+}
+
 
 function Menu (props) {
   function toggleNav () {
@@ -58,4 +61,5 @@ function Menu (props) {
 }
 
 Menu.About = MenuAbout
+Menu.Item = MenuItem
 
