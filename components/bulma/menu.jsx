@@ -50,6 +50,8 @@ function Menu (props) {
         <MenuAbout />
       </div>
 
+      {props.children}
+
       <div className='navbar-end' />
     </div>
   </nav>
