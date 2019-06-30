@@ -99,10 +99,10 @@ function getPublicKeyFromPrivate(eckey, addressType, publicKeyVersion) {
   }
 
   // get pub key hash
-  genEckey.pubKeyHash = Bitcoin.Util.sha256ripe160(genEckey.pub)
+  genEckey.ripe160 = Bitcoin.Util.sha256ripe160(genEckey.pub)
 
   // get pub key address
-  var addr = new Bitcoin.Address(genEckey.pubKeyHash)
+  var addr = new Bitcoin.Address(genEckey.ripe160)
   addr.version = parseInt(publicKeyVersion)
   genEckey.addr = addr
   return genEckey
@@ -153,18 +153,17 @@ class Body extends React.Component {
     }
 
     var that = this
-    var eckey
     await sha256(pw).then((hash) => {
 
       // get privkey from hash
-      eckey = getECKeyFromHash(hash)
+      var privateKey = getECKeyFromHash(hash)
 
-      // get privkey address
-      var privAddress = getPrivateKeyAddressFromHash(hash, this.state.addressType, 
-        this.state.publicKeyVersion)
+      // get privateKey address
+      var privateAddress = getPrivateKeyAddressFromHash(hash, 
+        this.state.addressType, this.state.publicKeyVersion)
 
       // get pub key from private
-      var genEckey = getPublicKeyFromPrivate(eckey, this.state.addressType,
+      var publicKey = getPublicKeyFromPrivate(privateKey, this.state.addressType,
         this.state.publicKeyVersion)
 
       // benchmark
@@ -173,11 +172,14 @@ class Body extends React.Component {
       // update state
       that.setState({
         hash: hash,
-        eckeyPriv: eckey.priv,
-        eckeyPub: genEckey.pub,
-        ripe: genEckey.pubKeyHash,
-        address: genEckey.addr,
-        privAddress: privAddress,
+
+        eckeyPriv: privateKey.priv,
+        privateAddress: privateAddress,
+
+        eckeyPub: publicKey.pub,
+        ripe160: publicKey.ripe160,
+        address: publicKey.addr,
+        
         timeTaken: timeTaken
       })
     })
@@ -230,7 +232,7 @@ class Body extends React.Component {
           Private Key Base58 check Address
           <br />
             <input readOnly size='60' placeholder='Private Key Base58 check Address'
-              value={this.state.privAddress} />
+              value={this.state.privateAddress} />
             <hr />
 
           ECDSA Public Key as Bytes
@@ -242,7 +244,7 @@ class Body extends React.Component {
           Ripe 160 hash of Public Key as Bytes
           <br />
             <input readOnly size='60' placeholder='Ripe 160 hash of Public Key as Bytes'
-              value={this.state.ripe} />
+              value={this.state.ripe160} />
             <br />
 
           Public Key Base58 check Address
