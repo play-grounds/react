@@ -119,7 +119,7 @@ class Body extends React.Component {
     super(props)
     this.state = {
       pw: '',
-      hash: '',
+      sha256: '',
       publicKeyVersion: 0,
       addressType: 'uncompressed',
       timeTaken: 0,
@@ -153,13 +153,13 @@ class Body extends React.Component {
     }
 
     var that = this
-    await sha256(pw).then((hash) => {
+    await sha256(pw).then((sha256) => {
 
       // get privkey from hash
-      var privateKey = getECKeyFromHash(hash)
+      var privateKey = getECKeyFromHash(sha256)
 
       // get privateKey address
-      var privateAddress = getPrivateKeyAddressFromHash(hash, 
+      var privateAddress = getPrivateKeyAddressFromHash(sha256, 
         this.state.addressType, this.state.publicKeyVersion)
 
       // get pub key from private
@@ -171,7 +171,7 @@ class Body extends React.Component {
 
       // update state
       that.setState({
-        hash: hash,
+        sha256: sha256,
 
         eckeyPriv: privateKey.priv,
         privateAddress: privateAddress,
@@ -213,13 +213,13 @@ class Body extends React.Component {
           Secret Exponent (sha256)
           <br />
             <input readOnly size='60' placeholder='Secret Exponent (sha256)'
-              value={this.state.hash} />
+              value={this.state.sha256} />
             <br />
 
           Secret Exponent (sha256) as Bytes
           <br />
             <input readOnly size='60' placeholder='Secret Exponent (sha256) as Bytes'
-              value={hexToBytes(this.state.hash)} />
+              value={hexToBytes(this.state.sha256)} />
 
             <br />
 
