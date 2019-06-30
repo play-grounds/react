@@ -11,6 +11,13 @@ async function sha256 (str) {
   return Array.prototype.map.call(new Uint8Array(buf), x => (('00' + x.toString(16)).slice(-2))).join('')
 }
 
+
+/**
+ * hex to bytes
+ *
+ * @param {*} str
+ * @returns bytes
+ */
 function hexToBytes (str) {
   var result = []
   while (str.length >= 2) {
@@ -20,6 +27,14 @@ function hexToBytes (str) {
   return result
 }
 
+
+/**
+ * get encoded point
+ *
+ * @param {*} pt
+ * @param {*} compressed
+ * @returns bytes
+ */
 function getEncoded (pt, compressed) {
   var x = pt.getX().toBigInteger()
   var y = pt.getY().toBigInteger()
@@ -37,10 +52,13 @@ function getEncoded (pt, compressed) {
   return enc
 }
 
-function getKeysFromHash () {
 
-}
-
+/**
+ * Main body of brain app
+ *
+ * @class Body
+ * @extends {React.Component}
+ */
 class Body extends React.Component {
   constructor (props) {
     super(props)
