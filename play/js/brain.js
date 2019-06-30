@@ -159,7 +159,7 @@ class Body extends React.Component {
       var privateKey = getECKeyFromHash(sha256)
 
       // get privateKey address
-      var privateAddress = getPrivateKeyAddressFromHash(sha256, 
+      var privateKeyAddress = getPrivateKeyAddressFromHash(sha256, 
         this.state.addressType, this.state.publicKeyVersion)
 
       // get pub key from private
@@ -174,7 +174,7 @@ class Body extends React.Component {
         sha256: sha256,
 
         privateKeyInt: privateKey.priv,
-        privateAddress: privateAddress,
+        privateKeyAddress: privateKeyAddress,
 
         publicKeyBytes: publicKey.pub,
         ripe160: publicKey.ripe160,
@@ -232,7 +232,7 @@ class Body extends React.Component {
           Private Key Base58 check Address
           <br />
             <input readOnly size='60' placeholder='Private Key Base58 check Address'
-              value={this.state.privateAddress} />
+              value={this.state.privateKeyAddress} />
             <hr />
 
           ECDSA Public Key as Bytes
