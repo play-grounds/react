@@ -47,7 +47,7 @@ function Menu (props) {
 
     <div id='navbarBasicExample' className='navbar-menu'>
       <div className='navbar-start'>
-        <MenuAbout />
+        <Menu.About />
       </div>
 
       {props.children}
@@ -56,4 +56,6 @@ function Menu (props) {
     </div>
   </nav>
 }
+
+Menu.About = MenuAbout
 
