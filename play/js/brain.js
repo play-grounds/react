@@ -15,7 +15,7 @@ async function sha256 (str) {
 /**
  * Hex to bytes
  *
- * @param {*} str A hex string
+ * @param {string} str A hex string
  * @returns {int[]} An array of bytes
  */
 function hexToBytes (str) {
