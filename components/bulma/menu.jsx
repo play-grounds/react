@@ -1,17 +1,13 @@
 
 function MenuAbout (props) {
   return <div className='navbar-item has-dropdown is-hoverable'>
-    <a className='navbar-link'>
-      About
-    </a>
-
-    <div className='navbar-dropdown'>
+    <Menu.List title="About">
       <Menu.Item href='index.html'>Up</Menu.Item>
       <hr />
       <Menu.Item href=''>Source</Menu.Item>
       <hr />
       <Menu.Item href=''>Help</Menu.Item>
-    </div>
+    </Menu.List>
   </div>
 }
 
@@ -23,6 +19,19 @@ function MenuItem ({href, ...props}) {
   )
 }
 
+function MenuList ({title, ...props}) {
+  return (
+    <span>
+    <a className='navbar-link'>
+      {title}
+    </a>
+
+    <div className='navbar-dropdown'>
+      {props.children}
+    </div>
+    </span>
+  )
+}
 
 function Menu (props) {
   function toggleNav () {
@@ -61,5 +70,6 @@ function Menu (props) {
 }
 
 Menu.About = MenuAbout
+Menu.List = MenuList
 Menu.Item = MenuItem
 
