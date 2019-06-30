@@ -118,12 +118,13 @@ function getPublicKeyFromPrivate (eckey, addressType, publicKeyVersion) {
  */
 function getKeyPairFromHash (hash, addressType, publicKeyVersion) {
   var keyPair = {}
+  keyPair.hash = hash
   // get privkey from hash
   keyPair.privateKey = getECKeyFromHash(hash)
 
   // get privateKey address
   keyPair.privateKeyAddress = getPrivateKeyAddressFromHash(
-    sha256,
+    hash,
     addressType,
     publicKeyVersion
   )
@@ -135,6 +136,25 @@ function getKeyPairFromHash (hash, addressType, publicKeyVersion) {
     publicKeyVersion
   )
 
+  return keyPair
+}
+
+
+/**
+ * gets a key pair from a string using sha245 KDF
+ *
+ * @param {*} pw
+ * @param {*} addressType
+ * @param {*} publicKeyVersion
+ */
+async function getKeyPairFromPW(pw, addressType, publicKeyVersion) {
+
+  var hash = await sha256(pw, addressType, publicKeyVersion)
+  var keyPair = getKeyPairFromHash(
+    hash,
+    addressType,
+    publicKeyVersion
+  )
   return keyPair
 }
 
@@ -182,48 +202,25 @@ class Body extends React.Component {
       this.setState({ addressType: event.target.value })
     }
 
-    var that = this
-    await sha256(pw).then(sha256 => {
-      // get privkey from hash
-      var privateKey = getECKeyFromHash(sha256)
+    var keyPair = await getKeyPairFromPW(pw, this.state.addressType, 
+    this.state.publicKeyVersion)
+    
+    // benchmark
+    var timeTaken = new Date().getTime() - startTime
 
-      // get privateKey address
-      var privateKeyAddress = getPrivateKeyAddressFromHash(
-        sha256,
-        this.state.addressType,
-        this.state.publicKeyVersion
-      )
+    // update state
+    this.setState({
+      sha256: keyPair.hash,
 
-      // get pub key from private
-      var publicKey = getPublicKeyFromPrivate(
-        privateKey,
-        this.state.addressType,
-        this.state.publicKeyVersion
-      )
+      privateKeyInt: keyPair.privateKey.priv,
+      privateKeyAddress: keyPair.privateKeyAddress,
 
-      var keyPair = getKeyPairFromHash(
-        sha256,
-        this.state.addressType,
-        this.state.publicKeyVersion
-      )
+      publicKeyBytes: keyPair.publicKey.pub,
+      ripe160: keyPair.publicKey.ripe160,
+      publicKeyAddress: keyPair.publicKey.address,
 
-      // benchmark
-      var timeTaken = new Date().getTime() - startTime
-
-      // update state
-      that.setState({
-        sha256: sha256,
-
-        privateKeyInt: keyPair.privateKey.priv,
-        privateKeyAddress: privateKeyAddress,
-
-        publicKeyBytes: publicKey.pub,
-        ripe160: publicKey.ripe160,
-        publicKeyAddress: publicKey.address,
-
-        timeTaken: timeTaken
-      })
-    })
+      timeTaken: timeTaken
+    })    
   }
 
   render () {
