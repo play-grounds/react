@@ -1,8 +1,8 @@
 /**
- * gets sha256 string from string
+ * Gets sha256 string from string
  *
- * @param {*} str
- * @returns {Promise sha256}
+ * @param {string} str - A string to be hashed
+ * @returns {Promise <string>} A promise of a sha256 hash of that string
  */
 async function sha256 (str) {
   var bytes = new TextEncoder('utf-8').encode(str)
