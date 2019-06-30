@@ -33,7 +33,7 @@ function MenuList ({title, ...props}) {
   )
 }
 
-function Menu (props) {
+function Menu ({title, ...props}) {
   function toggleNav () {
     var nav = document.querySelector('.navbar-menu')
     if (nav.className === 'navbar-menu') {
@@ -46,9 +46,7 @@ function Menu (props) {
   return <nav className={'navbar ' + props.className} role='navigation' aria-label='main navigation'>
     <div className='navbar-brand'>
 
-      <a id='add' className='navbar-item' href='#'>
-        {props.title}
-      </a>
+      <Menu.List.Item href='#'>{title}</Menu.List.Item>
 
       <a role='button' className='navbar-burger burger' aria-label='menu' aria-expanded='false' data-target='navbarBasicExample' onClick={toggleNav}>
         <span aria-hidden='true' />
