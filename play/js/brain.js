@@ -178,7 +178,7 @@ class Body extends React.Component {
 
         publicKeyBytes: publicKey.pub,
         ripe160: publicKey.ripe160,
-        publicAddress: publicKey.address,
+        publicKeyAddress: publicKey.address,
         
         timeTaken: timeTaken
       })
@@ -250,7 +250,7 @@ class Body extends React.Component {
           Public Key Base58 check Address
           <br />
             <input readOnly size='60' placeholder='Public Key Base58 check Address'
-              value={this.state.publicAddress} />
+              value={this.state.publicKeyAddress} />
             <br />
             <hr />
           Computed in : {this.state.timeTaken} ms
