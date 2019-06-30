@@ -1,5 +1,3 @@
-var OFFSET = 128
-
 /**
  * gets sha256 string from string
  *
