@@ -176,7 +176,7 @@ class Body extends React.Component {
         privateKeyInt: privateKey.priv,
         privateAddress: privateAddress,
 
-        eckeyPub: publicKey.pub,
+        publicKeyBytes: publicKey.pub,
         ripe160: publicKey.ripe160,
         publicAddress: publicKey.address,
         
@@ -238,7 +238,7 @@ class Body extends React.Component {
           ECDSA Public Key as Bytes
           <br />
             <input readOnly size='60' placeholder='ECDSA Public Key as Bytes'
-              value={this.state.eckeyPub} />
+              value={this.state.publicKeyBytes} />
             <br />
 
           Ripe 160 hash of Public Key as Bytes
