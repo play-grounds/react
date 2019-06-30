@@ -90,22 +90,22 @@ function getPrivateKeyAddressFromHash(hash, addressType, publicKeyVersion) {
  */
 function getPublicKeyFromPrivate(eckey, addressType, publicKeyVersion) {
   var curve = getSECCurveByName('secp256k1')
-  var genEckey = {}
+  var publicKey = {}
   var genPt = curve.getG().multiply(eckey.priv)
   if (addressType === 'uncompressed') {
-    genEckey.pub = getEncoded(genPt, false)
+    publicKey.pub = getEncoded(genPt, false)
   } else {
-    genEckey.pub = getEncoded(genPt, true)
+    publicKey.pub = getEncoded(genPt, true)
   }
 
   // get pub key hash
-  genEckey.ripe160 = Bitcoin.Util.sha256ripe160(genEckey.pub)
+  publicKey.ripe160 = Bitcoin.Util.sha256ripe160(publicKey.pub)
 
   // get pub key address
-  var address = new Bitcoin.Address(genEckey.ripe160)
+  var address = new Bitcoin.Address(publicKey.ripe160)
   address.version = parseInt(publicKeyVersion)
-  genEckey.address = address
-  return genEckey
+  publicKey.address = address
+  return publicKey
 }
 
 /**
