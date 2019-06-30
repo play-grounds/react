@@ -13,10 +13,10 @@ async function sha256 (str) {
 }
 
 /**
- * hex to bytes
+ * Hex to bytes
  *
- * @param {*} str
- * @returns bytes
+ * @param {*} str A hex string
+ * @returns {int[]} An array of bytes
  */
 function hexToBytes (str) {
   var result = []
@@ -28,11 +28,11 @@ function hexToBytes (str) {
 }
 
 /**
- * get encoded point
+ * Get encoded point
  *
  * @param {*} pt
  * @param {*} compressed
- * @returns bytes
+ * @returns {int[]} Array of bytes
  */
 function getEncoded (pt, compressed) {
   var x = pt.getX().toBigInteger()
@@ -63,10 +63,12 @@ function getECKeyFromHash (hash) {
 }
 
 /**
- * get a private key address form hash
+ * Get a private key address form hash
  *
- * @param {string} hash
- * @param {string} Compressed
+ * @param {string} hash A hash
+ * @param {string} addressType A string of compressed or uncompressed
+ * @param {string} publicKeyVersion Version number of the public key
+ * @returns {Bitcoin.Address} A bitcoin private key address
  */
 function getPrivateKeyAddressFromHash (hash, addressType, publicKeyVersion) {
   const OFFSET = 128
@@ -80,12 +82,12 @@ function getPrivateKeyAddressFromHash (hash, addressType, publicKeyVersion) {
 }
 
 /**
- * get public key from private
+ * Get public key from private
  *
  * @param {*} eckey
  * @param {*} addressType
  * @param {*} publicKeyVersion
- * @returns
+ * @returns {Bitcoin.Address} A bticoin public key address
  */
 function getPublicKeyFromPrivate (eckey, addressType, publicKeyVersion) {
   var curve = getSECCurveByName('secp256k1')
@@ -108,11 +110,12 @@ function getPublicKeyFromPrivate (eckey, addressType, publicKeyVersion) {
 }
 
 /**
- * gets a key pair from a hash
+ * Gets a key pair from a hash
  *
  * @param {*} hash
  * @param {*} addressType
  * @param {*} publicKeyVersion
+ * @returns {*} A keypair
  */
 function getKeyPairFromHash (hash, addressType, publicKeyVersion) {
   var keyPair = {}
@@ -138,11 +141,12 @@ function getKeyPairFromHash (hash, addressType, publicKeyVersion) {
 }
 
 /**
- * gets a key pair from a string using sha245 KDF
+ * Gets a key pair from a string using sha245 KDF
  *
  * @param {*} pw
  * @param {*} addressType
  * @param {*} publicKeyVersion
+ * @returns {*} A key pair
  */
 async function getKeyPairFromPW (pw, addressType, publicKeyVersion) {
   var hash = await sha256(pw, addressType, publicKeyVersion)
