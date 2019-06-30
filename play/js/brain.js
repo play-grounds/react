@@ -51,6 +51,62 @@ function getEncoded (pt, compressed) {
   return enc
 }
 
+/**
+ * Get an EC Key from hash
+ *
+ * @param {string} hash
+ * @returns ECKey
+ */
+function getECKeyFromHash(hash) {
+  var eckey = new Bitcoin.ECKey(hexToBytes(hash))
+  return eckey
+}
+
+
+/**
+ * get a private key address form hash
+ *
+ * @param {string} hash
+ * @param {string} Compressed
+ */
+function getPrivateKeyAddressFromHash(hash, addressType, publicKeyVersion) {
+  const OFFSET = 128
+  var payload = hexToBytes(hash)
+  if (addressType === 'compressed') {
+    payload.push(0x01)
+  }
+  var sec = new Bitcoin.Address(payload)
+  sec.version = parseInt(publicKeyVersion) + OFFSET
+  return sec
+}
+
+/**
+ * get public key from private
+ *
+ * @param {*} eckey
+ * @param {*} addressType
+ * @param {*} publicKeyVersion
+ * @returns
+ */
+function getPublicKeyFromPrivate(eckey, addressType, publicKeyVersion) {
+  var curve = getSECCurveByName('secp256k1')
+  var genEckey = {}
+  var genPt = curve.getG().multiply(eckey.priv)
+  if (addressType === 'uncompressed') {
+    genEckey.pub = getEncoded(genPt, false)
+  } else {
+    genEckey.pub = getEncoded(genPt, true)
+  }
+
+  // get pub key hash
+  genEckey.pubKeyHash = Bitcoin.Util.sha256ripe160(genEckey.pub)
+
+  // get pub key address
+  var addr = new Bitcoin.Address(genEckey.pubKeyHash)
+  addr.version = parseInt(publicKeyVersion)
+  genEckey.addr = addr
+  return genEckey
+}
 
 /**
  * Main body of brain app
@@ -99,35 +155,17 @@ class Body extends React.Component {
     var that = this
     var eckey
     await sha256(pw).then((hash) => {
+
       // get privkey from hash
-      eckey = new Bitcoin.ECKey(hexToBytes(hash))
+      eckey = getECKeyFromHash(hash)
 
       // get privkey address
-      var payload = hexToBytes(hash)
-      if (this.state.addressType === 'compressed') {
-        payload.push(0x01)
-      }
-      var sec = new Bitcoin.Address(payload)
-      sec.version = parseInt(this.state.publicKeyVersion) + OFFSET
-      console.log('sec', sec, sec.toString())
+      var privAddress = getPrivateKeyAddressFromHash(hash, this.state.addressType, 
+        this.state.publicKeyVersion)
 
-      // get pub key
-      var curve = getSECCurveByName('secp256k1')
-      var genEckey = {}
-      var genPt = curve.getG().multiply(eckey.priv)
-      var addressType
-      if (this.state.addressType === 'uncompressed') {
-        genEckey.pub = getEncoded(genPt, false)
-      } else {
-        genEckey.pub = getEncoded(genPt, true)
-      }
-
-      // get pub key hash
-      genEckey.pubKeyHash = Bitcoin.Util.sha256ripe160(genEckey.pub)
-
-      // get pub key address
-      var addr = new Bitcoin.Address(genEckey.pubKeyHash)
-      addr.version = parseInt(this.state.publicKeyVersion)
+      // get pub key from private
+      var genEckey = getPublicKeyFromPrivate(eckey, this.state.addressType,
+        this.state.publicKeyVersion)
 
       // benchmark
       var timeTaken = new Date().getTime() - startTime
@@ -138,8 +176,8 @@ class Body extends React.Component {
         eckeyPriv: eckey.priv,
         eckeyPub: genEckey.pub,
         ripe: genEckey.pubKeyHash,
-        address: addr,
-        privAddress: sec,
+        address: genEckey.addr,
+        privAddress: privAddress,
         timeTaken: timeTaken
       })
     })
