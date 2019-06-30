@@ -161,6 +161,12 @@ async function getKeyPairFromPW (pw, addressType, publicKeyVersion) {
  * @extends {React.Component}
  */
 class Body extends React.Component {
+
+  /**
+   *Creates an instance of Body.
+   * @param {*} props
+   * @memberof Body
+   */
   constructor (props) {
     super(props)
     this.state = {
@@ -179,6 +185,12 @@ class Body extends React.Component {
     e.preventDefault()
   }
 
+  /**
+   * handle all form changes
+   *
+   * @param {*} e
+   * @memberof Body
+   */
   async handleChange (e) {
     let startTime = new Date().getTime()
     var pw
@@ -219,6 +231,12 @@ class Body extends React.Component {
     })
   }
 
+  /**
+   * renders the form
+   *
+   * @returns
+   * @memberof Body
+   */
   render () {
     return (
       <section className='section'>
