@@ -102,9 +102,9 @@ function getPublicKeyFromPrivate(eckey, addressType, publicKeyVersion) {
   genEckey.ripe160 = Bitcoin.Util.sha256ripe160(genEckey.pub)
 
   // get pub key address
-  var addr = new Bitcoin.Address(genEckey.ripe160)
-  addr.version = parseInt(publicKeyVersion)
-  genEckey.addr = addr
+  var address = new Bitcoin.Address(genEckey.ripe160)
+  address.version = parseInt(publicKeyVersion)
+  genEckey.address = address
   return genEckey
 }
 
@@ -178,7 +178,7 @@ class Body extends React.Component {
 
         eckeyPub: publicKey.pub,
         ripe160: publicKey.ripe160,
-        address: publicKey.addr,
+        address: publicKey.address,
         
         timeTaken: timeTaken
       })
