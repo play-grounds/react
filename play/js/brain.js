@@ -146,11 +146,7 @@ function getKeyPairFromHash (hash, addressType, publicKeyVersion) {
  */
 async function getKeyPairFromPW (pw, addressType, publicKeyVersion) {
   var hash = await sha256(pw, addressType, publicKeyVersion)
-  var keyPair = getKeyPairFromHash(
-    hash,
-    addressType,
-    publicKeyVersion
-  )
+  var keyPair = getKeyPairFromHash(hash, addressType, publicKeyVersion)
   return keyPair
 }
 
@@ -161,7 +157,6 @@ async function getKeyPairFromPW (pw, addressType, publicKeyVersion) {
  * @extends {React.Component}
  */
 class Body extends React.Component {
-
   /**
    *Creates an instance of Body.
    * @param {*} props
@@ -210,8 +205,11 @@ class Body extends React.Component {
       this.setState({ addressType: event.target.value })
     }
 
-    var keyPair = await getKeyPairFromPW(pw, this.state.addressType,
-    this.state.publicKeyVersion)
+    var keyPair = await getKeyPairFromPW(
+      pw,
+      this.state.addressType,
+      this.state.publicKeyVersion
+    )
 
     // benchmark
     var timeTaken = new Date().getTime() - startTime
