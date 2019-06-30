@@ -173,7 +173,7 @@ class Body extends React.Component {
       that.setState({
         sha256: sha256,
 
-        eckeyPriv: privateKey.priv,
+        privateKeyInt: privateKey.priv,
         privateAddress: privateAddress,
 
         eckeyPub: publicKey.pub,
@@ -226,7 +226,7 @@ class Body extends React.Component {
           ECDSA Private Key (BigInteger)
           <br />
             <input readOnly size='60' placeholder='ECDSA Private Key (BigInteger)'
-              value={this.state.eckeyPriv} />
+              value={this.state.privateKeyInt} />
             <br />
 
           Private Key Base58 check Address
