@@ -2,16 +2,16 @@
 function MenuAbout (props) {
   return <div className='navbar-item has-dropdown is-hoverable'>
     <Menu.List title="About">
-      <Menu.Item href='index.html'>Up</Menu.Item>
+      <Menu.List.Item href='index.html'>Up</Menu.List.Item>
       <hr />
-      <Menu.Item href=''>Source</Menu.Item>
+      <Menu.List.Item href=''>Source</Menu.List.Item>
       <hr />
-      <Menu.Item href=''>Help</Menu.Item>
+      <Menu.List.Item href=''>Help</Menu.List.Item>
     </Menu.List>
   </div>
 }
 
-function MenuItem ({href, ...props}) {
+function MenuListItem ({href, ...props}) {
   return (
     <a href={href} className='navbar-item'>
     {props.children}
@@ -71,5 +71,5 @@ function Menu (props) {
 
 Menu.About = MenuAbout
 Menu.List = MenuList
-Menu.Item = MenuItem
+Menu.List.Item = MenuListItem
 
