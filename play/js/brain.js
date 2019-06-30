@@ -250,7 +250,7 @@ class Body extends React.Component {
                 onChange={this.handleChange}
                 value={this.state.addressType}
               >
-                <option selected value='uncompressed'>
+                <option value='uncompressed'>
                   Uncompressed
                 </option>
                 <option value='compressed'>Compressed</option>
@@ -260,7 +260,7 @@ class Body extends React.Component {
                 onChange={this.handleChange}
                 value={this.state.publicKeyVersion}
               >
-                <option selected value='0'>
+                <option value='0'>
                   Bitcoin
                 </option>
                 <option value='85'>Bitmark</option>
