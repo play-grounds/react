@@ -2,7 +2,7 @@
  * gets sha256 string from string
  *
  * @param {*} str
- * @returns sha256
+ * @returns {Promise sha256}
  */
 async function sha256 (str) {
   var bytes = new TextEncoder('utf-8').encode(str)
@@ -137,7 +137,6 @@ function getKeyPairFromHash (hash, addressType, publicKeyVersion) {
   return keyPair
 }
 
-
 /**
  * gets a key pair from a string using sha245 KDF
  *
@@ -145,8 +144,7 @@ function getKeyPairFromHash (hash, addressType, publicKeyVersion) {
  * @param {*} addressType
  * @param {*} publicKeyVersion
  */
-async function getKeyPairFromPW(pw, addressType, publicKeyVersion) {
-
+async function getKeyPairFromPW (pw, addressType, publicKeyVersion) {
   var hash = await sha256(pw, addressType, publicKeyVersion)
   var keyPair = getKeyPairFromHash(
     hash,
@@ -200,9 +198,9 @@ class Body extends React.Component {
       this.setState({ addressType: event.target.value })
     }
 
-    var keyPair = await getKeyPairFromPW(pw, this.state.addressType, 
+    var keyPair = await getKeyPairFromPW(pw, this.state.addressType,
     this.state.publicKeyVersion)
-    
+
     // benchmark
     var timeTaken = new Date().getTime() - startTime
 
@@ -218,7 +216,7 @@ class Body extends React.Component {
       publicKeyAddress: keyPair.publicKey.address,
 
       timeTaken: timeTaken
-    })    
+    })
   }
 
   render () {
