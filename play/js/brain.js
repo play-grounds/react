@@ -9,7 +9,9 @@ var OFFSET = 128
 async function sha256 (str) {
   var bytes = new TextEncoder('utf-8').encode(str)
   const buf = await crypto.subtle.digest('SHA-256', bytes)
-  return Array.prototype.map.call(new Uint8Array(buf), x => (('00' + x.toString(16)).slice(-2))).join('')
+  return Array.prototype.map
+    .call(new Uint8Array(buf), x => ('00' + x.toString(16)).slice(-2))
+    .join('')
 }
 
 /**
@@ -57,11 +59,10 @@ function getEncoded (pt, compressed) {
  * @param {string} hash
  * @returns ECKey
  */
-function getECKeyFromHash(hash) {
+function getECKeyFromHash (hash) {
   var eckey = new Bitcoin.ECKey(hexToBytes(hash))
   return eckey
 }
-
 
 /**
  * get a private key address form hash
@@ -69,7 +70,7 @@ function getECKeyFromHash(hash) {
  * @param {string} hash
  * @param {string} Compressed
  */
-function getPrivateKeyAddressFromHash(hash, addressType, publicKeyVersion) {
+function getPrivateKeyAddressFromHash (hash, addressType, publicKeyVersion) {
   const OFFSET = 128
   var payload = hexToBytes(hash)
   if (addressType === 'compressed') {
@@ -88,7 +89,7 @@ function getPrivateKeyAddressFromHash(hash, addressType, publicKeyVersion) {
  * @param {*} publicKeyVersion
  * @returns
  */
-function getPublicKeyFromPrivate(eckey, addressType, publicKeyVersion) {
+function getPublicKeyFromPrivate (eckey, addressType, publicKeyVersion) {
   var curve = getSECCurveByName('secp256k1')
   var publicKey = {}
   var genPt = curve.getG().multiply(eckey.priv)
@@ -106,6 +107,35 @@ function getPublicKeyFromPrivate(eckey, addressType, publicKeyVersion) {
   address.version = parseInt(publicKeyVersion)
   publicKey.address = address
   return publicKey
+}
+
+/**
+ * gets a key pair from a hash
+ *
+ * @param {*} hash
+ * @param {*} addressType
+ * @param {*} publicKeyVersion
+ */
+function getKeyPairFromHash (hash, addressType, publicKeyVersion) {
+  var keyPair = {}
+  // get privkey from hash
+  keyPair.privateKey = getECKeyFromHash(hash)
+
+  // get privateKey address
+  keyPair.privateKeyAddress = getPrivateKeyAddressFromHash(
+    sha256,
+    addressType,
+    publicKeyVersion
+  )
+
+  // get pub key from private
+  keyPair.publicKey = getPublicKeyFromPrivate(
+    keyPair.privateKey,
+    addressType,
+    publicKeyVersion
+  )
+
+  return keyPair
 }
 
 /**
@@ -143,28 +173,39 @@ class Body extends React.Component {
 
     if (name === 'pw') {
       pw = event.target.value
-      this.setState({pw: pw })
+      this.setState({ pw: pw })
     } else if (name === 'publicKeyVersion') {
       pw = this.state.pw
-      this.setState({publicKeyVersion: event.target.value })
+      this.setState({ publicKeyVersion: event.target.value })
     } else if (name === 'addressType') {
       pw = this.state.pw
-      this.setState({addressType: event.target.value })
+      this.setState({ addressType: event.target.value })
     }
 
     var that = this
-    await sha256(pw).then((sha256) => {
-
+    await sha256(pw).then(sha256 => {
       // get privkey from hash
       var privateKey = getECKeyFromHash(sha256)
 
       // get privateKey address
-      var privateKeyAddress = getPrivateKeyAddressFromHash(sha256, 
-        this.state.addressType, this.state.publicKeyVersion)
+      var privateKeyAddress = getPrivateKeyAddressFromHash(
+        sha256,
+        this.state.addressType,
+        this.state.publicKeyVersion
+      )
 
       // get pub key from private
-      var publicKey = getPublicKeyFromPrivate(privateKey, this.state.addressType,
-        this.state.publicKeyVersion)
+      var publicKey = getPublicKeyFromPrivate(
+        privateKey,
+        this.state.addressType,
+        this.state.publicKeyVersion
+      )
+
+      var keyPair = getKeyPairFromHash(
+        sha256,
+        this.state.addressType,
+        this.state.publicKeyVersion
+      )
 
       // benchmark
       var timeTaken = new Date().getTime() - startTime
@@ -173,92 +214,128 @@ class Body extends React.Component {
       that.setState({
         sha256: sha256,
 
-        privateKeyInt: privateKey.priv,
+        privateKeyInt: keyPair.privateKey.priv,
         privateKeyAddress: privateKeyAddress,
 
         publicKeyBytes: publicKey.pub,
         ripe160: publicKey.ripe160,
         publicKeyAddress: publicKey.address,
-        
+
         timeTaken: timeTaken
       })
     })
   }
 
   render () {
-    return <section className='section'>
-      <form onSubmit={this.handleSubmit}>
-        <div className='columns'>
-          <div className='column'>
-            <select name='addressType' onChange={this.handleChange} value={this.state.addressType}>
-              <option selected value='uncompressed'>Uncompressed</option>
-              <option value='compressed'>Compressed</option>
-            </select>
-            <select name='publicKeyVersion' onChange={this.handleChange} value={this.state.publicKeyVersion}>
-              <option selected value='0'>Bitcoin</option>
-              <option value='85'>Bitmark</option>
-              <option value='111'>Testnet3</option>
-            </select>
-
-            <hr />
-            Passphrase
-          <br />
-            <input name='pw' size='60' type='text' placeholder='Enter passphrase'
-              value={this.state.pw}
-              onChange={this.handleChange} autoFocus />
-            <br />
-
-            <hr />
-
-          Secret Exponent (sha256)
-          <br />
-            <input readOnly size='60' placeholder='Secret Exponent (sha256)'
-              value={this.state.sha256} />
-            <br />
-
-          Secret Exponent (sha256) as Bytes
-          <br />
-            <input readOnly size='60' placeholder='Secret Exponent (sha256) as Bytes'
-              value={hexToBytes(this.state.sha256)} />
-
-            <br />
-
-          ECDSA Private Key (BigInteger)
-          <br />
-            <input readOnly size='60' placeholder='ECDSA Private Key (BigInteger)'
-              value={this.state.privateKeyInt} />
-            <br />
-
-          Private Key Base58 check Address
-          <br />
-            <input readOnly size='60' placeholder='Private Key Base58 check Address'
-              value={this.state.privateKeyAddress} />
-            <hr />
-
-          ECDSA Public Key as Bytes
-          <br />
-            <input readOnly size='60' placeholder='ECDSA Public Key as Bytes'
-              value={this.state.publicKeyBytes} />
-            <br />
-
-          Ripe 160 hash of Public Key as Bytes
-          <br />
-            <input readOnly size='60' placeholder='Ripe 160 hash of Public Key as Bytes'
-              value={this.state.ripe160} />
-            <br />
-
-          Public Key Base58 check Address
-          <br />
-            <input readOnly size='60' placeholder='Public Key Base58 check Address'
-              value={this.state.publicKeyAddress} />
-            <br />
-            <hr />
-          Computed in : {this.state.timeTaken} ms
-
+    return (
+      <section className='section'>
+        <form onSubmit={this.handleSubmit}>
+          <div className='columns'>
+            <div className='column'>
+              <select
+                name='addressType'
+                onChange={this.handleChange}
+                value={this.state.addressType}
+              >
+                <option selected value='uncompressed'>
+                  Uncompressed
+                </option>
+                <option value='compressed'>Compressed</option>
+              </select>
+              <select
+                name='publicKeyVersion'
+                onChange={this.handleChange}
+                value={this.state.publicKeyVersion}
+              >
+                <option selected value='0'>
+                  Bitcoin
+                </option>
+                <option value='85'>Bitmark</option>
+                <option value='111'>Testnet3</option>
+              </select>
+              <hr />
+              Passphrase
+              <br />
+              <input
+                name='pw'
+                size='60'
+                type='text'
+                placeholder='Enter passphrase'
+                value={this.state.pw}
+                onChange={this.handleChange}
+                autoFocus
+              />
+              <br />
+              <hr />
+              Secret Exponent (sha256)
+              <br />
+              <input
+                readOnly
+                size='60'
+                placeholder='Secret Exponent (sha256)'
+                value={this.state.sha256}
+              />
+              <br />
+              Secret Exponent (sha256) as Bytes
+              <br />
+              <input
+                readOnly
+                size='60'
+                placeholder='Secret Exponent (sha256) as Bytes'
+                value={hexToBytes(this.state.sha256)}
+              />
+              <br />
+              ECDSA Private Key (BigInteger)
+              <br />
+              <input
+                readOnly
+                size='60'
+                placeholder='ECDSA Private Key (BigInteger)'
+                value={this.state.privateKeyInt}
+              />
+              <br />
+              Private Key Base58 check Address
+              <br />
+              <input
+                readOnly
+                size='60'
+                placeholder='Private Key Base58 check Address'
+                value={this.state.privateKeyAddress}
+              />
+              <hr />
+              ECDSA Public Key as Bytes
+              <br />
+              <input
+                readOnly
+                size='60'
+                placeholder='ECDSA Public Key as Bytes'
+                value={this.state.publicKeyBytes}
+              />
+              <br />
+              Ripe 160 hash of Public Key as Bytes
+              <br />
+              <input
+                readOnly
+                size='60'
+                placeholder='Ripe 160 hash of Public Key as Bytes'
+                value={this.state.ripe160}
+              />
+              <br />
+              Public Key Base58 check Address
+              <br />
+              <input
+                readOnly
+                size='60'
+                placeholder='Public Key Base58 check Address'
+                value={this.state.publicKeyAddress}
+              />
+              <br />
+              <hr />
+              Computed in : {this.state.timeTaken} ms
+            </div>
           </div>
-        </div>
-      </form>
-    </section>
+        </form>
+      </section>
+    )
   }
-
 }
