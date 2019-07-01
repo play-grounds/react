@@ -1,3 +1,4 @@
+import React, { Component } from 'react'
 
 function NavbarAbout (props) {
   return <div className='navbar-item has-dropdown is-hoverable'>
@@ -119,7 +120,7 @@ function NavbarExample ({title, className, ...props}) {
   </Navbar>
 }
 
-function NavbarSolid ({title, className, ...props}) {
+export default function NavbarSolid ({title, className, ...props}) {
 
   return <Navbar className={className}>
     <Navbar.Brand>
