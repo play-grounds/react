@@ -33,8 +33,12 @@ function NavbarList ({title, ...props}) {
   )
 }
 
-function Navbar ({title, ...props}) {
-  function toggleNav () {
+class NavbarBurger extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
+  toggleNav () {
     var nav = document.querySelector('.navbar-menu')
     if (nav.className === 'navbar-menu') {
       nav.className = 'navbar-menu is-active'
@@ -43,16 +47,28 @@ function Navbar ({title, ...props}) {
     }
   }
 
+
+  render() {
+    return (
+      <React.Fragment>
+      <a role='button' className='navbar-burger burger' aria-label='menu' aria-expanded='false' data-target='navbarBasicExample' onClick={this.toggleNav}>
+        <span aria-hidden='true' />
+        <span aria-hidden='true' />
+        <span aria-hidden='true' />
+      </a>        
+      </React.Fragment>
+    )
+  }
+}
+
+function Navbar ({title, ...props}) {
+
   return <nav className={'navbar ' + props.className} role='navigation' aria-label='main navigation'>
     <div className='navbar-brand'>
 
       <Navbar.Item href='#'>{title}</Navbar.Item>
+      <Navbar.Burger/>
 
-      <a role='button' className='navbar-burger burger' aria-label='menu' aria-expanded='false' data-target='navbarBasicExample' onClick={toggleNav}>
-        <span aria-hidden='true' />
-        <span aria-hidden='true' />
-        <span aria-hidden='true' />
-      </a>
     </div>
 
     <div id='navbarBasicExample' className='navbar-menu'>
@@ -70,5 +86,6 @@ function Navbar ({title, ...props}) {
 Navbar.About = NavbarAbout
 Navbar.List = NavbarList
 Navbar.Item = NavbarItem
+Navbar.Burger = NavbarBurger
 
 
