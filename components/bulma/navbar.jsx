@@ -21,7 +21,7 @@ function NavbarItem ({href, ...props}) {
 
 function NavbarList ({title, ...props}) {
   return (
-    <span>
+    <React.Fragment>
     <a className='navbar-link'>
       {title}
     </a>
@@ -29,7 +29,7 @@ function NavbarList ({title, ...props}) {
     <div className='navbar-dropdown'>
       {props.children}
     </div>
-    </span>
+    </React.Fragment>
   )
 }
 
@@ -61,31 +61,62 @@ class NavbarBurger extends React.Component {
   }
 }
 
-function Navbar ({title, ...props}) {
-
-  return <nav className={'navbar ' + props.className} role='navigation' aria-label='main navigation'>
+function NavbarBrand (props) {
+  return (
     <div className='navbar-brand'>
+      {props.children}
+    </div>      
+  )
+}
 
+function NavbarContainer ({position, ...props}) {
+  return (
+    <div className={'navbar-' + position}>
+      {props.children}
+    </div>      
+  )
+}
+
+function NavbarMenu ({...props}) {
+  return (
+    <div className='navbar-menu'>
+      {props.children}
+    </div>      
+  )
+}
+
+function Navbar ({title, className, ...props}) {
+
+  return <nav className={'navbar ' + className} role='navigation' aria-label='main navigation'>
+      {props.children}
+  </nav>
+}
+
+function NavbarExample ({title, className, ...props}) {
+
+  return <Navbar className={className}>
+    <Navbar.Brand>
       <Navbar.Item href='#'>{title}</Navbar.Item>
       <Navbar.Burger/>
+    </Navbar.Brand>
 
-    </div>
-
-    <div id='navbarBasicExample' className='navbar-menu'>
-      <div className='navbar-start'>
+    <Navbar.Menu>
+      <Navbar.Container position="start">
         <Navbar.About />
-      </div>
+      </Navbar.Container>
 
       {props.children}
 
-      <div className='navbar-end' />
-    </div>
-  </nav>
+    </Navbar.Menu>
+  </Navbar>
 }
 
 Navbar.About = NavbarAbout
 Navbar.List = NavbarList
 Navbar.Item = NavbarItem
 Navbar.Burger = NavbarBurger
+Navbar.Brand = NavbarBrand
+Navbar.Menu = NavbarMenu
+Navbar.Container = NavbarContainer
 
-
+Navbar.Example = NavbarExample
