@@ -19,6 +19,14 @@ function NavbarItem ({href, ...props}) {
   )
 }
 
+function NavbarLogo ({href, src, alt, width, height, ...props}) {
+  return (
+    <a href={href} className='navbar-item'>
+    <img src={src} alt={alt} width={width} height={height} />
+    </a>    
+  )
+}
+
 function NavbarList ({title, ...props}) {
   return (
     <React.Fragment>
@@ -96,7 +104,27 @@ function NavbarExample ({title, className, ...props}) {
 
   return <Navbar className={className}>
     <Navbar.Brand>
-      <Navbar.Item href='#'>{title}</Navbar.Item>
+    <Navbar.Item href='#'>{title}</Navbar.Item>
+      <Navbar.Burger/>
+    </Navbar.Brand>
+
+    <Navbar.Menu>
+      <Navbar.Container position="start">
+        <Navbar.About />
+      </Navbar.Container>
+
+      {props.children}
+
+    </Navbar.Menu>
+  </Navbar>
+}
+
+function NavbarSolid ({title, className, ...props}) {
+
+  return <Navbar className={className}>
+    <Navbar.Brand>
+    <Navbar.Logo href='#' src="https://design.inrupt.com/atomic-core/img/solid.svg" width="30" height="30" alt="Logo"></Navbar.Logo>
+    <Navbar.Item href='#'>{title}</Navbar.Item>
       <Navbar.Burger/>
     </Navbar.Brand>
 
@@ -114,6 +142,7 @@ function NavbarExample ({title, className, ...props}) {
 Navbar.About = NavbarAbout
 Navbar.List = NavbarList
 Navbar.Item = NavbarItem
+Navbar.Logo = NavbarLogo
 Navbar.Burger = NavbarBurger
 Navbar.Brand = NavbarBrand
 Navbar.Menu = NavbarMenu
