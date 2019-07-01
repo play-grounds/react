@@ -2,16 +2,16 @@
 function NavbarAbout (props) {
   return <div className='navbar-item has-dropdown is-hoverable'>
     <Navbar.List title="About">
-      <Navbar.List.Item href='index.html'>Up</Navbar.List.Item>
+      <Navbar.Item href='index.html'>Up</Navbar.Item>
       <hr />
-      <Navbar.List.Item href=''>Source</Navbar.List.Item>
+      <Navbar.Item href=''>Source</Navbar.Item>
       <hr />
-      <Navbar.List.Item href=''>Help</Navbar.List.Item>
+      <Navbar.Item href=''>Help</Navbar.Item>
     </Navbar.List>
   </div>
 }
 
-function NavbarListItem ({href, ...props}) {
+function NavbarItem ({href, ...props}) {
   return (
     <a href={href} className='navbar-item'>
     {props.children}
@@ -46,7 +46,7 @@ function Navbar ({title, ...props}) {
   return <nav className={'navbar ' + props.className} role='navigation' aria-label='main navigation'>
     <div className='navbar-brand'>
 
-      <Navbar.List.Item href='#'>{title}</Navbar.List.Item>
+      <Navbar.Item href='#'>{title}</Navbar.Item>
 
       <a role='button' className='navbar-burger burger' aria-label='menu' aria-expanded='false' data-target='navbarBasicExample' onClick={toggleNav}>
         <span aria-hidden='true' />
@@ -69,5 +69,6 @@ function Navbar ({title, ...props}) {
 
 Navbar.About = NavbarAbout
 Navbar.List = NavbarList
-Navbar.List.Item = NavbarListItem
+Navbar.Item = NavbarItem
+
 
