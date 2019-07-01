@@ -193,12 +193,12 @@ export default class Body extends React.Component {
    * @param {*} e
    * @memberof Body
    */
-  async handleChange (e) {
+  async handleChange (event) {
     let startTime = new Date().getTime()
     var pw
-    var target = e.target
-    if (e.target) {
-      var name = e.target.name
+    var target = event.target
+    if (event.target) {
+      var name = event.target.name
     }
 
     if (name === 'pw') {
