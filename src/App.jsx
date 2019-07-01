@@ -8,8 +8,7 @@ class App extends Component {
   render () {
     return (
       <div className='App'>
-          <NavbarSolid title="Brain Wallet" className="is-link"/>
-        <h1> Hello, World </h1>
+        <NavbarSolid title="Brain Wallet" className="is-link"/>
         <NamedNode value='https://www.scrolller.com/media/20f58d.jpg' />
       </div>
     )
