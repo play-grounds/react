@@ -78,7 +78,8 @@ class App extends React.Component {
         <hr/>
         <button onClick={this.handleChange}>Login</button>
         <button onClick={() => { localStorage.clear() ; location.reload() }}>Logout</button>
-      </section>
+        <button onClick={() => { var sac = JSON.parse(localStorage.getItem('solid-auth-client'));console.table(sac);console.table(sac.rpConfig);console.table(sac.session);console.table(sac.session.authorization);console.table(sac.session.idClaims); } }>Debug to console</button>
+        </section>
 
     </div>
     )
