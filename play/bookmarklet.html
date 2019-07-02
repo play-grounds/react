@@ -61,11 +61,11 @@ class App extends React.Component {
         <hr/>
         Code
         <br/>
-        <textarea value={this.state.code} onChange={this.handleChange}></textarea>
+        <textarea cols='60' rows='12' value={this.state.code} onChange={this.handleChange}></textarea>
         <hr/>
         Bookmarklet
         <br/>
-        <textarea value={this.state.bookmarklet}></textarea>
+        <textarea cols='60' rows='12' value={this.state.bookmarklet}></textarea>
         <hr/>
           <a class='bookmarklet' href={this.state.bookmarklet}>Bookmarklet</a>
         <hr/>
