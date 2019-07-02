@@ -2,7 +2,7 @@
 function NavbarAbout ({sourceCode, ...props}) {
   return <div className='navbar-item has-dropdown is-hoverable'>
     <Navbar.List title="About">
-      <Navbar.Item href='index.html'>Up</Navbar.Item>
+      <Navbar.Item href='index.html'>About</Navbar.Item>
       <hr />
       <Navbar.Item href={sourceCode}>Source</Navbar.Item>
     </Navbar.List>
