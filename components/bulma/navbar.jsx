@@ -121,7 +121,7 @@ function NavbarSolid ({title, className, sourceCode, ...props}) {
 
   return <Navbar className={className}>
     <Navbar.Brand>
-    <Navbar.Logo href='#' src="https://design.inrupt.com/atomic-core/img/solid.svg" width="30" height="30" alt="Logo"></Navbar.Logo>
+    <Navbar.Logo href='#' src="https://play-grounds.github.io/react/play/image/solid.svg" width="30" height="30" alt="Logo"></Navbar.Logo>
     <Navbar.Item href='#'>{title}</Navbar.Item>
       <Navbar.Burger/>
     </Navbar.Brand>
