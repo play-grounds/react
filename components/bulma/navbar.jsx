@@ -5,8 +5,6 @@ function NavbarAbout ({sourceCode, ...props}) {
       <Navbar.Item href='index.html'>Up</Navbar.Item>
       <hr />
       <Navbar.Item href={sourceCode}>Source</Navbar.Item>
-      <hr />
-      <Navbar.Item href=''>Help</Navbar.Item>
     </Navbar.List>
   </div>
 }
