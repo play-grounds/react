@@ -36,26 +36,7 @@ function App() {
   return (
     <div>
 
-<Navbar className="is-link">
-  <Navbar.Brand>
-    <Navbar.Logo href='#' src="https://play-grounds.github.io/react/play/image/solid.svg" width="30" height="30" alt="Logo"></Navbar.Logo>
-    <Navbar.Item href='#'>Bookmark</Navbar.Item>
-    <Navbar.Burger />
-  </Navbar.Brand>
-
-  <Navbar.Menu>
-    <Navbar.Container position="start">
-      <div className='navbar-item has-dropdown is-hoverable'>
-        <Navbar.List title="About">
-          <Navbar.Item href='index.html'>Up</Navbar.Item>
-          <hr />
-          <Navbar.Item href='https://github.com/play-grounds/react/blob/gh-pages/play/bookmark.html'>Source</Navbar.Item>
-        </Navbar.List>
-      </div>
-    </Navbar.Container>
-  </Navbar.Menu>
-</Navbar>  
-      
+      <NavbarSolid className="is-link" title="Brain Wallet" sourceCode="https://github.com/play-grounds/react/blob/gh-pages/play/bookmark.html"></NavbarSolid>      
       
       <Body/>
 
