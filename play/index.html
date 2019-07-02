@@ -56,7 +56,7 @@ function Body(props) {
 }
 
 function Li (props) {
-  return <li><a target="_blank" href={props.href}>{props.text}</a></li>
+  return <li><a href={props.href}>{props.text}</a></li>
 }
 
 
@@ -66,6 +66,10 @@ function App() {
       <NavbarSolid className="is-link" title="Play index"/>
       <section className="section">
         <Body/>
+        <hr/>
+        Play apps is a set of playground apps to test out various functionality.
+        <br/>
+        Click on a link below to try out one of our apps.
         <hr/>
       <ul>
         <Li href="bookmark.html" text="Bookmarks" />
