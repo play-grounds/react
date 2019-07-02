@@ -33,8 +33,8 @@ function getQueryStringParam (param) {
   return queryStringList[param]
 }
 
-function Bookmark (props) {
-  return <div><img src={props.uri} /></div>
+function Bookmark ({target, ...props}) {
+  return <div><img src={target} /></div>
 }
 
 class AddressUri extends React.Component {
@@ -61,7 +61,7 @@ class AddressUri extends React.Component {
       <input size='80' onChange={this.handleChange} placeholder='uri' value={this.state.uri} />
       <hr />
 
-      <Bookmark uri={this.state.uri} />
+      <Bookmark target={this.state.uri} />
     </div>
   }
 
