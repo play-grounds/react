@@ -77,6 +77,7 @@ class App extends React.Component {
         {this.state.message}
         <hr/>
         <button onClick={this.handleChange}>Login</button>
+        <button onClick={() => { localStorage.clear() ; location.reload() }}>Logout</button>
       </section>
 
     </div>
