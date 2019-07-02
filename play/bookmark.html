@@ -19,6 +19,9 @@
   <script type="text/babel" src="../src/components/Literal.js"></script>
 
   <script type="text/babel">
+const defaultUri = 'https://external-preview.redd.it/TcSzPOpGNxov4-zHd11YfCQP95CXM5aCY2FXxW8lwnU.jpg?auto=webp&s=1c4120f8d6c8a794b21d67d5b390db34f623ccf1'
+
+var subject = getQueryStringParam('uri') || defaultUri
 
 function getQueryStringParam (param) {
   var url = window.location.toString()
@@ -33,17 +36,17 @@ function getQueryStringParam (param) {
   return queryStringList[param]
 }
 
-function Bookmark ({target, ...props}) {
+function Bookmark ({...props}) {
+  var target = subject
+  console.log('target', target)
   return <div><img src={target} /></div>
 }
 
-class AddressUri extends React.Component {
+class AddressBar extends React.Component {
   constructor (props) {
     super(props)
-
-    const defaultUri = 'https://external-preview.redd.it/TcSzPOpGNxov4-zHd11YfCQP95CXM5aCY2FXxW8lwnU.jpg?auto=webp&s=1c4120f8d6c8a794b21d67d5b390db34f623ccf1'
-    var uri = getQueryStringParam('uri') || defaultUri
-    this.state = { uri: uri }
+    var uri = subject
+    this.state = { uri: subject }
     this.handleChange = this.handleChange.bind(this)
   }
 
@@ -55,23 +58,24 @@ class AddressUri extends React.Component {
   }
 
   render () {
-    return <div>
+    return (<div>
       <label>Address</label>
       <br/> 
       <input size='80' onChange={this.handleChange} placeholder='uri' value={this.state.uri} />
       <hr />
 
-      <Bookmark target={this.state.uri} />
-    </div>
+      {this.props.children}
+    </div>)
   }
 
 }
 
-
 function Main(props) {
     return (
     <section className="section">
-      <AddressUri />
+      <AddressBar >
+      <Bookmark />
+      </AddressBar>
     </section>
   );
 }
@@ -82,7 +86,8 @@ function App() {
 
       <NavbarSolid className="is-link" title="Bookmark" sourceCode="https://github.com/play-grounds/react/blob/gh-pages/play/bookmark.html"></NavbarSolid>      
       
-      <Main/>
+      <Main>
+      </Main>
 
     </div>
   );
