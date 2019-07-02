@@ -100,7 +100,7 @@ class Subject extends React.Component {
 } 
 
 
-class InputUri extends React.Component {
+class AddressUri extends React.Component {
     constructor(props) {
         super(props)
 
@@ -118,7 +118,9 @@ class InputUri extends React.Component {
     render() {
 
         return <div>
-        Uri : <input size="80" onChange={this.handleChange} placeholder="uri" value={this.state.uri}/>
+        Address
+        <br/>
+        <input size="80" onChange={this.handleChange} placeholder="uri" value={this.state.uri}/>
         <hr/>
 
         <Subject uri={this.state.uri}/>
@@ -139,9 +141,9 @@ function Body(props) {
     <div>
 
       <div>
-        <Card title="">
-          <InputUri />
-        </Card>
+        <section className="section">
+          <AddressUri />
+        </section>
 
       </div>
 
@@ -153,7 +155,7 @@ function Body(props) {
 function App() {
   return (
     <div>
-      <NavbarSolid className="is-link" title="Friends App"/>
+      <NavbarSolid className="is-link" title="Friends App" sourceCode="https://github.com/play-grounds/react/blob/gh-pages/play/friends.html/" />
       <Body/>
 
     </div>
