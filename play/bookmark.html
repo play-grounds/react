@@ -15,8 +15,8 @@
 <body>
   <div id="root"></div>
   <script type="text/babel" src="../components/bulma/navbar.jsx"></script>
-  <script type="text/babel" src="../components/bulma/card.jsx"></script>
   <script type="text/babel" src="../src/components/Literal.js"></script>
+  <script type="text/babel" src="../src/components/AddressBar.jsx"></script>
 
   <script type="text/babel">
 const defaultUri = 'https://external-preview.redd.it/TcSzPOpGNxov4-zHd11YfCQP95CXM5aCY2FXxW8lwnU.jpg?auto=webp&s=1c4120f8d6c8a794b21d67d5b390db34f623ccf1'
@@ -42,33 +42,6 @@ function Bookmark ({...props}) {
   return <div><img src={target} /></div>
 }
 
-class AddressBar extends React.Component {
-  constructor (props) {
-    super(props)
-    var uri = subject
-    this.state = { uri: subject }
-    this.handleChange = this.handleChange.bind(this)
-  }
-
-  handleChange (event) {
-    this.setState({uri: event.target.value })
-    history.pushState({}, 'Bookmark App', window.location.href.split('?')[0] + '?uri=' 
-    + encodeURIComponent(event.target.value))
-    console.log('this.state.uri', this.state.uri)
-  }
-
-  render () {
-    return (<div>
-      <label>Address</label>
-      <br/> 
-      <input size='80' onChange={this.handleChange} placeholder='uri' value={this.state.uri} />
-      <hr />
-
-      {this.props.children}
-    </div>)
-  }
-
-}
 
 function Main(props) {
     return (
