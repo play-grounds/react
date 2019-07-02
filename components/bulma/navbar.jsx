@@ -1,10 +1,10 @@
 
-function NavbarAbout (props) {
+function NavbarAbout ({sourceCode, ...props}) {
   return <div className='navbar-item has-dropdown is-hoverable'>
     <Navbar.List title="About">
       <Navbar.Item href='index.html'>Up</Navbar.Item>
       <hr />
-      <Navbar.Item href=''>Source</Navbar.Item>
+      <Navbar.Item href={sourceCode}>Source</Navbar.Item>
       <hr />
       <Navbar.Item href=''>Help</Navbar.Item>
     </Navbar.List>
@@ -119,7 +119,7 @@ function NavbarExample ({title, className, ...props}) {
   </Navbar>
 }
 
-function NavbarSolid ({title, className, ...props}) {
+function NavbarSolid ({title, className, sourceCode, ...props}) {
 
   return <Navbar className={className}>
     <Navbar.Brand>
@@ -130,7 +130,7 @@ function NavbarSolid ({title, className, ...props}) {
 
     <Navbar.Menu>
       <Navbar.Container position="start">
-        <Navbar.About />
+        <Navbar.About sourceCode={sourceCode} />
       </Navbar.Container>
 
       {props.children}
