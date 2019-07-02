@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Wallet App</title>
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://solid.github.io/releases/rdflib.js/rdflib-0.12.2.min.js"></script>
+
+  <!-- Don't use this in production: -->
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel" src="../components/bulma/navbar.jsx"></script>
+  <script type="text/babel" src="../src/components/Literal.js"></script>
+  <script type="text/babel" src="../src/components/AddressBar.jsx"></script>
+
+  <script type="text/babel">
+const defaultUri = 'https://external-preview.redd.it/TcSzPOpGNxov4-zHd11YfCQP95CXM5aCY2FXxW8lwnU.jpg?auto=webp&s=1c4120f8d6c8a794b21d67d5b390db34f623ccf1'
+
+var subject = getQueryStringParam('uri') || defaultUri
+
+function getQueryStringParam (param) {
+  var url = window.location.toString()
+  url.match(/\?(.+)$/)
+  var params = RegExp.$1
+  params = params.split('&')
+  var queryStringList = {}
+  for (var i = 0; i < params.length; i++) {
+    var tmp = params[i].split('=')
+    queryStringList[tmp[0]] = unescape(tmp[1])
+  }
+  return queryStringList[param]
+}
+
+function Wallet ({...props}) {
+  var target = subject
+  console.log('target', target)
+  return <div><img src={target} /></div>
+}
+
+
+function Main(props) {
+    return (
+    <section className="section">
+      <AddressBar >
+      <Wallet />
+      </AddressBar>
+    </section>
+  );
+}
+
+function App() {
+  return (
+    <div>
+
+      <NavbarSolid className="is-link" title="Wallet" sourceCode="https://github.com/play-grounds/react/blob/gh-pages/play/wallet.html"></NavbarSolid>      
+      
+      <Main>
+      </Main>
+
+    </div>
+  );
+}
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('root')
+);
+
+  </script>
+
+  <link rel="stylesheet" href="css/bulma.css" defer>
+
+</body>
+
+</html>
