@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>play</title>
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://solid.github.io/releases/rdflib.js/rdflib-0.12.2.min.js"></script>
+
+
+  <!-- Don't use this in production: -->
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel" src="../components/bulma/navbar.jsx"></script>
+  <script src="https://solid.github.io/solid-auth-client/dist/solid-auth-client.bundle.js"></script>
+
+  <script type="text/babel">
+
+async function login(idp) {
+  const session = await solid.auth.currentSession();
+  if (!session)
+    await solid.auth.login(idp);
+  else
+    alert(`Logged in as ${session.webId}`);
+  }
+
+
+function Body(props) {
+    return (
+    <div>
+
+      <h1 id="welcome" className="title">
+        Solid Auth Client
+      </h1>
+      <hr/>
+
+
+    </div>
+  );
+}
+
+
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      message: ''
+    }
+    this.handleChange = this.handleChange.bind(this)
+
+    solid.auth.trackSession(session => {
+      if (!session) {
+        this.setState({ message : 'The user is not logged in' })
+      } else {
+        this.setState({ message : `The user is ${session.webId}` })
+      }
+    })
+    
+
+  }
+
+  async handleChange(event) {
+    console.log(event.target.value)
+    login('https://solid.community')    
+  }
+
+  render() {
+      return (
+    <div>
+      <NavbarSolid className="is-link" title="Solid Auth Client" sourceCode="https://github.com/play-grounds/react/blob/gh-pages/play/index.html"/>
+      <section className="section">
+        <Body/>
+        {this.state.message}
+        <hr/>
+        <button onClick={this.handleChange}>Login</button>
+      </section>
+
+    </div>
+    )
+  }
+}
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('root')
+);
+
+
+    </script>
+
+  <link rel="stylesheet" href="css/bulma.css" defer>
+
+</body>
+
+</html>

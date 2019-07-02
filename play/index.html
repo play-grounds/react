@@ -17,28 +17,6 @@
     <div id="root"></div>
     <script type="text/babel" src="../components/bulma/navbar.jsx"></script>
 
-
-    <script type="text/babel">
-
-
-function getQueryStringParam(param) {
-      var url = window.location.toString();
-      url.match(/\?(.+)$/);
-      var params = RegExp.$1;
-      params = params.split("&");
-      var queryStringList = {};
-      for (var i = 0; i < params.length; i++) {
-        var tmp = params[i].split("=");
-        queryStringList[tmp[0]] = unescape(tmp[1]);
-      }
-      return queryStringList[param];
-    }
-
-
-</script>
-
-
-
     <script type="text/babel">
 
 
@@ -80,6 +58,7 @@ function App() {
         <Li href="tipjar.html" text="Tipjars" />
         <Li href="localStorage.html" text="Local Storage" />
         <Li href="bookmarklet.html" text="Bookmarklets" />
+        <Li href="solid-auth-client.html" text="Solid Auth Client" />
       </ul>
       <hr/>
       </section>
