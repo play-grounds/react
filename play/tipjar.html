@@ -10,6 +10,7 @@
 
     <!-- Don't use this in production: -->
     <script type="text/babel" src="../components/bulma/menu.jsx"></script>
+    <script type="text/babel" src="../components/bulma/navbar.jsx"></script>
     <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
 </head>
 
@@ -152,7 +153,7 @@ function Body(props) {
 function App() {
   return (
     <div>
-      <Menu className="is-link" title="Tipjar App"/>
+      <NavbarSolid className="is-link" title="Tipjar App"/>
       <Body/>
 
     </div>
@@ -189,7 +190,7 @@ ReactDOM.render(
 
     </script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" defer>
+    <link rel="stylesheet" href="css/bulma.css" defer>
 
 </body>
 

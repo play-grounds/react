@@ -267,7 +267,7 @@ class Body extends React.Component {
                 <option value='111'>Testnet3</option>
               </select>
               <hr />
-              Passphrase
+              <label>Passphrase</label>
               <br />
               <input
                 name='pw'
