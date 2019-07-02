@@ -112,6 +112,8 @@ class AddressUri extends React.Component {
 
     handleChange(e) {
       this.setState({uri: e.target.value })
+      history.pushState({}, 'Bookmark App', window.location.href.split('?')[0] + '?uri=' 
+    + encodeURIComponent(event.target.value))
       console.log("this.state.uri", this.state.uri)
     }
 
