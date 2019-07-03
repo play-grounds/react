@@ -1,13 +1,11 @@
-import React, { Component } from 'react'
+// import React, { Component } from 'react'
 
-function NavbarAbout (props) {
+function NavbarAbout ({sourceCode, ...props}) {
   return <div className='navbar-item has-dropdown is-hoverable'>
     <Navbar.List title="About">
-      <Navbar.Item href='index.html'>Up</Navbar.Item>
+      <Navbar.Item href='index.html'>Index</Navbar.Item>
       <hr />
-      <Navbar.Item href=''>Source</Navbar.Item>
-      <hr />
-      <Navbar.Item href=''>Help</Navbar.Item>
+      <Navbar.Item href={sourceCode}>Source</Navbar.Item>
     </Navbar.List>
   </div>
 }
@@ -20,7 +18,7 @@ function NavbarItem ({href, ...props}) {
   )
 }
 
-function NavbarLogo ({href, src, alt, width, height, ...props}) {
+function NavbarLogo ({href = '#', src, alt, width, height, ...props}) {
   return (
     <a href={href} className='navbar-item'>
     <img src={src} alt={alt} width={width} height={height} />
@@ -120,18 +118,18 @@ function NavbarExample ({title, className, ...props}) {
   </Navbar>
 }
 
-export default function NavbarSolid ({title, className, ...props}) {
+function NavbarSolid ({title, className, sourceCode, ...props}) {
 
   return <Navbar className={className}>
     <Navbar.Brand>
-    <Navbar.Logo href='#' src="https://design.inrupt.com/atomic-core/img/solid.svg" width="30" height="30" alt="Logo"></Navbar.Logo>
+    <Navbar.Logo href='#' src="https://play-grounds.github.io/react/play/image/solid.svg" width="30" height="30" alt="Logo"></Navbar.Logo>
     <Navbar.Item href='#'>{title}</Navbar.Item>
       <Navbar.Burger/>
     </Navbar.Brand>
 
     <Navbar.Menu>
       <Navbar.Container position="start">
-        <Navbar.About />
+        <Navbar.About sourceCode={sourceCode} />
       </Navbar.Container>
 
       {props.children}
@@ -150,3 +148,5 @@ Navbar.Menu = NavbarMenu
 Navbar.Container = NavbarContainer
 
 Navbar.Example = NavbarExample
+
+// export default NavbarSolid
