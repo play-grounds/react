@@ -10,6 +10,7 @@ class AddressBar extends React.Component {
     this.setState({uri: event.target.value })
     history.pushState({}, 'Bookmark App', window.location.href.split('?')[0] + '?uri=' 
     + encodeURIComponent(event.target.value))
+    setSubject(event.target.value)
     console.log('this.state.uri', this.state.uri)
   }
 

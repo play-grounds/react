@@ -21,6 +21,7 @@
 const defaultUri = 'https://i.redd.it/gwctsj9lbs731.jpg'
 
 var subject = getQueryStringParam('uri') || defaultUri
+var subjectUpdate = {}
 
 function getQueryStringParam (param) {
   var url = window.location.toString()
@@ -35,10 +36,32 @@ function getQueryStringParam (param) {
   return queryStringList[param]
 }
 
-function Bookmark ({...props}) {
-  var target = subject
-  console.log('target', target)
-  return <div><img src={target} /></div>
+function setSubject(s) {
+  subject = s
+  subjectUpdate.callback(s)
+}
+
+class Bookmark extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      recalls : subject
+    }
+  }
+
+  componentDidMount(){
+    subjectUpdate.callback = (data) => {
+      this.setState({recalls : data})
+    }
+  }
+
+  render() {
+    var target = subject
+    console.log('target', target)
+    return (
+      <div><img src={this.state.recalls} /></div>
+    )
+  }
 }
 
 function Main(props) {
