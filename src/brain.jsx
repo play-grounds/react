@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import NavbarSolid from './components/bulma/Navbar.jsx'
+import NavbarSolid from '../components/bulma/navbar.jsx'
 
 /**
  * Gets sha256 string from string
