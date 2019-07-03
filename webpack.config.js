@@ -1,5 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
+const ReplaceInFileWebpackPlugin = require('replace-in-file-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -34,6 +35,17 @@ module.exports = {
     publicPath: 'http://localhost:3000/dist/',
     hotOnly: true
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()]
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    // Replace the assignment to window by a module export
+    new ReplaceInFileWebpackPlugin([{
+        dir: './',
+        test: [/jsx$/],
+        rules: [{
+          search: '//REMOVEME ',
+          replace: ''
+        }]
+    }])
+  ]
 }
 
