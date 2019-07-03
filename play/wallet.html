@@ -78,11 +78,21 @@ class Wallet extends React.Component  {
     }
     console.log('ledger', ledger)
 
+    var creditChain = store.any(store.sym(subject), store.sym('https://w3id.org/cc#creditChain'))
+
+    if (creditChain && creditChain.value) {
+      creditChain = creditChain.value
+    }
+    console.log('creditChain', creditChain)
+
+
     return (<div>Wallet : <a href={subject}>{subject}</a>
       <br/>
       Description : {description}
       <br/>
       Ledger : <a href={ledger}>{ledger}</a>
+      <br/>
+      Credit Chain : <a href={ledger}>{creditChain}</a>
       </div>)
   }
 
