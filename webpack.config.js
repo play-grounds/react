@@ -5,6 +5,7 @@ module.exports = {
   entry: {
     tmp :'./src/tmp.jsx',
     index :'./src/index.jsx',
+    brain :'./src/brain.jsx',
     bookmark : './src/bookmark.jsx'
   },
   mode: 'development',
