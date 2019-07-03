@@ -42,7 +42,7 @@ module.exports = {
         dir: './',
         test: [/jsx$/],
         rules: [{
-          search: '//REMOVEME ',
+          search: '//REMOVE ',
           replace: ''
         }]
     }])

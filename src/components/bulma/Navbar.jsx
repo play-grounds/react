@@ -1,4 +1,4 @@
-//REMOVEME import React, { Component } from 'react' ; export default NavbarSolid
+//REMOVE import React, { Component } from 'react' ; export default NavbarSolid
 
 function NavbarAbout ({sourceCode, ...props}) {
   return <div className='navbar-item has-dropdown is-hoverable'>
