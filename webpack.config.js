@@ -4,6 +4,7 @@ const webpack = require('webpack')
 module.exports = {
   entry: {
     tmp :'./src/tmp.jsx',
+    index :'./src/index.jsx',
     bookmark : './src/bookmark.jsx'
   },
   mode: 'development',
