@@ -15,11 +15,10 @@
 <body>
   <div id="root"></div>
   <script type="text/babel" src="../components/bulma/navbar.jsx"></script>
-  <script type="text/babel" src="../src/components/Literal.js"></script>
   <script type="text/babel" src="../src/components/AddressBar.jsx"></script>
 
   <script type="text/babel">
-const defaultUri = 'https://external-preview.redd.it/TcSzPOpGNxov4-zHd11YfCQP95CXM5aCY2FXxW8lwnU.jpg?auto=webp&s=1c4120f8d6c8a794b21d67d5b390db34f623ccf1'
+const defaultUri = 'https://i.redd.it/gwctsj9lbs731.jpg'
 
 var subject = getQueryStringParam('uri') || defaultUri
 
@@ -41,7 +40,6 @@ function Bookmark ({...props}) {
   console.log('target', target)
   return <div><img src={target} /></div>
 }
-
 
 function Main(props) {
     return (
