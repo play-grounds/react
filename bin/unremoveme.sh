@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for i in $(find ../src -name '*.jsx') 
+for i in $(find ./src -name '*.jsx') 
   do
   if grep -q '//REMOVE $' $i ; then
     echo $i
