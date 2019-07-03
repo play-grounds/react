@@ -4,7 +4,7 @@ const ReplaceInFileWebpackPlugin = require('replace-in-file-webpack-plugin');
 
 module.exports = {
   entry: {
-    foo :'./src/index.jsx',
+    foo :'./src/tmp.jsx',
     bar : './src/index2.jsx'
   },
   mode: 'development',
