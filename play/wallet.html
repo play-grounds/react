@@ -17,9 +17,14 @@
   <script type="text/babel" src="../components/bulma/navbar.jsx"></script>
   <script type="text/babel" src="../src/components/Literal.js"></script>
   <script type="text/babel" src="../src/components/AddressBar.jsx"></script>
+  <script src="https://solid.github.io/releases/rdflib.js/rdflib-0.12.2.min.js"></script>
+
 
   <script type="text/babel">
-const defaultUri = 'https://external-preview.redd.it/TcSzPOpGNxov4-zHd11YfCQP95CXM5aCY2FXxW8lwnU.jpg?auto=webp&s=1c4120f8d6c8a794b21d67d5b390db34f623ccf1'
+const defaultUri = 'https://melvin.solid.live/public/appdata/wallet/testwallet.ttl#this'
+const store = $rdf.graph()
+const fetcher = new $rdf.Fetcher(store)
+const updater = new $rdf.UpdateManager(store)
 
 var subject = getQueryStringParam('uri') || defaultUri
 
@@ -36,10 +41,52 @@ function getQueryStringParam (param) {
   return queryStringList[param]
 }
 
-function Wallet ({...props}) {
-  var target = subject
-  console.log('target', target)
-  return <div><img src={target} /></div>
+class Wallet extends React.Component  {
+  constructor(props) {
+    super(props)
+  }
+
+  componentDidMount() {
+    console.log('loading', subject)
+    fetcher.load(store.sym(subject)).then(response => {
+        this.triples = store.statementsMatching(store.sym(subject))
+        console.log('triples', this.triples)
+
+        for (var i=0; i < this.triples.length; i++) {
+            var triple = this.triples[i]
+            console.log('object', triple.object);
+        }
+        this.setState({triples: this.triples})
+    }, err => {
+        console.log(err);
+    });
+ }
+
+
+  render () {
+    var description = store.any(store.sym(subject), store.sym('http://purl.org/dc/terms/description'))
+
+    if (description && description.value) {
+      description = description.value
+    }
+    console.log('description', description)
+
+    var ledger = store.any(store.sym(subject), store.sym('https://w3id.org/cc#ledger'))
+
+    if (ledger && ledger.value) {
+      ledger = ledger.value
+    }
+    console.log('ledger', ledger)
+
+    return (<div>Wallet : <a href={subject}>{subject}</a>
+      <br/>
+      Description : {description}
+      <br/>
+      Ledger : <a href={ledger}>{ledger}</a>
+      </div>)
+  }
+
+
 }
 
 
