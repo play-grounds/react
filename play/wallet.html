@@ -102,30 +102,32 @@ class Wallet extends React.Component  {
     var HDPubKey = store.any(store.sym(subject), store.sym('https://w3id.org/cc#HDPubKey'))
 
     if (HDPubKey && HDPubKey.value) {
-      HDPubKey = HDPubKey.value
+      HDPubKey = HDPubKey.value.substring(40)
     }
     console.log('HDPubKey', HDPubKey)
 
 
-    return (<div>Wallet : <a href={subject}>{subject}</a>
+    return (<div>
+      <Label>Wallet</Label> <a href={subject}>{subject}</a>
       <br/>
-      Description : {description}
+      <Label>Description</Label> {description}
       <br/>
-      Ledger : <a href={ledger}>{ledger}</a>
+      <Label>Ledger</Label> <a href={ledger}>{ledger}</a>
       <br/>
-      Credit Chain : <a href={creditChain}>{creditChain}</a>
+      <Label>Credit Chain</Label> <a href={creditChain}>{creditChain}</a>
       <br/>
-      Inbox : <a href={inbox}>{inbox}</a>
+      <Label>Inbox</Label> <a href={inbox}>{inbox}</a>
       <br/>
-      Currency : <a href={currency}>{currency}</a>
+      <Label>Currency</Label> <a href={currency}>{currency}</a>
       <br/>
-      HDPubKey : {HDPubKey}
+      <Label>HDPubKey</Label> {HDPubKey}
       </div>)
   }
-
-
 }
 
+function Label(props) {
+  return <span style={{width: '100px', display: 'inline-block'}}>{props.children}</span>
+}
 
 function Main(props) {
     return (
