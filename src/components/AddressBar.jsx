@@ -12,8 +12,8 @@ class AddressBar extends React.Component {
   handleChange (event) {
     this.setState({subject: event.target.value })
     history.pushState({}, 'Bookmark App', window.location.href.split('?')[0] + '?uri=' + encodeURIComponent(event.target.value))
-    if (setSubject) {
-      setSubject(event.target.value)
+    if (this.props.updater) {
+      this.props.updater(event.target.value)
     }
   }
 
