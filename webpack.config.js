@@ -3,7 +3,7 @@ const webpack = require('webpack')
 
 module.exports = {
   entry: {
-    foo :'./src/tmp.jsx',
+    tmp :'./src/tmp.jsx',
     bar : './src/index2.jsx'
   },
   mode: 'development',
@@ -26,7 +26,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist/'),
     publicPath: '/dist/',
-    filename: '[name]/dist/[name].bundle.js'
+    filename: '[name].bundle.js'
   },
   devServer: {
     contentBase: path.join(__dirname, 'public/'),
