@@ -85,6 +85,27 @@ class Wallet extends React.Component  {
     }
     console.log('creditChain', creditChain)
 
+    var inbox = store.any(store.sym(subject), store.sym('https://w3id.org/cc#inbox'))
+
+    if (inbox && inbox.value) {
+      inbox = inbox.value
+    }
+    console.log('inbox', inbox)
+
+    var currency = store.any(store.sym(subject), store.sym('https://w3id.org/cc#currency'))
+
+    if (currency && currency.value) {
+      currency = currency.value
+    }
+    console.log('currency', currency)
+
+    var HDPubKey = store.any(store.sym(subject), store.sym('https://w3id.org/cc#HDPubKey'))
+
+    if (HDPubKey && HDPubKey.value) {
+      HDPubKey = HDPubKey.value
+    }
+    console.log('HDPubKey', HDPubKey)
+
 
     return (<div>Wallet : <a href={subject}>{subject}</a>
       <br/>
@@ -92,7 +113,13 @@ class Wallet extends React.Component  {
       <br/>
       Ledger : <a href={ledger}>{ledger}</a>
       <br/>
-      Credit Chain : <a href={ledger}>{creditChain}</a>
+      Credit Chain : <a href={creditChain}>{creditChain}</a>
+      <br/>
+      Inbox : <a href={inbox}>{inbox}</a>
+      <br/>
+      Currency : <a href={currency}>{currency}</a>
+      <br/>
+      HDPubKey : {HDPubKey}
       </div>)
   }
 
