@@ -1,10 +1,10 @@
-// import React from 'react'
+//REMOVE import React from 'react' ; import ReactDOM from 'react-dom' 
 
 class AddressBar extends React.Component {
   constructor (props) {
     super(props)
     if (props.subject) {
-      this.state = { subject : subject }
+      this.state = { subject : props.subject }
     }
     this.handleChange = this.handleChange.bind(this)
   }
@@ -30,3 +30,4 @@ class AddressBar extends React.Component {
 
 }
 
+//REMOVE export default AddressBar
