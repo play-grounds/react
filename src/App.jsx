@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import NavbarSolid from './components/bulma/Navbar.jsx'
-import Body from './components/Brain.jsx'
-
 
 class App extends Component {
   render () {
