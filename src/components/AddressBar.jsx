@@ -3,7 +3,7 @@
 class AddressBar extends React.Component {
   constructor (props) {
     super(props)
-    if (subject) {
+    if (props.subject) {
       this.state = { subject : subject }
     }
     this.handleChange = this.handleChange.bind(this)

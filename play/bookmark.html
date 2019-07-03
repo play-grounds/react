@@ -7,6 +7,7 @@
   <script src="js/react.development.js"></script>
   <script src="js/react-dom.development.js"></script>
   <script src="js/rdflib-0.12.2.min.js"></script>
+  <script src="js/util.js"></script>
 
   <!-- Don't use this in production: -->
   <script src="js/babel.min.js"></script>
@@ -16,7 +17,6 @@
   <div id="root"></div>
   <script type="text/babel" src="../components/bulma/navbar.jsx"></script>
   <script type="text/babel" src="../src/components/AddressBar.jsx"></script>
-  <script type="text/javascript" src="./js/util.js"></script>
 
   <script type="text/babel">
 const defaultUri = 'https://i.redd.it/gwctsj9lbs731.jpg'
@@ -58,7 +58,7 @@ class Bookmark extends React.Component {
 function Main(props) {
     return (
     <section className="section">
-      <AddressBar updater={setSubject}>
+      <AddressBar subject={subject} updater={setSubject}>
       <Bookmark />
       </AddressBar>
     </section>
