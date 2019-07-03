@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import NavbarSolid from '../components/bulma/navbar.jsx'
+import NavbarSolid from './components/bulma/Navbar.jsx'
+import "babel-polyfill"
 
 /**
  * Gets sha256 string from string
