@@ -4,37 +4,26 @@
 <head>
   <meta charset="UTF-8" />
   <title>Bookmark App</title>
-  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-  <script src="https://solid.github.io/releases/rdflib.js/rdflib-0.12.2.min.js"></script>
+  <script src="js/react.development.js"></script>
+  <script src="js/react-dom.development.js"></script>
+  <script src="js/rdflib-0.12.2.min.js"></script>
 
   <!-- Don't use this in production: -->
-  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <script src="js/babel.min.js"></script>
 </head>
 
 <body>
   <div id="root"></div>
   <script type="text/babel" src="../components/bulma/navbar.jsx"></script>
   <script type="text/babel" src="../src/components/AddressBar.jsx"></script>
+  <script type="text/javascript" src="./js/util.js"></script>
 
   <script type="text/babel">
 const defaultUri = 'https://i.redd.it/gwctsj9lbs731.jpg'
-
-var subject = getQueryStringParam('uri') || defaultUri
 var subjectUpdate = {}
 
-function getQueryStringParam (param) {
-  var url = window.location.toString()
-  url.match(/\?(.+)$/)
-  var params = RegExp.$1
-  params = params.split('&')
-  var queryStringList = {}
-  for (var i = 0; i < params.length; i++) {
-    var tmp = params[i].split('=')
-    queryStringList[tmp[0]] = unescape(tmp[1])
-  }
-  return queryStringList[param]
-}
+// init
+var subject = getQueryStringParam('uri') || defaultUri
 
 function setSubject(s) {
   subject = s
