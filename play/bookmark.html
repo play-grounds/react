@@ -50,8 +50,10 @@ class Bookmark extends React.Component {
   }
 
   componentDidMount(){
-    subjectUpdate.callback = (data) => {
-      this.setState({recalls : data})
+    if (subjectUpdate) {
+      subjectUpdate.callback = (data) => {
+        this.setState({recalls : data})
+      }
     }
   }
 
