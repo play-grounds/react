@@ -23,7 +23,7 @@ function NamedNode(props) {
   var nodes = props.nodes;
   if (nodes) {
     var listItems = nodes.map((node) => {
-      if (node.object.termType === "Literal") {
+      if (node.object.termType === 'Literal') {
         return <li>{node.object.value}</li>
       } else {
         return <li><a href={node.object.value} target="_blank">{node.object.value}</a></li>
