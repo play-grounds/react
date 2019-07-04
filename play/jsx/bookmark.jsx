@@ -18,9 +18,19 @@ class Bookmark extends React.Component {
 
   render() {
     let recalls = this.props.subject
-    return (
-      <div><img src={recalls} /></div>
-    )
+    let contentType = 'image'
+    if (recalls.match(/.jpg$/)) {
+      return (
+        <div><img src={recalls} /></div>)
+  
+    } else if (recalls.match(/.webm$/)) {
+      return (
+        <div><video autoplay="true" src={recalls} ></video></div>)
+  
+    } else {
+      return (
+        <div><img src={recalls} /></div>)  
+    }
   }
 }
 
