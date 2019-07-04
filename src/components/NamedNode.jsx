@@ -1,4 +1,4 @@
-import React from 'react'
+//REMOVE import React from 'react'
 
 /** Displays a NamedNode by value. */
 function NamedNode({node, ...props}) {
@@ -8,3 +8,5 @@ function NamedNode({node, ...props}) {
     return <li><a href={node.value} target="_blank">{node.value}</a></li>
   }
 }
+
+//REMOVE export default NamedNode
