@@ -23,11 +23,19 @@ class Bookmark extends React.Component {
       return (
         <div><img src={recalls} /></div>)
   
-    } else if (recalls.match(/.webm$/)) {
-      return (
-        <div><video autoplay="true" src={recalls} ></video></div>)
+      } else if (recalls.match(/.webm$/)) {
+        return (
+          <div><video autoplay="true" src={recalls} ></video></div>)
+    
+        } else if (recalls.match(/.mp3$/)) {
+          return (
+            <div><video autoplay="true" src={recalls} ></video></div>)
+      
+        } else if (recalls.match(/.webm$/)) {
+        return (
+          <div><video autoplay="true" src={recalls} ></video></div>)
   
-    } else {
+      } else {
       return (
         <div><img src={recalls} /></div>)  
     }
