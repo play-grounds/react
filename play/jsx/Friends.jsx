@@ -17,8 +17,8 @@ class FriendSet extends React.Component {
 
   componentDidMount() {
 
-    fetcher.load(this.state.subject).then(response => {
-      this.quads = store.statementsMatching(store.sym(this.state.subject), store.sym("http://xmlns.com/foaf/0.1/knows"), null, store.sym(this.state.subject.split('#')[0]))
+    fetcher.load(this.props.subject).then(response => {
+      this.quads = store.statementsMatching(store.sym(this.props.subject), store.sym("http://xmlns.com/foaf/0.1/knows"), null, store.sym(this.props.subject.split('#')[0]))
       for (var i = 0; i < this.quads.length; i++) {
         var quad = this.quads[i]
         console.log('object', quad.object);
@@ -31,9 +31,9 @@ class FriendSet extends React.Component {
 
   handleChange(e) {
     this.setState({ subject: e.target.value })
-    console.log("this.state.subject", this.state.subject)
-    fetcher.load(this.state.subject).then(response => {
-      this.quads = store.statementsMatching(store.sym(this.state.subject), null, null, store.sym(this.state.subject.split('#')[0]))
+    console.log("this.props.subject", this.props.subject)
+    fetcher.load(this.props.subject).then(response => {
+      this.quads = store.statementsMatching(store.sym(this.props.subject), null, null, store.sym(this.props.subject.split('#')[0]))
       for (var i = 0; i < this.quads.length; i++) {
         var triple = this.quads[i]
         console.log('object', triple.object.value);
