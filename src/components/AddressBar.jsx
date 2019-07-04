@@ -12,19 +12,23 @@ class AddressBar extends React.Component {
   handleChange (event) {
     this.setState({subject: event.target.value })
     history.pushState({}, 'Bookmark App', window.location.href.split('?')[0] + '?uri=' + encodeURIComponent(event.target.value))
-    if (this.props.updater) {
-      this.props.updater(event.target.value)
-    }
   }
 
   render () {
+
+    const children = React.Children.map(this.props.children, child => {
+      return React.cloneElement(child, {
+        subject: this.state.subject
+      });
+    });
+
     return (<div>
       <label>Address</label>
       <br/> 
       <input size='80' onChange={this.handleChange} placeholder='uri' value={this.state.subject} />
       <hr />
 
-      {this.props.children}
+      {children}
     </div>)
   }
 
