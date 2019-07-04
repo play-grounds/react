@@ -64,7 +64,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "98dd8e2b6b3bac8745e6";
+/******/ 	var hotCurrentHash = "6591fa47ae15da67fbe1";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -789,7 +789,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return hotCreateRequire("./src/bookmark.jsx")(__webpack_require__.s = "./src/bookmark.jsx");
+/******/ 	return hotCreateRequire("./src/Bookmark.jsx")(__webpack_require__.s = "./src/Bookmark.jsx");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -926,15 +926,15 @@ eval("\n\nif (false) {} else {\n  module.exports = __webpack_require__(/*! ./cjs
 
 /***/ }),
 
-/***/ "./src/bookmark.jsx":
+/***/ "./src/Bookmark.jsx":
 /*!**************************!*\
-  !*** ./src/bookmark.jsx ***!
+  !*** ./src/Bookmark.jsx ***!
   \**************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ \"./node_modules/react-dom/index.js\");\n/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _components_bulma_Navbar_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/bulma/Navbar.jsx */ \"./src/components/bulma/Navbar.jsx\");\n/* harmony import */ var _components_Addressbar_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Addressbar.jsx */ \"./src/components/Addressbar.jsx\");\n/* harmony import */ var _components_Bookmark_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/Bookmark.jsx */ \"./src/components/Bookmark.jsx\");\n\n\n\n\n // init\n\nvar defaultUri = 'https://i.redd.it/gwctsj9lbs731.jpg';\nvar subject = getQueryStringParam('uri') || defaultUri;\n\nfunction Main(props) {\n  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"section\", {\n    className: \"section\"\n  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Addressbar_jsx__WEBPACK_IMPORTED_MODULE_3__[\"default\"], {\n    subject: subject\n  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Bookmark_jsx__WEBPACK_IMPORTED_MODULE_4__[\"default\"], null)));\n}\n\nfunction App() {\n  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_bulma_Navbar_jsx__WEBPACK_IMPORTED_MODULE_2__[\"default\"], {\n    className: \"is-link\",\n    title: \"Bookmark\",\n    sourceCode: \"https://github.com/play-grounds/react/blob/gh-pages/play/bookmark.html\"\n  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Main, null));\n}\n\nreact_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(App, null), document.getElementById('root'));\n\n//# sourceURL=webpack:///./src/bookmark.jsx?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ \"./node_modules/react-dom/index.js\");\n/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _components_bulma_Navbar_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/bulma/Navbar.jsx */ \"./src/components/bulma/Navbar.jsx\");\n/* harmony import */ var _components_Addressbar_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Addressbar.jsx */ \"./src/components/Addressbar.jsx\");\n/* harmony import */ var _components_Bookmark_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/Bookmark.jsx */ \"./src/components/Bookmark.jsx\");\n\n\n\n\n // init\n\nvar defaultUri = 'https://i.redd.it/gwctsj9lbs731.jpg';\nvar subject = getQueryStringParam('uri') || defaultUri;\n\nfunction Main(props) {\n  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"section\", {\n    className: \"section\"\n  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Addressbar_jsx__WEBPACK_IMPORTED_MODULE_3__[\"default\"], {\n    subject: subject\n  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Bookmark_jsx__WEBPACK_IMPORTED_MODULE_4__[\"default\"], null)));\n}\n\nfunction App() {\n  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_bulma_Navbar_jsx__WEBPACK_IMPORTED_MODULE_2__[\"default\"], {\n    className: \"is-link\",\n    title: \"Bookmark\",\n    sourceCode: \"https://github.com/play-grounds/react/blob/gh-pages/play/bookmark.html\"\n  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Main, null));\n}\n\nreact_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(App, null), document.getElementById('root'));\n\n//# sourceURL=webpack:///./src/Bookmark.jsx?");
 
 /***/ }),
 

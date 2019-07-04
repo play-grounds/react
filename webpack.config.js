@@ -6,7 +6,7 @@ module.exports = {
     tmp :'./src/tmp.jsx',
     index :'./src/index.jsx',
     brain :'./src/brain.jsx',
-    bookmark : './src/bookmark.jsx',
+    bookmark : './src/Bookmark.jsx',
     lightning : './src/lightning.jsx'
   },
   mode: 'development',
