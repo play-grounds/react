@@ -18,22 +18,40 @@ class Bookmark extends React.Component {
     super(props)
   }
 
-  componentDidMount(){
+  componentDidMount() {
   }
 
   render() {
     let recalls = this.props.subject
-    return (
-      <div><img src={recalls} /></div>
-    )
+    let contentType = 'image'
+    if (recalls.match(/.jpg$/)) {
+      return (
+        <div><img src={recalls} /></div>)
+
+    } else if (recalls.match(/.webm$/)) {
+      return (
+        <div><video autoplay="true" loop src={recalls} ></video></div>)
+
+    } else if (recalls.match(/.mp3$/)) {
+      return (
+        <div><video autoplay="true" loop src={recalls} ></video></div>)
+
+    } else if (recalls.match(/.webm$|.mp4$/)) {
+      return (
+        <div><video autoplay="true" loop src={recalls} ></video></div>)
+
+    } else {
+      return (
+        <div><img src={recalls} /></div>)
+    }
   }
 }
 
 function Main(props) {
-    return (
+  return (
     <section className="section">
       <AddressBar subject={subject}>
-      <Bookmark />
+        <Bookmark />
       </AddressBar>
     </section>
   );
@@ -43,12 +61,12 @@ function App() {
   return (
     <div>
 
-      <NavbarSolid 
-        className="is-link" 
-        title="Bookmark" 
+      <NavbarSolid
+        className="is-link"
+        title="Bookmark"
         sourceCode="https://github.com/play-grounds/react/blob/gh-pages/play/bookmark.html">
-      </NavbarSolid>      
-      
+      </NavbarSolid>
+
       <Main>
       </Main>
 
