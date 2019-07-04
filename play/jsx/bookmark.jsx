@@ -1,5 +1,3 @@
-const defaultUri = 'https://i.redd.it/gwctsj9lbs731.jpg'
-
 // init
 var subject = getQueryStringParam('uri') || defaultUri
 
@@ -15,7 +13,7 @@ class Bookmark extends React.Component {
 
     let recalls = this.props.subject
 
-    if (recalls.match(/.jpg$/)) {
+    if (recalls.match(IMAGE_EXTENSIONS)) {
       return (
         <div><img src={recalls} /></div>)
     } else if (recalls.match(VIDEO_EXTENSIONS)) {
@@ -24,9 +22,6 @@ class Bookmark extends React.Component {
     } else if (recalls.match(AUDIO_EXTENSIONS)) {
       return (
         <div><video autoplay='true' loop src={recalls} /></div>)
-    } else if (recalls.match(IMAGE_EXTENSIONS)) {
-      return (
-        <div><img src={recalls} /></div>)
     } else {
       return (
         <div><img src={recalls} /></div>)
