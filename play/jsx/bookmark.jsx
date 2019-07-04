@@ -11,6 +11,7 @@ class Bookmark extends React.Component {
 
     const AUDIO_EXTENSIONS = /\.(m4a|mp4a|mpga|mp2|mp2a|mp3|m2a|m3a|wav|weba|aac|oga|spx)($|\?)/i
     const VIDEO_EXTENSIONS = /\.(mp4|og[gv]|webm|mov|m4v)($|\?)/i
+    const IMAGE_EXTENSIONS = /\.(png|gif|bmp|svg|jpeg|jpg)($|\?)/i
 
     let recalls = this.props.subject
 
@@ -20,12 +21,12 @@ class Bookmark extends React.Component {
     } else if (recalls.match(VIDEO_EXTENSIONS)) {
       return (
         <div><video autoplay='true' loop src={recalls} /></div>)
-    } else if (recalls.match(/AUDIO_EXTENSIONS/)) {
+    } else if (recalls.match(AUDIO_EXTENSIONS)) {
       return (
         <div><video autoplay='true' loop src={recalls} /></div>)
-    } else if (recalls.match(/.webm$|.mp4$/)) {
+    } else if (recalls.match(IMAGE_EXTENSIONS)) {
       return (
-        <div><video autoplay='true' loop src={recalls} /></div>)
+        <div><img src={recalls} /></div>)
     } else {
       return (
         <div><img src={recalls} /></div>)
