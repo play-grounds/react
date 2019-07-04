@@ -9,7 +9,10 @@ const { default: data } = require('@solid/query-ldflex');
 
 class App extends React.Component {
 
-
+  constructor(props) {
+    super(props)
+    this.state = { label : 'empty' }
+  }
 
   render () {
 
