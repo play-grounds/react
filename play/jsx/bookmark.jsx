@@ -4,28 +4,24 @@ const defaultUri = 'https://i.redd.it/gwctsj9lbs731.jpg'
 var subject = getQueryStringParam('uri') || defaultUri
 
 class Bookmark extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
   }
-  render() {
+  render () {
     let recalls = this.props.subject
     let contentType = 'image'
     if (recalls.match(/.jpg$/)) {
       return (
         <div><img src={recalls} /></div>)
-
     } else if (recalls.match(/.webm$/)) {
       return (
-        <div><video autoplay="true" loop src={recalls} ></video></div>)
-
+        <div><video autoplay='true' loop src={recalls} /></div>)
     } else if (recalls.match(/.mp3$/)) {
       return (
-        <div><video autoplay="true" loop src={recalls} ></video></div>)
-
+        <div><video autoplay='true' loop src={recalls} /></div>)
     } else if (recalls.match(/.webm$|.mp4$/)) {
       return (
-        <div><video autoplay="true" loop src={recalls} ></video></div>)
-
+        <div><video autoplay='true' loop src={recalls} /></div>)
     } else {
       return (
         <div><img src={recalls} /></div>)
@@ -33,9 +29,9 @@ class Bookmark extends React.Component {
   }
 }
 
-function Main(props) {
+function Main (props) {
   return (
-    <section className="section">
+    <section className='section'>
       <AddressBar subject={subject}>
         <Bookmark />
       </AddressBar>
@@ -43,18 +39,16 @@ function Main(props) {
   )
 }
 
-function App() {
+function App () {
   return (
     <div>
 
       <NavbarSolid
-        className="is-link"
-        title="Bookmark"
-        sourceCode="https://github.com/play-grounds/react/blob/gh-pages/play/bookmark.html">
-      </NavbarSolid>
+        className='is-link'
+        title='Bookmark'
+        sourceCode='https://github.com/play-grounds/react/blob/gh-pages/play/bookmark.html' />
 
-      <Main>
-      </Main>
+      <Main />
 
     </div>
   )
