@@ -6,9 +6,13 @@ module.exports = {
     tmp :'./src/tmp.jsx',
     index :'./src/index.jsx',
     brain :'./src/brain.jsx',
-    bookmark : './src/bookmark.jsx'
+    bookmark : './src/bookmark.jsx',
+    lightning : './src/lightning.jsx'
   },
   mode: 'development',
+  node: {
+    fs : 'empty'
+  },
   module: {
     rules: [
       {
