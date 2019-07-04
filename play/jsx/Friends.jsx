@@ -23,7 +23,7 @@ function NamedNodeSet(props) {
   var nodes = props.nodes;
   if (nodes) {
     var nodeSet = nodes.map((node) => {
-      return <NamedNode node={node}></NamedNode>
+      return <NamedNode node={node.object}></NamedNode>
     })
     return (
       <ul>{nodeSet}</ul>
@@ -34,10 +34,10 @@ function NamedNodeSet(props) {
 }
 
 function NamedNode({node, ...props}) {
-    if (node.object.termType === 'Literal') {
-      return <li>{node.object.value}</li>
+    if (node.termType === 'Literal') {
+      return <li>{node.value}</li>
     } else {
-      return <li><a href={node.object.value} target="_blank">{node.object.value}</a></li>
+      return <li><a href={node.value} target="_blank">{node.value}</a></li>
     }
 }
 
