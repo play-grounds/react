@@ -22,15 +22,11 @@ function getQueryStringParam(param) {
 function NamedNodeSet(props) {
   var nodes = props.nodes;
   if (nodes) {
-    var listItems = nodes.map((node) => {
-      if (node.object.termType === 'Literal') {
-        return <li>{node.object.value}</li>
-      } else {
-        return <li><a href={node.object.value} target="_blank">{node.object.value}</a></li>
-      }
+    var nodeSet = nodes.map((node) => {
+      return <NamedNode node={node}></NamedNode>
     })
     return (
-      <ul>{listItems}</ul>
+      <ul>{nodeSet}</ul>
     );
   } else {
     return <div>Empty</div>
