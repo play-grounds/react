@@ -9,16 +9,16 @@ class FriendSet extends React.Component {
     super(props)
 
     var defaultUri = "https://melvincarvalho.com/#me"
-    var uri = getQueryStringParam("uri") || defaultUri
-    this.state = { uri : uri }
+    var subject = getQueryStringParam("uri") || defaultUri
+    this.state = { subject : subject }
     this.handleChange = this.handleChange.bind(this)
 
   }
 
   componentDidMount() {
 
-    fetcher.load(this.state.uri).then(response => {
-      this.quads = store.statementsMatching(store.sym(this.state.uri), store.sym("http://xmlns.com/foaf/0.1/knows"), null, store.sym(this.state.uri.split('#')[0]))
+    fetcher.load(this.state.subject).then(response => {
+      this.quads = store.statementsMatching(store.sym(this.state.subject), store.sym("http://xmlns.com/foaf/0.1/knows"), null, store.sym(this.state.subject.split('#')[0]))
       for (var i = 0; i < this.quads.length; i++) {
         var quad = this.quads[i]
         console.log('object', quad.object);
@@ -30,10 +30,10 @@ class FriendSet extends React.Component {
   }
 
   handleChange(e) {
-    this.setState({ uri: e.target.value })
-    console.log("this.state.uri", this.state.uri)
-    fetcher.load(this.state.uri).then(response => {
-      this.quads = store.statementsMatching(store.sym(this.state.uri), null, null, store.sym(this.state.uri.split('#')[0]))
+    this.setState({ subject: e.target.value })
+    console.log("this.state.subject", this.state.subject)
+    fetcher.load(this.state.subject).then(response => {
+      this.quads = store.statementsMatching(store.sym(this.state.subject), null, null, store.sym(this.state.subject.split('#')[0]))
       for (var i = 0; i < this.quads.length; i++) {
         var triple = this.quads[i]
         console.log('object', triple.object.value);
