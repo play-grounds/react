@@ -1,8 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import NavbarSolid from './components/bulma/Navbar.jsx'
-import AddressBar from './components/AddressBar.jsx'
-import Media from './components/Media.jsx'
+import Addressbar from './components/Addressbar.jsx'
 import Bookmark from './components/Bookmark.jsx'
 
 // init
@@ -12,9 +11,9 @@ var subject = getQueryStringParam('uri') || defaultUri
 function Main (props) {
   return (
     <section className='section'>
-      <AddressBar subject={subject}>
+      <Addressbar subject={subject}>
         <Bookmark />
-      </AddressBar>
+      </Addressbar>
     </section>
   )
 }

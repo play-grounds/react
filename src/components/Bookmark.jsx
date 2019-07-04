@@ -1,4 +1,5 @@
 //REMOVE import React from 'react'
+//REMOVE import Media from './Media.jsx'
 
 class Bookmark extends React.Component {
   constructor (props) {

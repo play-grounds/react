@@ -5,9 +5,9 @@ var subject = getQueryStringParam('uri') || defaultUri
 function Main (props) {
   return (
     <section className='section'>
-      <AddressBar subject={subject}>
+      <Addressbar subject={subject}>
         <Bookmark />
-      </AddressBar>
+      </Addressbar>
     </section>
   )
 }
