@@ -19,7 +19,7 @@ function getQueryStringParam(param) {
 }
 
 
-function NamedNode(props) {
+function NamedNodeSet(props) {
   var nodes = props.nodes;
   if (nodes) {
     var listItems = nodes.map((node) => {
@@ -37,7 +37,15 @@ function NamedNode(props) {
   }
 }
 
-class Subject extends React.Component {
+function NamedNode({node, ...props}) {
+    if (node.object.termType === 'Literal') {
+      return <li>{node.object.value}</li>
+    } else {
+      return <li><a href={node.object.value} target="_blank">{node.object.value}</a></li>
+    }
+}
+
+class FriendSet extends React.Component {
   constructor(props) {
     super(props)
 
@@ -80,7 +88,7 @@ class Subject extends React.Component {
 
 
   render() {
-    return <NamedNode nodes={this.state.triples} />
+    return <NamedNodeSet nodes={this.state.triples} />
   }
 }
 
@@ -92,7 +100,7 @@ function Body(props) {
       <div>
         <section className="section">
           <AddressBar subject={subject}>
-          <Subject />
+          <FriendSet />
           </AddressBar> 
         </section>
 
