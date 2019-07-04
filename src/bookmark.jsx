@@ -4,23 +4,14 @@ import NavbarSolid from './components/bulma/Navbar.jsx'
 import AddressBar from './components/AddressBar.jsx'
 
 const defaultUri = 'https://i.redd.it/gwctsj9lbs731.jpg'
-var subjectUpdate = {}
 
 // init
 var subject = getQueryStringParam('uri') || defaultUri
-
-function setSubject(s) {
-  subject = s
-}
 
 class Bookmark extends React.Component {
   constructor(props) {
     super(props)
   }
-
-  componentDidMount() {
-  }
-
   render() {
     let recalls = this.props.subject
     let contentType = 'image'
@@ -54,7 +45,7 @@ function Main(props) {
         <Bookmark />
       </AddressBar>
     </section>
-  );
+  )
 }
 
 function App() {
@@ -71,11 +62,11 @@ function App() {
       </Main>
 
     </div>
-  );
+  )
 }
 
 ReactDOM.render(
   <App />,
   document.getElementById('root')
-);
+)
 

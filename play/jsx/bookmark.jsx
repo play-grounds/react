@@ -1,21 +1,12 @@
 const defaultUri = 'https://i.redd.it/gwctsj9lbs731.jpg'
-var subjectUpdate = {}
 
 // init
 var subject = getQueryStringParam('uri') || defaultUri
-
-function setSubject(s) {
-  subject = s
-}
 
 class Bookmark extends React.Component {
   constructor(props) {
     super(props)
   }
-
-  componentDidMount() {
-  }
-
   render() {
     let recalls = this.props.subject
     let contentType = 'image'
@@ -25,15 +16,15 @@ class Bookmark extends React.Component {
 
     } else if (recalls.match(/.webm$/)) {
       return (
-        <div><video autoplay="true" src={recalls} ></video></div>)
+        <div><video autoplay="true" loop src={recalls} ></video></div>)
 
     } else if (recalls.match(/.mp3$/)) {
       return (
-        <div><video autoplay="true" src={recalls} ></video></div>)
+        <div><video autoplay="true" loop src={recalls} ></video></div>)
 
     } else if (recalls.match(/.webm$|.mp4$/)) {
       return (
-        <div><video autoplay="true" src={recalls} ></video></div>)
+        <div><video autoplay="true" loop src={recalls} ></video></div>)
 
     } else {
       return (
@@ -49,7 +40,7 @@ function Main(props) {
         <Bookmark />
       </AddressBar>
     </section>
-  );
+  )
 }
 
 function App() {
@@ -66,11 +57,10 @@ function App() {
       </Main>
 
     </div>
-  );
+  )
 }
 
 ReactDOM.render(
   <App />,
   document.getElementById('root')
-);
-
+)
