@@ -1,20 +1,6 @@
 // init
 const defaultUri = 'https://i.redd.it/gwctsj9lbs731.jpg'
 var subject = getQueryStringParam('uri') || defaultUri
- 
-class Bookmark extends React.Component {
-  constructor (props) {
-    super(props)
-  }
-  render () {
-    let isMedia = true
-    if (isMedia) {
-      return (
-        <Media href={this.props.subject} />
-      )  
-    }
-  }
-}
 
 function Main (props) {
   return (
