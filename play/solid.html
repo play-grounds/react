@@ -7,6 +7,7 @@
     <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     <script src="https://solid.github.io/releases/rdflib.js/rdflib-0.12.2.min.js"></script>
+    <script src="js/util.js"></script>
 
     <!-- Don't use this in production: -->
     <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
@@ -14,182 +15,11 @@
 
 <body>
     <div id="root"></div>
-    <script type="text/babel" src="../components/bulma/navbar.jsx"></script>
-    <script type="text/babel" src="../components/bulma/literal.jsx"></script>
-    <script type="text/babel" src="../components/bulma/named-node.jsx"></script>
-    <script type="text/babel">
-
-
-function getQueryStringParam(param) {
-      var url = window.location.toString();
-      url.match(/\?(.+)$/);
-      var params = RegExp.$1;
-      params = params.split("&");
-      var queryStringList = {};
-      for (var i = 0; i < params.length; i++) {
-        var tmp = params[i].split("=");
-        queryStringList[tmp[0]] = unescape(tmp[1]);
-      }
-      return queryStringList[param];
-    }
-
-
-function Node(props) {
-  var nodes = props.nodes;
-  if (nodes) {
-    var listItems = nodes.map((node) => {
-        console.log('object', node.object.termType);
-        if (node.object.termType == "Literal") {
-          return <li><Literal value={node.object.value} /></li>
-        } else {
-          return <li><NamedNode value={node.object.value} /></li>
-        }
-    })
-    return (
-      <ul>{listItems}</ul>
-    );
-  } else {
-    return <div>Empty</div>
-  }
-}
-
-class Subject extends React.Component {
-    constructor(props) {
-        super(props)
-
-        var triples = [0, 1, 2]
-        var defaultUri = "https://melvincarvalho.com/#me"
-        var uri = getQueryStringParam("uri") || defaultUri
-        this.state = { uri : uri, triples : this.triples }
-        this.handleChange = this.handleChange.bind(this)
-
-    }
-
-    componentDidMount() {
-
-        fetcher.load(this.state.uri).then(response => {
-            this.triples = store.statementsMatching(store.sym(this.state.uri), store.sym("http://xmlns.com/foaf/0.1/knows"), null, store.sym(this.state.uri.split('#')[0]))
-            for (var i=0; i < this.triples.length; i++) {
-                var triple = this.triples[i]
-            }
-            this.setState({triples: this.triples})
-        }, err => {
-            console.log(err);
-        });
-    }
-
-    handleChange(e) {
-      this.setState({uri: e.target.value })
-      console.log("this.state.uri", this.state.uri)
-      fetcher.load(this.state.uri).then(response => {
-            this.triples = store.statementsMatching(store.sym(this.state.uri), null, null, store.sym(this.state.uri.split('#')[0]))
-            for (var i=0; i < this.triples.length; i++) {
-                var triple = this.triples[i]
-                console.log('object', triple.object.value);
-            }
-            this.setState({triples: this.triples})
-        }, err => {
-            console.log(err);
-        });
-
-    }
-
-
-    render() {
-        return <Node nodes={this.state.triples} />
-    }
-} 
-
-
-class InputUri extends React.Component {
-    constructor(props) {
-        super(props)
-
-        var defaultUri = "https://melvincarvalho.com/#me"
-        var uri = getQueryStringParam("uri") || defaultUri
-        this.state = { uri : uri }
-        this.handleChange = this.handleChange.bind(this)
-    }
-
-    handleChange(e) {
-      this.setState({uri: e.target.value })
-      console.log("this.state.uri", this.state.uri)
-    }
-
-    render() {
-
-        return <div>
-        Uri : <input size="80" onChange={this.handleChange} placeholder="uri" value={this.state.uri}/>
-        <hr/>
-
-        <Subject uri={this.state.uri}/>
-        </div>
-    }
-
-}
-
-</script>
-
-
-
-    <script type="text/babel">
-
-
-function Body(props) {
-    return (
-    <div>
-
-      <section className="section">
-      <h1 id="welcome" className="title">
-        Solid App!
-      </h1>
-        <InputUri />
-      </section>
-
-    </div>
-  );
-}
-
-
-function App() {
-  return (
-    <div>
-      <NavbarSolid className="is-link" title="Solid App"/>
-      <Body/>
-
-    </div>
-  );
-}
-
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-);
-
-    </script>
-
-    <script>
-
-        function getQueryStringParam(param) {
-            var url = window.location.toString();
-            url.match(/\?(.+)$/);
-            var params = RegExp.$1;
-            params = params.split("&");
-            var queryStringList = {};
-            for (var i = 0; i < params.length; i++) {
-                var tmp = params[i].split("=");
-                queryStringList[tmp[0]] = unescape(tmp[1]);
-            }
-            return queryStringList[param];
-        }
-
-        // main
-        const store = $rdf.graph()
-        const fetcher = new $rdf.Fetcher(store)
-        const updater = new $rdf.UpdateManager(store)
-
-
-    </script>
+    <script type="text/babel" src="../src/components/bulma/Navbar.jsx"></script>
+    <script type="text/babel" src="../src/components/Addressbar.jsx"></script>
+    <script type="text/babel" src="../src/components/NamedNodeSet.jsx"></script>
+    <script type="text/babel" src="../src/components/NamedNode.jsx"></script>
+    <script type="text/babel" src="jsx/Solid.jsx"></script>
 
     <link rel="stylesheet" href="css/bulma.css" defer>
 

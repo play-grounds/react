@@ -6,7 +6,7 @@ UI.updater = new $rdf.UpdateManager(UI.store)
 
 var subject = getQueryStringParam('uri') || 'https://melvincarvalho.com/#me'
 
-class FriendSet extends React.Component {
+class Solid extends React.Component {
   constructor (props) {
     super(props)
 
@@ -50,7 +50,7 @@ function Body (props) {
       <div>
         <section className='section'>
           <Addressbar subject={subject}>
-            <FriendSet />
+            <Solid />
           </Addressbar>
         </section>
 
@@ -65,8 +65,8 @@ function App () {
     <div>
       <NavbarSolid
         className='is-link'
-        title='Friends App'
-        sourceCode='https://github.com/play-grounds/react/blob/gh-pages/play/friends.html/' />
+        title='Solid App'
+        sourceCode='https://github.com/play-grounds/react/blob/gh-pages/play/solid.html/' />
       <Body />
 
     </div>
