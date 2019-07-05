@@ -4,8 +4,7 @@ UI.store = $rdf.graph()
 UI.fetcher = new $rdf.Fetcher(UI.store)
 UI.updater = new $rdf.UpdateManager(UI.store)
 
-var defaultUri = 'https://melvincarvalho.com/#me'
-var subject = getQueryStringParam('uri') || defaultUri
+var subject = getQueryStringParam('uri') || 'https://melvincarvalho.com/#me'
 
 class FriendSet extends React.Component {
   constructor (props) {
