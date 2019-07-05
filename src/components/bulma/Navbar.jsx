@@ -10,6 +10,53 @@ function NavbarAbout ({sourceCode, ...props}) {
   </div>
 }
 
+class NavbarLogin extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { loggedIn : false }
+  }
+
+  async componentDidMount() {
+    console.log('mounted');
+    
+    await this.login()  
+  }
+
+  async login(idp) {
+    console.log('login');
+    
+    idp = idp || "https://solid.community"
+    const session = await solid.auth.currentSession();
+    console.log('session', session)
+    if (!session) {
+      //await solid.auth.login(idp)
+    } else {
+      this.setState({loggedIn : true})
+      console.log(`Logged in as ${session.webId}`);
+    }
+  }
+
+  render() {
+    const {sourceCode, ...props} = this.props;
+    if (this.state.loggedIn) {
+      return (<div className='navbar-item has-dropdown is-hoverable'>
+      <Navbar.List title="Logged In">
+        <Navbar.Item href="./solid-auth-client.html">Logout</Navbar.Item>
+        <hr />
+        <Navbar.Item href="./solid-auth-client.html">Debug to console</Navbar.Item>
+      </Navbar.List>
+    </div>) } else {
+      return (<div className='navbar-item has-dropdown is-hoverable'>
+      <Navbar.List title="Sign In">
+        <Navbar.Item href='./solid-auth-client.html'>Login</Navbar.Item>
+        <hr />
+        <Navbar.Item href="https://solid.community/">Sign Up</Navbar.Item>
+      </Navbar.List>
+    </div>)   
+    }
+  }
+}
+
 function NavbarItem ({href, ...props}) {
   return (
     <a href={href} className='navbar-item'>
@@ -120,7 +167,7 @@ function NavbarExample ({title, className, ...props}) {
 
 function NavbarSolid ({title, className, sourceCode, ...props}) {
 
-  return <Navbar className={className}>
+  return (<Navbar className={className}>
     <Navbar.Brand>
     <Navbar.Logo href='#' src="https://play-grounds.github.io/react/play/image/solid.svg" width="30" height="30" alt="Logo"></Navbar.Logo>
     <Navbar.Item href='#'>{title}</Navbar.Item>
@@ -135,10 +182,36 @@ function NavbarSolid ({title, className, sourceCode, ...props}) {
       {props.children}
 
     </Navbar.Menu>
-  </Navbar>
+  </Navbar>)
+}
+
+function NavbarSolidLogin ({title, className, sourceCode, ...props}) {
+
+  return (<Navbar className={className}>
+    <Navbar.Brand>
+    <Navbar.Logo href='#' src="https://play-grounds.github.io/react/play/image/solid.svg" width="30" height="30" alt="Logo"></Navbar.Logo>
+    <Navbar.Item href='#'>{title}</Navbar.Item>
+      <Navbar.Burger/>
+    </Navbar.Brand>
+
+    <Navbar.Menu>
+      <Navbar.Container position="start">
+        <Navbar.About sourceCode={sourceCode} />
+      </Navbar.Container>
+
+      {props.children}
+
+      <Navbar.Container position="end">
+        <Navbar.Login sourceCode={sourceCode} />
+      </Navbar.Container>
+
+
+    </Navbar.Menu>
+  </Navbar>)
 }
 
 Navbar.About = NavbarAbout
+Navbar.Login = NavbarLogin
 Navbar.List = NavbarList
 Navbar.Item = NavbarItem
 Navbar.Logo = NavbarLogo
