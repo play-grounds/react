@@ -41,16 +41,16 @@ class NavbarLogin extends React.Component {
     if (this.state.loggedIn) {
       return (<div className='navbar-item has-dropdown is-hoverable'>
       <Navbar.List title="Logged In">
-        <Navbar.Item href="./solid-auth-client.html">Logout</Navbar.Item>
+        <Navbar.Item target="_blank" href="./solid-auth-client.html">Logout</Navbar.Item>
         <hr />
-        <Navbar.Item href="./solid-auth-client.html">Debug to console</Navbar.Item>
+        <Navbar.Item target="_blank" href="./solid-auth-client.html">Debug</Navbar.Item>
       </Navbar.List>
     </div>) } else {
       return (<div className='navbar-item has-dropdown is-hoverable'>
       <Navbar.List title="Sign In">
-        <Navbar.Item href='./solid-auth-client.html'>Login</Navbar.Item>
+        <Navbar.Item target="_blank" href='./solid-auth-client.html'>Login</Navbar.Item>
         <hr />
-        <Navbar.Item href="https://solid.community/">Sign Up</Navbar.Item>
+        <Navbar.Item target="_blank" href="https://solid.community/">Sign Up</Navbar.Item>
       </Navbar.List>
     </div>)   
     }
@@ -59,7 +59,7 @@ class NavbarLogin extends React.Component {
 
 function NavbarItem ({href, ...props}) {
   return (
-    <a href={href} className='navbar-item'>
+    <a href={href} {...props} className='navbar-item'>
     {props.children}
     </a>    
   )
