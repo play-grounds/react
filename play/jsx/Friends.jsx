@@ -11,43 +11,57 @@ class FriendSet extends React.Component {
     var defaultUri = "https://melvincarvalho.com/#me"
     var subject = getQueryStringParam("uri") || defaultUri
     this.state = { subject : subject }
-    this.handleChange = this.handleChange.bind(this)
 
   }
 
   componentDidMount() {
+    console.log('mounted');
 
     fetcher.load(this.props.subject).then(response => {
-      this.quads = store.statementsMatching(store.sym(this.props.subject), store.sym("http://xmlns.com/foaf/0.1/knows"), null, store.sym(this.props.subject.split('#')[0]))
-      for (var i = 0; i < this.quads.length; i++) {
-        var quad = this.quads[i]
-        console.log('object', quad.object);
-      }
-      this.setState({ quads: this.quads })
-    }, err => {
-      console.log(err);
-    });
+
+    let s = store.sym(this.props.subject)
+    let p = store.sym("http://xmlns.com/foaf/0.1/knows")
+    let o = null
+    let w = store.sym(this.props.subject.split('#')[0])
+    let quads = store.statementsMatching(s,p,o,w)
+    this.setState({ quads: quads })
+
+  }, err => {
+    console.log(err)
+  })
   }
 
-  handleChange(e) {
-    this.setState({ subject: e.target.value })
-    console.log("this.props.subject", this.props.subject)
-    fetcher.load(this.props.subject).then(response => {
-      this.quads = store.statementsMatching(store.sym(this.props.subject), null, null, store.sym(this.props.subject.split('#')[0]))
-      for (var i = 0; i < this.quads.length; i++) {
-        var triple = this.quads[i]
-        console.log('object', triple.object.value);
-      }
-      this.setState({ quads: this.quads })
-    }, err => {
-      console.log(err);
-    });
+  componentWillReceiveProps(props, current_state) {
+    
+    console.log('received', props);
+    
+    fetcher.load(props.subject).then(response => {
 
+      let s = store.sym(this.props.subject)
+      let p = store.sym("http://xmlns.com/foaf/0.1/knows")
+      let o = null
+      let w = store.sym(this.props.subject.split('#')[0])
+      let quads = store.statementsMatching(s,p,o,w)
+      this.setState({ quads: quads })
+
+      console.log('quads', quads, subject, this.props.subject);
+      
+    }, err => {
+      console.log(err)
+    })
+  
   }
 
 
   render() {
-    return <NamedNodeSet nodes={this.state.quads} />
+
+    return (
+      <div>
+        {this.props.subject}
+        <hr/>
+        <NamedNodeSet nodes={this.state.quads} subject={this.props.subject} />
+      </div>
+    )
   }
 }
 
@@ -58,9 +72,9 @@ function Body(props) {
 
       <div>
         <section className="section">
-          <AddressBar subject={subject}>
+          <Addressbar subject={subject}>
           <FriendSet />
-          </AddressBar> 
+          </Addressbar> 
         </section>
 
       </div>
