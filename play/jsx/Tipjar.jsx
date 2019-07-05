@@ -63,7 +63,7 @@ function Body (props) {
 function App () {
   return (
     <div>
-      <NavbarSolid
+      <NavbarSolidLogin
         className='is-link'
         title='Tipjar App'
         sourceCode='https://github.com/play-grounds/react/blob/gh-pages/play/tipjar.html/' />

@@ -16,7 +16,7 @@ function App () {
   return (
     <div>
 
-      <NavbarSolid
+      <NavbarSolidLogin
         className='is-link'
         title='Bookmark'
         sourceCode='https://github.com/play-grounds/react/blob/gh-pages/play/bookmark.html' />

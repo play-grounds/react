@@ -21,7 +21,10 @@ return <li><a href={props.href}>{props.text}</a></li>
 function App() {
 return (
   <div>
-    <NavbarSolid className="is-link" title="Play Apps" sourceCode="https://github.com/play-grounds/react/blob/gh-pages/play/index.html"/>
+    <NavbarSolidLogin
+       className="is-link" 
+       title="Play Apps" 
+       sourceCode="https://github.com/play-grounds/react/blob/gh-pages/play/index.html"/>
     <section className="section">
       <Body/>
       <hr/>
