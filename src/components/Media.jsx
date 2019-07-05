@@ -15,10 +15,10 @@ class Media extends React.Component {
         <div><img src={this.props.href} /></div>)
     } else if (this.props.href.match(VIDEO_EXTENSIONS)) {
       return (
-        <div><video autoplay='true' loop src={this.props.href} /></div>)
+        <div><video controls autoplay='true' loop src={this.props.href} /></div>)
     } else if (this.props.href.match(AUDIO_EXTENSIONS)) {
       return (
-        <div><video autoplay='true' loop src={this.props.href} /></div>)
+        <div><video controls autoplay='true' loop src={this.props.href} /></div>)
     } else {
       return (
         <div><img src={this.props.href} /></div>)
