@@ -67,7 +67,10 @@ class App extends React.Component {
   render() {
       return (
     <div>
-      <NavbarSolid className="is-link" title="Solid Auth Client" sourceCode="https://github.com/play-grounds/react/blob/gh-pages/play/solid-auth-client.html"/>
+      <NavbarSolidLogin
+        className="is-link" 
+        title="Solid Auth Client" 
+        sourceCode="https://github.com/play-grounds/react/blob/gh-pages/play/solid-auth-client.html"/>
       <section className="section">
         <Body/>
         {this.state.message}
