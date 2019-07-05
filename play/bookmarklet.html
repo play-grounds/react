@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>play</title>
+    <title>Bookmarklets</title>
     <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     <script src="https://solid.github.io/releases/rdflib.js/rdflib-0.12.2.min.js"></script>
@@ -15,8 +15,7 @@
 
 <body>
     <div id="root"></div>
-    <script type="text/babel" src="../components/bulma/navbar.jsx"></script>
-
+    <script type="text/babel" src="../src/components/bulma/Navbar.jsx"></script>
 
     <script type="text/babel">
 
@@ -28,7 +27,6 @@ function Body(props) {
       <h1 id="welcome" className="title">
         Bookmarklet playground!
       </h1>
-
 
     </div>
   );
@@ -53,7 +51,7 @@ class App extends React.Component {
   render() {
       return (
     <div>
-      <NavbarSolid className="is-link" title="Bookmarklets" sourceCode="https://github.com/play-grounds/react/blob/gh-pages/play/index.html"/>
+      <NavbarSolid className="is-link" title="Bookmarklets" sourceCode="https://github.com/play-grounds/react/blob/gh-pages/play/bookmarklet.html"/>
       <section className="section">
         <Body/>
         <hr/>
@@ -79,11 +77,7 @@ class App extends React.Component {
 ReactDOM.render(
   <App />,
   document.getElementById('root')
-);
-
-    </script>
-
-    <script>
+)
 
     </script>
 
