@@ -31,7 +31,7 @@ class FriendSet extends React.Component {
     this.fetchFriends(this.props.subject)
   }
 
-  componentWillReceiveProps (props, current_state) {
+  componentWillReceiveProps (props) {
     this.fetchFriends(props.subject)
   }
 
