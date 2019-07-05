@@ -1,55 +1,41 @@
 // main
-const store = $rdf.graph()
-const fetcher = new $rdf.Fetcher(store)
-const updater = new $rdf.UpdateManager(store)
-var subject = 'https://melvincarvalho.com/#me'
+var UI = {}
+UI.store = $rdf.graph()
+UI.fetcher = new $rdf.Fetcher(UI.store)
+UI.updater = new $rdf.UpdateManager(UI.store)
+
+var defaultUri = "https://melvincarvalho.com/#me"
+var subject = getQueryStringParam("uri") || defaultUri
+
 
 class FriendSet extends React.Component {
   constructor(props) {
     super(props)
 
-    var defaultUri = "https://melvincarvalho.com/#me"
-    var subject = getQueryStringParam("uri") || defaultUri
     this.state = { subject : subject }
+  }
 
+  fetchFriends(subject) {
+    UI.fetcher.load(subject).then(response => {
+
+      let s = UI.store.sym(subject)
+      let p = UI.store.sym("http://xmlns.com/foaf/0.1/knows")
+      let o = null
+      let w = UI.store.sym(subject.split('#')[0])
+      let quads = UI.store.statementsMatching(s,p,o,w)
+      this.setState({ quads: quads })
+  
+    }, err => {
+      console.log(err)
+    })  
   }
 
   componentDidMount() {
-    console.log('mounted');
-
-    fetcher.load(this.props.subject).then(response => {
-
-    let s = store.sym(this.props.subject)
-    let p = store.sym("http://xmlns.com/foaf/0.1/knows")
-    let o = null
-    let w = store.sym(this.props.subject.split('#')[0])
-    let quads = store.statementsMatching(s,p,o,w)
-    this.setState({ quads: quads })
-
-  }, err => {
-    console.log(err)
-  })
+    this.fetchFriends(this.props.subject)
   }
 
   componentWillReceiveProps(props, current_state) {
-    
-    console.log('received', props);
-    
-    fetcher.load(props.subject).then(response => {
-
-      let s = store.sym(this.props.subject)
-      let p = store.sym("http://xmlns.com/foaf/0.1/knows")
-      let o = null
-      let w = store.sym(this.props.subject.split('#')[0])
-      let quads = store.statementsMatching(s,p,o,w)
-      this.setState({ quads: quads })
-
-      console.log('quads', quads, subject, this.props.subject);
-      
-    }, err => {
-      console.log(err)
-    })
-  
+    this.fetchFriends(props.subject)
   }
 
 
@@ -83,11 +69,13 @@ function Body(props) {
   );
 }
 
-
 function App() {
   return (
     <div>
-      <NavbarSolid className="is-link" title="Friends App" sourceCode="https://github.com/play-grounds/react/blob/gh-pages/play/friends.html/" />
+      <NavbarSolid 
+        className="is-link" 
+        title="Friends App" 
+        sourceCode="https://github.com/play-grounds/react/blob/gh-pages/play/friends.html/" />
       <Body />
 
     </div>
@@ -97,8 +85,4 @@ function App() {
 ReactDOM.render(
   <App />,
   document.getElementById('root')
-);
-
-
-
-
+)
