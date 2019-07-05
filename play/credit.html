@@ -132,7 +132,7 @@ function Label(props) {
 function Main(props) {
     return (
     <section className="section">
-      <AddressBar >
+      <AddressBar subject={subject}>
       <Credit />
       </AddressBar>
     </section>
@@ -143,7 +143,11 @@ function App() {
   return (
     <div>
 
-      <NavbarSolid className="is-link" title="Credit" sourceCode="https://github.com/play-grounds/react/blob/gh-pages/play/credit.html"></NavbarSolid>      
+      <NavbarSolid 
+        className="is-link" 
+        title="Credit" 
+        sourceCode="https://github.com/play-grounds/react/blob/gh-pages/play/credit.html">
+      </NavbarSolid>      
       
       <Main>
       </Main>

@@ -14,9 +14,8 @@
 
 <body>
   <div id="root"></div>
-  <script type="text/babel" src="../components/bulma/navbar.jsx"></script>
-  <script type="text/babel" src="../src/components/Literal.js"></script>
-  <script type="text/babel" src="../src/components/AddressBar.jsx"></script>
+  <script type="text/babel" src="../src/components/bulma/Navbar.jsx"></script>
+  <script type="text/babel" src="../src/components/Addressbar.jsx"></script>
   <script src="https://solid.github.io/releases/rdflib.js/rdflib-0.12.2.min.js"></script>
 
 
@@ -132,9 +131,9 @@ function Label(props) {
 function Main(props) {
     return (
     <section className="section">
-      <AddressBar >
+      <Addressbar subject={subject}>
       <Wallet />
-      </AddressBar>
+      </Addressbar>
     </section>
   );
 }
