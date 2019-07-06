@@ -56,9 +56,9 @@ function Counter() {
       <span className="button is-large">Total : {count}</span>
       <hr/>
       <button className="button is-link is-large" onClick={() => {increment(5)}}>+5</button>&nbsp;
-      <button className="button is-link is-large" onClick={() => {increment(30)}}>+30</button>
+      <button className="button is-primary is-large" onClick={() => {increment(30)}}>+30</button>
       <hr/>
-      <button className="button is-link is-large" onClick={reset}>Reset</button>
+      <button className="button is-info is-large" onClick={reset}>Reset</button>
       <hr/>
     </div>
   );
@@ -72,7 +72,7 @@ ReactDOM.render(
     title='Counter App'
     sourceCode='https://github.com/play-grounds/react/blob/gh-pages/play/counter.html/' />
 
-    <div className="section has-background-light">
+    <div className="section">
       <div className="container">
         <div className="columns">
           <div className="column">
