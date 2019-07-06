@@ -53,12 +53,12 @@ function Counter() {
 
   return (
     <div>
-      <span>Total : {count}</span>
+      <span className="button is-large">Total : {count}</span>
       <hr/>
-      <button className="button is-link" onClick={plus5}>plus5</button>&nbsp;
-      <button className="button is-link" onClick={plus30}>plus30</button>
+      <button className="button is-link is-large" onClick={plus5}>+5</button>&nbsp;
+      <button className="button is-link is-large" onClick={plus30}>+30</button>
       <hr/>
-      <button className="button is-link" onClick={reset}>reset</button>
+      <button className="button is-link is-large" onClick={reset}>Reset</button>
     </div>
   );
 }
