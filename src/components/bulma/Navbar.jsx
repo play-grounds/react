@@ -13,13 +13,17 @@ function NavbarAbout ({sourceCode, ...props}) {
 class NavbarLogin extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { loggedIn : false }
+    this.state = { loggedIn : false, webId : null }
   }
 
   async componentDidMount() {
     console.log('mounted');
     
-    await this.login()  
+    const session = await solid.auth.currentSession();
+    if (session) {
+      this.setState({loggedIn : true, webId : session.webId })
+      console.log(`Logged in as ${session.webId}`);
+    }    
   }
 
   async login(idp) {
@@ -29,7 +33,7 @@ class NavbarLogin extends React.Component {
     const session = await solid.auth.currentSession();
     console.log('session', session)
     if (!session) {
-      //await solid.auth.login(idp)
+      await solid.auth.login(idp)
     } else {
       this.setState({loggedIn : true})
       console.log(`Logged in as ${session.webId}`);
@@ -48,7 +52,7 @@ class NavbarLogin extends React.Component {
     </div>) } else {
       return (<div className='navbar-item has-dropdown is-hoverable'>
       <Navbar.List title="Sign In">
-        <Navbar.Item target="_blank" href='./solid-auth-client.html'>Login</Navbar.Item>
+        <button target="_blank" onClick={() => { this.login() } } href='#'>Login</button>
         <hr />
         <Navbar.Item target="_blank" href="https://solid.community/">Sign Up</Navbar.Item>
       </Navbar.List>
