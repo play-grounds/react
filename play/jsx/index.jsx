@@ -44,6 +44,7 @@ return (
       <Li href="solid-auth-client.html" text="Solid Auth Client" />
       <Li href="wallet.html" text="Wallet" />
       <Li href="credit.html" text="Credit" />
+      <Li href="outstated.html" text="Outstated Counter" />
     </ul>
     <hr/>
     </section>
