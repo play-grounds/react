@@ -52,7 +52,7 @@ function Counter() {
   const {count, increment, decrement, reset} = useStore(store);
 
   return (
-    <div>
+    <div className="is-info">
       <span className="button is-large">Total : {count}</span>
       <hr/>
       <button className="button is-link is-large" onClick={() => {increment(5)}}>+5</button>&nbsp;
@@ -71,8 +71,20 @@ ReactDOM.render(
     className='is-link'
     title='Counter App'
     sourceCode='https://github.com/play-grounds/react/blob/gh-pages/play/counter.html/' />
-    <div class="section">
-      <Counter />
+
+    <div className="section has-background-light">
+      <div className="container">
+        <div className="columns">
+          <div className="column">
+
+            <div className="notification is-info">
+            <Counter />
+            </div>
+
+          </div>
+
+        </div>
+      </div>
     </div>
   </Provider>,
   document.getElementById('root')
