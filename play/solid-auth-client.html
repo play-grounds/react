@@ -37,6 +37,23 @@ async function login(idp) {
     console.log(`Logged in as ${session.webId}`);
   }
 
+/** Checks syncronously whether user is logged in
+ *
+ * @returns Named Node or null
+*/
+function currentUser () {
+  let str = localStorage['solid-auth-client']
+  if (str) {
+    let da = JSON.parse(str)
+    if (da.session && da.session.webId) {
+      // @@ check has not expired
+      return $rdf.sym(da.session.webId)
+    }
+  }
+  return offlineTestID() // null unless testing
+  // JSON.parse(localStorage['solid-auth-client']).session.webId
+}
+
 
 function Body(props) {
     return (
@@ -97,7 +114,7 @@ class App extends React.Component {
           localStorage.clear() ; 
           location.reload() 
         }}>Logout</button>
-        <button className="button is-link" onClick={() => { 
+        <button className="button is-warning" onClick={() => { 
           var sac = JSON.parse(localStorage.getItem('solid-auth-client'));
           console.table(sac);
           console.table(sac.rpConfig);
