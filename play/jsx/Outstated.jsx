@@ -41,29 +41,38 @@ function useStore(storeInit) {
 const store = () => {
   const [count, setCount] = React.useState(0);
 
-  const increment = () => setCount(count + 1);
-  const decrement = () => setCount(count - 1);
+  const plus5 = () => setCount(count + 5);
+  const plus30 = () => setCount(count + 30);
   const reset = () => setCount(0);
 
-  return {count, increment, decrement, reset};
+  return {count, plus5, plus30, reset};
 };
 
 function Counter() {
-  const {count, increment, decrement, reset} = useStore(store);
+  const {count, plus5, plus30, reset} = useStore(store);
 
   return (
     <div>
-      <button onClick={decrement}>-</button>
-      <span>{count}</span>
-      <button onClick={increment}>+</button>
-      <button onClick={reset}>reset</button>
+      <span>Total : {count}</span>
+      <hr/>
+      <button className="button is-link" onClick={plus5}>plus5</button>&nbsp;
+      <button className="button is-link" onClick={plus30}>plus30</button>
+      <hr/>
+      <button className="button is-link" onClick={reset}>reset</button>
     </div>
   );
 }
 
 ReactDOM.render(
+  
   <Provider stores={[store]}>
-    <Counter />
+  <NavbarSolidLogin
+    className='is-link'
+    title='Outstated App'
+    sourceCode='https://github.com/play-grounds/react/blob/gh-pages/play/outstated.html/' />
+    <div class="section">
+      <Counter />
+    </div>
   </Provider>,
   document.getElementById('root')
 );
