@@ -43,20 +43,26 @@ class NavbarLogin extends React.Component {
   render() {
     const {sourceCode, ...props} = this.props;
     if (this.state.loggedIn) {
-      return (<div className='navbar-item has-dropdown is-hoverable'>
+      return (
+      <div className='navbar-item has-dropdown is-hoverable'>
       <Navbar.List title="Logged In">
         <Navbar.Item target="_blank" href="./solid-auth-client.html">Logout</Navbar.Item>
         <hr />
         <Navbar.Item target="_blank" href="./solid-auth-client.html">Debug</Navbar.Item>
       </Navbar.List>
-    </div>) } else {
-      return (<div className='navbar-item has-dropdown is-hoverable'>
+      </div>) 
+    } else {
+      return (
+      <div className='navbar-item has-dropdown is-hoverable'>
       <Navbar.List title="Sign In">
-        <button target="_blank" onClick={() => { this.login() } } href='#'>Login</button>
+        <a className="navbar-item button navbar is-primary" target="_blank" 
+        onClick={() => { 
+          this.login() } 
+        } href='#'>Login</a>
         <hr />
-        <Navbar.Item target="_blank" href="https://solid.community/">Sign Up</Navbar.Item>
+        <a className="navbar-item button navbar is-info" target="_blank" href="https://solid.community/">Sign Up</a>
       </Navbar.List>
-    </div>)   
+      </div>)   
     }
   }
 }
