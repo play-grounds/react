@@ -41,24 +41,25 @@ function useStore(storeInit) {
 const store = () => {
   const [count, setCount] = React.useState(0);
 
-  const plus5 = () => setCount(count + 5);
-  const plus30 = () => setCount(count + 30);
+  const increment = (amount) => setCount(count + amount);
+  const decrement = () => setCount(count + 30);
   const reset = () => setCount(0);
 
-  return {count, plus5, plus30, reset};
+  return {count, increment, decrement, reset};
 };
 
 function Counter() {
-  const {count, plus5, plus30, reset} = useStore(store);
+  const {count, increment, decrement, reset} = useStore(store);
 
   return (
     <div>
       <span className="button is-large">Total : {count}</span>
       <hr/>
-      <button className="button is-link is-large" onClick={plus5}>+5</button>&nbsp;
-      <button className="button is-link is-large" onClick={plus30}>+30</button>
+      <button className="button is-link is-large" onClick={() => {increment(5)}}>+5</button>&nbsp;
+      <button className="button is-link is-large" onClick={() => {increment(30)}}>+30</button>
       <hr/>
       <button className="button is-link is-large" onClick={reset}>Reset</button>
+      <hr/>
     </div>
   );
 }
