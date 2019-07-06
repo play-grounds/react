@@ -29,6 +29,15 @@ async function login(idp) {
     console.log(`Logged in as ${session.webId}`);
   }
 
+  async function popupLogin(idp) {
+  const session = await solid.auth.currentSession();
+  if (!session)
+    await solid.auth.popupLogin(idp);
+  else
+    console.log(`Logged in as ${session.webId}`);
+  }
+
+
 function Body(props) {
     return (
     <div>
@@ -61,7 +70,12 @@ class App extends React.Component {
   }
 
   async handleChange(event) {
-    console.log(event.target.value)
+    login('https://solid.community')    
+  }
+
+
+  
+  async popupLogin(event) {
     login('https://solid.community')    
   }
 
@@ -78,11 +92,12 @@ class App extends React.Component {
         <hr/>
         <div className="buttons">
         <button className="button is-link" onClick={this.handleChange}>Login</button>
+        <button className="button is-info" onClick={this.popupLogin}>Popup Login</button>
         <button className="button is-primary" onClick={() => { 
           localStorage.clear() ; 
           location.reload() 
         }}>Logout</button>
-        <button className="button is-info" onClick={() => { 
+        <button className="button is-link" onClick={() => { 
           var sac = JSON.parse(localStorage.getItem('solid-auth-client'));
           console.table(sac);
           console.table(sac.rpConfig);
