@@ -4,14 +4,12 @@ UI.store = $rdf.graph()
 UI.store.fetcher = new $rdf.Fetcher(UI.store)
 UI.updater = new $rdf.UpdateManager(UI.store)
 
-var subject = new URLSearchParams(document.location.search).get('uri') 
+var subject = new URLSearchParams(document.location.search).get('uri')
 || 'https://melvincarvalho.com/#me'
 
-
 function getWithDefault (subject, predicate, defaultValue) {
-  
   const object = UI.store.any(subject, predicate)
-  console.log('object', subject, predicate, object);
+  console.log('object', subject, predicate, object)
   return object ? object.value : defaultValue
 }
 
@@ -24,27 +22,24 @@ function fetchPerson (subject) {
 
 var avatar = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMTAwIDEwMCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PGc+PGc+PGc+PGc+PHBhdGggZD0iTTQ3LjY4Niw1MC44MDloMC4zOTFjLTAuMTA4LTAuMDktMC4yMTMtMC4xNzMtMC4zMDctMC4yNzJjLTMuMDk5LTIuNzk5LTUuNDYzLTguMjM5LTUuNDYzLTEyLjYzNyAgICAgIGMwLTYuMjIyLDUuMDk0LTEwLjMxNSw5LjkxMS0xMC4zMTVjNC44MTMsMCw5LjY1MSw0LjQyOCw5LjY1MSwxMC42NDdjMCw0LjM5Ni0yLjYxNSw5LjY3MS01Ljg1MSwxMi4zNzQgICAgICBjMC42NjUsMi41MzYsNC4zMDYsMy4zNjYsMTEuODE1LDUuNDI1YzguMzQzLDIuMjksNi45MDcsNy45NTgsNi44ODIsMTEuNzY0SDI5LjY4NGMtMC4wMjYtMy44MDYtMi4wOTMtOS40NzQsNi4yNTEtMTEuNzY0ICAgICAgQzQzLjIzOCw1NC4wMjYsNDYuODc2LDUzLjE4NSw0Ny42ODYsNTAuODA5eiI+PC9wYXRoPjxwYXRoIGQ9Ik00OC4wNzcsNTAuODA5aC0wLjM5MWMwLjAzMi0wLjA5LDAuMDU3LTAuMTc3LDAuMDgzLTAuMjcyQzQ3Ljg2Myw1MC42MzYsNDcuOTY5LDUwLjcxOSw0OC4wNzcsNTAuODA5eiI+PC9wYXRoPjwvZz48L2c+PC9nPjwvZz48L3N2Zz4='
 
-
 class Person extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
-    this.state = { name : props.subject, img : avatar }
+    this.state = { name: props.subject, img: avatar }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     UI.store.fetcher.load(UI.store.sym(this.props.subject)).then(response => {
-      this.setState ({name : getWithDefault (UI.store.sym(this.props.subject), UI.store.sym('http://xmlns.com/foaf/0.1/name'), this.props.subject) }) 
-      this.setState ({img : getWithDefault (UI.store.sym(this.props.subject), UI.store.sym('http://xmlns.com/foaf/0.1/img'), avatar) }) 
-      console.log('fetched', this.props.subject);
-      
+      this.setState({name: getWithDefault(UI.store.sym(this.props.subject), UI.store.sym('http://xmlns.com/foaf/0.1/name'), this.props.subject) })
+      this.setState({img: getWithDefault(UI.store.sym(this.props.subject), UI.store.sym('http://xmlns.com/foaf/0.1/img'), avatar) })
+      console.log('fetched', this.props.subject)
     }, err => {
       console.log(err)
     })
   }
 
-  render() {
-
-    function handleRemove() {
+  render () {
+    function handleRemove () {
 
     }
 
@@ -53,27 +48,24 @@ class Person extends React.Component {
     if (remove) {
       return (
 
-        <div style={{ 'display' : 'flex' }}>
-          <img src={this.state.img} width='50' height='50' style={{ 'margin' : 1 }} />
-          <a href={this.props.subject} target="_blank" style={{ 'flexGrow' : 1, 'margin' : 'auto 0' }} >{this.state.name}</a>
-          <button style={{ 'margin' : '5px' }} onClick={handleRemove} >Remove</button>
-        </div>    
-    )
-
+        <div style={{ 'display': 'flex' }}>
+          <img src={this.state.img} width='50' height='50' style={{ 'margin': 1 }} />
+          <a href={this.props.subject} target='_blank' style={{ 'flexGrow': 1, 'margin': 'auto 0' }} >{this.state.name}</a>
+          <button style={{ 'margin': '5px' }} onClick={handleRemove} >Remove</button>
+        </div>
+      )
     } else {
       return (
 
-        <div style={{ 'display' : 'flex' }}>
-          <img src={this.state.img} width='50' height='50' style={{ 'margin' : 1 }} />
-          <a style={{ 'flexGrow' : 1, 'margin' : 'auto 0' }} >{this.state.name}</a>
-          <a href={this.props.subject} target="_blank" style={{ 'margin': '5px' }} >
+        <div style={{ 'display': 'flex' }}>
+          <img src={this.state.img} width='50' height='50' style={{ 'margin': 1 }} />
+          <a style={{ 'flexGrow': 1, 'margin': 'auto 0' }} >{this.state.name}</a>
+          <a href={this.props.subject} target='_blank' style={{ 'margin': '5px' }} >
             <img src='https://solid.github.io/solid-ui/src/originalIcons/go-to-this.png' />
           </a>
-        </div>    
-    )
-
+        </div>
+      )
     }
-
   }
 }
 
@@ -83,8 +75,6 @@ class PersonClass {
     this.element = element
     this.handleRemove = handleRemove
   }
-
-
 
   render () {
     const container = document.createElement('div')
@@ -159,17 +149,11 @@ class Group extends React.Component {
     this.fetchFriends(props.subject)
   }
 
-
   render () {
-
     if (this.state.quads) {
-      var listItems = this.state.quads.map( (quad) => {
-
-        
+      var listItems = this.state.quads.map((quad) => {
         return <Person subject={quad.object.value} name={quad.object.value} />
-
-        
-      } )  
+      })
     }
 
     return (
