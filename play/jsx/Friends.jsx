@@ -38,7 +38,7 @@ function Person (props) {
 
 
   UI.store.fetcher.load(UI.store.sym(props.subject)).then(response => {
-    name = getWithDefault (UI.store.sym(props.subject), UI.store.sym('http://xmlns.com/foaf/0.1/knows'), props.subject)    
+    name = getWithDefault (UI.store.sym(props.subject), UI.store.sym('http://xmlns.com/foaf/0.1/name'), props.subject)    
     img = getWithDefault (UI.store.sym(props.subject), UI.store.sym('http://xmlns.com/foaf/0.1/img'), avatar)    
   }, err => {
     console.log(err)
