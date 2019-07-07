@@ -30,9 +30,14 @@ class Person extends React.Component {
 
   componentDidMount () {
     UI.store.fetcher.load(UI.store.sym(this.props.subject)).then(response => {
-      this.setState({name: getWithDefault(UI.store.sym(this.props.subject), UI.store.sym('http://xmlns.com/foaf/0.1/name'), this.props.subject) })
-      this.setState({img: getWithDefault(UI.store.sym(this.props.subject), UI.store.sym('http://xmlns.com/foaf/0.1/img'), avatar) })
-      console.log('fetched', this.props.subject)
+      let name = UI.store.any(UI.store.sym(this.props.subject), UI.store.sym('http://xmlns.com/foaf/0.1/name')) || 
+      UI.store.any(UI.store.sym(this.props.subject), UI.store.sym('http://www.w3.org/2006/vcard/ns#fn')) 
+      let img = UI.store.any(UI.store.sym(this.props.subject), UI.store.sym('http://xmlns.com/foaf/0.1/img')) || 
+      UI.store.any(UI.store.sym(this.props.subject), UI.store.sym('http://xmlns.com/foaf/0.1/depiction')) ||
+      UI.store.any(UI.store.sym(this.props.subject), UI.store.sym('http://www.w3.org/2006/vcard/ns#hasPhoto'))
+      img = img ? img.value : this.props.subject.value 
+      name = name ? name.value : avatar 
+      this.setState({name: name, img : img })
     }, err => {
       console.log(err)
     })
