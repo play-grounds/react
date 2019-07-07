@@ -31,18 +31,16 @@ class Person extends React.Component {
     this.state = { name : props.subject, img : avatar }
   }
 
-  componentDidMount()
-{
-  UI.store.fetcher.load(UI.store.sym(this.props.subject)).then(response => {
-    this.setState ({name : getWithDefault (UI.store.sym(this.props.subject), UI.store.sym('http://xmlns.com/foaf/0.1/name'), this.props.subject) }) 
-    this.setState ({img : getWithDefault (UI.store.sym(this.props.subject), UI.store.sym('http://xmlns.com/foaf/0.1/img'), avatar) }) 
-    console.log('fetched', this.props.subject);
-    
-  }, err => {
-    console.log(err)
-  })
-
-}
+  componentDidMount() {
+    UI.store.fetcher.load(UI.store.sym(this.props.subject)).then(response => {
+      this.setState ({name : getWithDefault (UI.store.sym(this.props.subject), UI.store.sym('http://xmlns.com/foaf/0.1/name'), this.props.subject) }) 
+      this.setState ({img : getWithDefault (UI.store.sym(this.props.subject), UI.store.sym('http://xmlns.com/foaf/0.1/img'), avatar) }) 
+      console.log('fetched', this.props.subject);
+      
+    }, err => {
+      console.log(err)
+    })
+  }
 
   render() {
 
@@ -50,14 +48,32 @@ class Person extends React.Component {
 
     }
 
-    return (
+    var remove = false
 
-        <div style={{ display : 'flex' }}>
-        <img src={this.state.img} width='50' height='50' style={{ margin : 'i' }} />
-        <a href={this.props.subject} target="_blank" style={{ flexGrow : 1, margin : 'auto 0' }} >{this.state.name}</a>
-        <button style={{ margin : '5px' }} onClick={handleRemove} >Remove</button>
+    if (remove) {
+      return (
+
+        <div style={{ 'display' : 'flex' }}>
+          <img src={this.state.img} width='50' height='50' style={{ 'margin' : 1 }} />
+          <a href={this.props.subject} target="_blank" style={{ 'flexGrow' : 1, 'margin' : 'auto 0' }} >{this.state.name}</a>
+          <button style={{ 'margin' : '5px' }} onClick={handleRemove} >Remove</button>
         </div>    
     )
+
+    } else {
+      return (
+
+        <div style={{ 'display' : 'flex' }}>
+          <img src={this.state.img} width='50' height='50' style={{ 'margin' : 1 }} />
+          <a style={{ 'flexGrow' : 1, 'margin' : 'auto 0' }} >{this.state.name}</a>
+          <a href={this.props.subject} target="_blank" style={{ 'margin': '5px' }} >
+            <img src='https://solid.github.io/solid-ui/src/originalIcons/go-to-this.png' />
+          </a>
+        </div>    
+    )
+
+    }
+
   }
 }
 
