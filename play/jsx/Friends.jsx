@@ -2,7 +2,7 @@
 var UI = {}
 UI.store = $rdf.graph()
 UI.store.fetcher = new $rdf.Fetcher(UI.store)
-UI.store.updater = new $rdf.UpdateManager(UI.store)
+UI.updater = new $rdf.UpdateManager(UI.store)
 
 var subject = getQueryStringParam('uri') || 'https://melvincarvalho.com/#me'
 
@@ -98,7 +98,7 @@ class FriendSet extends React.Component {
 
   fetchFriends (subject) {
     UI.store.fetcher.load(subject).then(response => {
-      let store.s = UI.store.sym(subject)
+      let s = UI.store.sym(subject)
       let p = UI.store.sym('http://xmlns.com/foaf/0.1/knows')
       let o = null
       let w = UI.store.sym(subject.split('#')[0])
