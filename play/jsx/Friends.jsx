@@ -7,12 +7,6 @@ UI.updater = new $rdf.UpdateManager(UI.store)
 var subject = new URLSearchParams(document.location.search).get('uri')
 || 'https://melvincarvalho.com/#me'
 
-function getWithDefault (subject, predicate, defaultValue) {
-  const object = UI.store.any(subject, predicate)
-  console.log('object', subject, predicate, object)
-  return object ? object.value : defaultValue
-}
-
 function fetchPerson (subject) {
   UI.store.fetcher.load(subject).then(response => {
   }, err => {
@@ -26,6 +20,7 @@ class Person extends React.Component {
   constructor (props) {
     super(props)
     this.state = { name: props.subject, img: avatar }
+    this.handleClick = this.handleClick.bind(this)
   }
 
   componentDidMount () {
@@ -35,17 +30,23 @@ class Person extends React.Component {
       let img = UI.store.any(UI.store.sym(this.props.subject), UI.store.sym('http://xmlns.com/foaf/0.1/img')) || 
       UI.store.any(UI.store.sym(this.props.subject), UI.store.sym('http://xmlns.com/foaf/0.1/depiction')) ||
       UI.store.any(UI.store.sym(this.props.subject), UI.store.sym('http://www.w3.org/2006/vcard/ns#hasPhoto'))
-      img = img ? img.value : this.props.subject.value 
-      name = name ? name.value : avatar 
-      this.setState({name: name, img : img })
+      img = img ? img.value : this.props.subject.value
+      name = name ? name.value : avatar
+      this.setState({'name': name, 'img': img })
     }, err => {
       console.log(err)
     })
   }
 
-  render () {
-    function handleRemove () {
+  handleClick (event) {
+    let webId = event.target.title
+    history.pushState({}, 'Friends App', window.location.href.split('?')[0] + '?uri=' + encodeURIComponent(webId))
+    console.log(webId)
+    window.location.reload()
+  }
 
+  render () {
+    function handleRemove (event) {
     }
 
     var remove = false
@@ -64,7 +65,7 @@ class Person extends React.Component {
 
         <div style={{ 'display': 'flex' }}>
           <img src={this.state.img} width='50' height='50' style={{ 'margin': 1 }} />
-          <a style={{ 'flexGrow': 1, 'margin': 'auto 0' }} >{this.state.name}</a>
+          <a style={{ 'flexGrow': 1, 'margin': 'auto 0' }} title={this.props.subject} onClick={this.handleClick} >{this.state.name}</a>
           <a href={this.props.subject} target='_blank' style={{ 'margin': '5px' }} >
             <img src='https://solid.github.io/solid-ui/src/originalIcons/go-to-this.png' />
           </a>
@@ -74,59 +75,7 @@ class Person extends React.Component {
   }
 }
 
-class PersonClass {
-  constructor (element, webIdNode, handleRemove) {
-    this.webIdNode = webIdNode
-    this.element = element
-    this.handleRemove = handleRemove
-  }
-
-  render () {
-    const container = document.createElement('div')
-    container.style.display = 'flex'
-    // <div style={{ display : flex }}</div>
-
-    // TODO: take a look at UI.widgets.setName
-    const imgSrc = getWithDefault(this.webIdNode, ns.foaf('img'), iconBase + 'noun_15059.svg')
-    const profileImg = document.createElement('img')
-    profileImg.src = escape(imgSrc)
-    profileImg.width = '50'
-    profileImg.height = '50'
-    profileImg.style.margin = '5px'
-    // <img src={foar.img || person.svg} width='50' height='50' style={{ margin : 5px }} />
-
-    // TODO: take a look at UI.widgets.setImage
-    const name = getWithDefault(this.webIdNode, ns.foaf('name'), `[${this.webIdNode}]`)
-    const nameSpan = document.createElement('span')
-    nameSpan.innerHTML = escape(name)
-    nameSpan.style.flexGrow = '1'
-    nameSpan.style.margin = 'auto 0'
-    // <span style={{ flexGrow : 1, margin : 'auto 0' }} >{ foaf.name | WebId }</span>
-
-    const removeButton = document.createElement('button')
-    removeButton.textContent = 'Remove'
-    removeButton.addEventListener('click', event => this.handleRemove().catch(err => {
-      console.error(err)
-    }))
-    removeButton.style.margin = '5px'
-    // <button style={{ margin : 5ps }} onClick={this.handleRemove} >Remove</button>
-
-    container.appendChild(profileImg)
-    container.appendChild(nameSpan)
-    container.appendChild(removeButton)
-    // div style={{ display : flex }}
-    //    <img src={foar.img || person.svg} width='50' height='50' style={{ margin : 5px }}
-    //    <span style={{ flexGrow : 1, margin : 'auto 0' }} >{ foaf.name | WebId }</span>
-    //    <button style={{ margin : 5ps }} onClick={this.handleRemove} >Remove</button>
-    // </div>
-
-    this.element.innerHTML = ''
-    this.element.appendChild(container)
-    return this
-  }
-}
-
-class Group extends React.Component {
+class Roster extends React.Component {
   constructor (props) {
     super(props)
 
@@ -156,14 +105,14 @@ class Group extends React.Component {
 
   render () {
     if (this.state.quads) {
-      var listItems = this.state.quads.map((quad) => {
+      var friendSet = this.state.quads.map((quad) => {
         return <Person subject={quad.object.value} name={quad.object.value} />
       })
     }
 
     return (
       <div>
-        <ul>{listItems}</ul>
+        <ul>{friendSet}</ul>
       </div>
     )
   }
@@ -176,7 +125,7 @@ function Body (props) {
       <div>
         <section className='section'>
           <Addressbar subject={subject}>
-            <Group />
+            <Roster />
           </Addressbar>
         </section>
 
