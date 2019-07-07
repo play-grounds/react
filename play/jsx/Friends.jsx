@@ -4,7 +4,8 @@ UI.store = $rdf.graph()
 UI.store.fetcher = new $rdf.Fetcher(UI.store)
 UI.updater = new $rdf.UpdateManager(UI.store)
 
-var subject = getQueryStringParam('uri') || 'https://melvincarvalho.com/#me'
+var subject = new URLSearchParams(document.location.search).get('uri') 
+|| 'https://melvincarvalho.com/#me'
 
 
 function getWithDefault (subject, predicate, defaultValue) {
@@ -13,19 +14,17 @@ function getWithDefault (subject, predicate, defaultValue) {
 }
 
 
-function Body (props) {
+function Person (props) {
   function handleRemove() {
 
   }
 
-
   return (
-
 
       <div style={{ display : flex }}>
       <img src={'foar.img || person.svg'} width='50' height='50' style={{ margin : 'i' }} />
       <span style={{ flexGrow : 1, margin : 'auto 0' }} >'foaf.name | WebId' </span>
-      <button style={{ margin : '5ps' }} onClick={this.handleRemove} >Remove</button>
+      <button style={{ margin : '5px' }} onClick={this.handleRemove} >Remove</button>
       </div>    
   )
 }
@@ -35,7 +34,7 @@ function getWithDefault (subject, predicate, defaultValue) {
   return object ? object.value : defaultValue
 }
 
-class Person {
+class PersonClass {
   constructor (element, webIdNode, handleRemove) {
     this.webIdNode = webIdNode
     this.element = element
@@ -89,7 +88,7 @@ class Person {
   }
 }
 
-class FriendSet extends React.Component {
+class Group extends React.Component {
   constructor (props) {
     super(props)
 
@@ -133,7 +132,7 @@ function Body (props) {
       <div>
         <section className='section'>
           <Addressbar subject={subject}>
-            <FriendSet />
+            <Group />
           </Addressbar>
         </section>
 

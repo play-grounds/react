@@ -22,18 +22,7 @@
     <script type="text/babel">
 
 
-function getQueryStringParam(param) {
-      var url = window.location.toString();
-      url.match(/\?(.+)$/);
-      var params = RegExp.$1;
-      params = params.split("&");
-      var queryStringList = {};
-      for (var i = 0; i < params.length; i++) {
-        var tmp = params[i].split("=");
-        queryStringList[tmp[0]] = unescape(tmp[1]);
-      }
-      return queryStringList[param];
-    }
+  
 
 
 function NamedNode(props) {
@@ -60,15 +49,18 @@ class Subject extends React.Component {
 
         var triples = [0, 1, 2]
         var defaultUri = "https://melvincarvalho.com/#me"
-        var uri = getQueryStringParam("uri") || defaultUri
+        var uri = new URLSearchParams(document.location.search).get('uri') || defaultUri
         this.state = { uri : uri, triples : this.triples }
         this.handleChange = this.handleChange.bind(this)
 
     }
 
     componentDidMount() {
+      fetchProfile()
+    }
 
-        fetcher.load(this.state.uri).then(response => {
+    fetchProfile() {
+      fetcher.load(this.state.uri).then(response => {
             this.triples = store.statementsMatching(store.sym(this.state.uri), null, null, store.sym(this.state.uri.split('#')[0]))
             for (var i=0; i < this.triples.length; i++) {
                 var triple = this.triples[i]
@@ -151,6 +143,9 @@ function Body(props) {
     </div>
   );
 }
+
+
+// @TODO include : <img src="https://github.com/linkeddata/rdflib.js/blob/c87251639d443f1d188c2576b99dc7fc610e37be/diagrams/rdflib-block-diagram.svg" alt="rdf diagram" />
 
 
 function App() {
