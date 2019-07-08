@@ -7,6 +7,11 @@ UI.updater = new $rdf.UpdateManager(UI.store)
 var subject = new URLSearchParams(document.location.search).get('uri')
 || 'https://melvincarvalho.com/#me'
 
+window.onpopstate = function(event) {
+  console.log("location: " + document.location + ", state: " + JSON.stringify(event.state));
+  location.reload()
+};
+
 function fetchPerson (subject) {
   UI.store.fetcher.load(subject).then(response => {
   }, err => {
