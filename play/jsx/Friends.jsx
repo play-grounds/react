@@ -76,7 +76,7 @@ class Person extends React.Component {
         this.state.name.match(/http/) ? <span></span> : !this.state.img ? <span></span> :
 
         <div style={{ 'display': 'flex' }}>
-          <img src={this.state.img} width='50' height='50' style={{ 'margin': 1, borderRadius : '50%' }} />
+          <img src={this.state.img} width='50' height='50' style={{ 'margin': 1, borderRadius : '50%', height : '50px' }} />
           <a style={{ 'flexGrow': 1, 'margin': 'auto 0' }} title={this.props.subject} onClick={this.handleClick} >{this.state.name}</a>
           <a href={this.props.subject} target='_blank' style={{ 'margin': '5px' }} >
             <img src='https://solid.github.io/solid-ui/src/originalIcons/go-to-this.png' />
