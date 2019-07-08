@@ -49,7 +49,7 @@ class Person extends React.Component {
     function handleRemove (event) {
     }
 
-    let style = new URLSearchParams(document.location.search).get('uri')  || 'roster'
+    let style = new URLSearchParams(document.location.search).get('style')  || 'roster'
 
     if (style === 'remove') {
       return (
