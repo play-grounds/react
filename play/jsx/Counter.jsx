@@ -53,7 +53,11 @@ function Counter() {
 
   return (
     <div className="is-info">
-      <span className="button is-large">Total : {count}</span>
+      <div className='buttons'>
+        <span className="button is-large">S : {count%30}</span>
+        <span className="button is-large">L : {count%360 - count%30}</span>
+        <span className="button is-large">T : {count}</span>
+      </div>
       <hr/>
       <button className="button is-link is-large" onClick={() => {increment(5)}}>+5</button>&nbsp;
       <button className="button is-primary is-large" onClick={() => {increment(30)}}>+30</button>
