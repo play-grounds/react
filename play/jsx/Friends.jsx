@@ -73,7 +73,7 @@ class Person extends React.Component {
       )
     } else if (style === 'filter') {
       return (
-        this.state.name.match(/http/) ? <span></span> :
+        this.state.name.match(/http/) ? <span></span> : !this.state.img ? <span></span> :
 
         <div style={{ 'display': 'flex' }}>
           <img src={this.state.img} width='50' height='50' style={{ 'margin': 1 }} />
