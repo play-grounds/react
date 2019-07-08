@@ -4,21 +4,26 @@ class Addressbar extends React.Component {
   constructor (props) {
     super(props)
     if (props.subject) {
-      this.state = { subject : props.subject }
+      this.state = { subject : props.subject, view : props.view }
     }
     this.handleChange = this.handleChange.bind(this)
   }
 
   handleChange (event) {
     this.setState({subject: event.target.value })
-    history.pushState({}, 'Bookmark App', window.location.href.split('?')[0] + '?uri=' + encodeURIComponent(event.target.value))
+    let href =  window.location.href.split('?')[0] 
+    href += '?uri=' + encodeURIComponent(webId)
+    href += '&view=' 
+    href += this.state.view ? this.state.view : ''
+    history.pushState({}, 'Friends App', href)
   }
 
   render () {
 
     const children = React.Children.map(this.props.children, child => {
       return React.cloneElement(child, {
-        subject: this.state.subject
+        subject: this.state.subject,
+        view : this.state.view
       });
     });
 

@@ -19,7 +19,8 @@ var avatar = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
 class Person extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { name: props.subject, img: avatar }
+    let view = new URLSearchParams(document.location.search).get('view') 
+    this.state = { name: props.subject, img: avatar, view : props.view }
     this.handleClick = this.handleClick.bind(this)
   }
 
@@ -40,7 +41,11 @@ class Person extends React.Component {
 
   handleClick (event) {
     let webId = event.target.title
-    history.pushState({}, 'Friends App', window.location.href.split('?')[0] + '?uri=' + encodeURIComponent(webId))
+    let href =  window.location.href.split('?')[0] 
+    href += '?uri=' + encodeURIComponent(webId)
+    href += '&view=' 
+    href += this.state.view ? this.state.view : ''
+    history.pushState({}, 'Friends App', href)
     console.log(webId)
     window.location.reload()
   }
@@ -49,29 +54,29 @@ class Person extends React.Component {
     function handleRemove (event) {
     }
 
-    let style = new URLSearchParams(document.location.search).get('style')  || 'roster'
+    let view = new URLSearchParams(document.location.search).get('view')  || 'filter'
 
-    if (style === 'remove') {
+    if (view === 'remove') {
       return (
 
         <div style={{ 'display': 'flex' }}>
           <img src={this.state.img} width='50' height='50' style={{ 'margin': 1, borderRadius : '50%' }} />
           <a href={this.props.subject} target='_blank' style={{ 'flexGrow': 1, 'margin': 'auto 0' }} >{this.state.name}</a>
-          <button style={{ 'margin': '5px' }} onClick={handleRemove} >Remove</button>
+          <button style={{ 'margin': '5px', height : '50px' }} onClick={handleRemove} >Remove</button>
         </div>
       )
-    } else if (style === 'roster') {
+    } else if (view === 'roster') {
       return (
 
         <div style={{ 'display': 'flex' }}>
-          <img src={this.state.img} width='50' height='50' style={{ 'margin': 1, borderRadius : '50%' }} />
+          <img src={this.state.img} width='50' height='50' style={{ 'margin': 1, borderRadius : '50%', height : '50px' }} />
           <a style={{ 'flexGrow': 1, 'margin': 'auto 0' }} title={this.props.subject} onClick={this.handleClick} >{this.state.name}</a>
           <a href={this.props.subject} target='_blank' style={{ 'margin': '5px' }} >
             <img src='https://solid.github.io/solid-ui/src/originalIcons/go-to-this.png' />
           </a>
         </div>
       )
-    } else if (style === 'filter') {
+    } else if (view === 'filter') {
       return (
         this.state.name.match(/http/) ? <span></span> : !this.state.img ? <span></span> :
 
@@ -136,7 +141,8 @@ function Body (props) {
 
       <div>
         <section className='section'>
-          <Addressbar subject={subject}>
+          <Addressbar subject={subject} 
+            view={new URLSearchParams(document.location.search).get('view')}>
             <Roster />
           </Addressbar>
         </section>
