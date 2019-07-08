@@ -49,9 +49,9 @@ class Person extends React.Component {
     function handleRemove (event) {
     }
 
-    var remove = false
+    let style = new URLSearchParams(document.location.search).get('uri')  || 'roster'
 
-    if (remove) {
+    if (style === 'remove') {
       return (
 
         <div style={{ 'display': 'flex' }}>
@@ -60,7 +60,7 @@ class Person extends React.Component {
           <button style={{ 'margin': '5px' }} onClick={handleRemove} >Remove</button>
         </div>
       )
-    } else {
+    } else if (style === 'roster') {
       return (
 
         <div style={{ 'display': 'flex' }}>
