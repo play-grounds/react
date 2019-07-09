@@ -46,6 +46,7 @@ return (
       <Li href="credit.html" text="Credit" />
       <Li href="outstated.html" text="Outstated Counter" />
       <Li href="counter.html" text="Counter App" />
+      <Li href="seed.html" text="seed App" />
     </ul>
     <hr/>
     </section>

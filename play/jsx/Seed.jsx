@@ -219,12 +219,11 @@ for (var i=0; i<num; i++) {
 
 ReactDOM.render(
   <div>
-    <NavbarSolid className="is-link" title="Tmp" sourceCode="https://github.com/play-grounds/react/blob/gh-pages/play/tmp.html"></NavbarSolid> 
+    <NavbarSolid className="is-link" title="Seed" sourceCode="https://github.com/play-grounds/react/blob/gh-pages/play/seed.html"></NavbarSolid> 
 
     <div className="section">{poem.join(' ')}</div>
     <hr/>
     <div className="section">{words}</div>
-
 
   </div>,
 
