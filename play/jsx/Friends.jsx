@@ -6,6 +6,8 @@ UI.updater = new $rdf.UpdateManager(UI.store)
 
 var subject = new URLSearchParams(document.location.search).get('uri')
   || 'https://melvincarvalho.com/#me'
+var view = new URLSearchParams(document.location.search).get('view')
+  || 'filter'
 
 window.onpopstate = function (event) {
   console.log("location: " + document.location + ", state: " + JSON.stringify(event.state));
@@ -49,7 +51,7 @@ class Person extends React.Component {
     let href = window.location.href.split('?')[0]
     href += '?uri=' + encodeURIComponent(webId)
     href += '&view='
-    href += this.state.view ? this.state.view : ''
+    href += this.state.view ? this.state.view : view
     history.pushState({}, 'Friends App', href)
     console.log(webId)
     window.location.reload()
@@ -97,21 +99,26 @@ class Person extends React.Component {
 
     )
 
+    var views = {}
+    views.filter = filterView
+    views.group = groupView
+    views.roster = rosterView
+
     let view = new URLSearchParams(document.location.search).get('view') || 'filter'
 
     if (view === 'group') {
       return (
-        groupView
+        views.group
       )
     } else if (view === 'roster') {
       return (
-        rosterView
+        views.roster
       )
     } else if (view === 'filter') {
       return (
         this.state.name.match(/http/) ?
           <span></span> : !this.state.img ?
-            <span></span> : filterView
+            <span></span> : views.roster
       )
     }
   }
