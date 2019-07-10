@@ -170,6 +170,7 @@ class Body extends React.Component {
     super(props)
     this.state = {
       pw: '',
+      prefix: '',
       sha256: '',
       publicKeyVersion: 0,
       addressType: 'uncompressed',
@@ -193,6 +194,7 @@ class Body extends React.Component {
   async handleChange (e) {
     let startTime = new Date().getTime()
     var pw
+    var prefix = this.state.prefix
     var target = e.target
     if (e.target) {
       var name = e.target.name
@@ -207,10 +209,13 @@ class Body extends React.Component {
     } else if (name === 'addressType') {
       pw = this.state.pw
       this.setState({ addressType: event.target.value })
+    } else if (name === 'prefix') {
+      this.setState({ prefix: event.target.value })
+      pw = this.state.pw
     }
 
     var keyPair = await getKeyPairFromPW(
-      pw,
+      pw + prefix,
       this.state.addressType,
       this.state.publicKeyVersion
     )
@@ -275,6 +280,19 @@ class Body extends React.Component {
                 type='text'
                 placeholder='Enter passphrase'
                 value={this.state.pw}
+                onChange={this.handleChange}
+                autoFocus
+              />
+              <br />
+              <hr />
+              <label>Prefix</label>
+              <br />
+              <input
+                name='prefix'
+                size='60'
+                type='text'
+                placeholder='Enter prefix'
+                value={this.state.prefix}
                 onChange={this.handleChange}
                 autoFocus
               />
