@@ -168,9 +168,10 @@ class Body extends React.Component {
    */
   constructor (props) {
     super(props)
+    var prefix = localStorage.getItem('prefix') || ''
     this.state = {
       pw: '',
-      prefix: '',
+      prefix: prefix,
       sha256: '',
       publicKeyVersion: 0,
       addressType: 'uncompressed',
@@ -213,6 +214,7 @@ class Body extends React.Component {
     } else if (name === 'prefix') {
       this.setState({ prefix: event.target.value })
       combined = pw + event.target.value
+      localStorage.setItem('prefix', event.target.value)
     }
 
     var keyPair = await getKeyPairFromPW(
@@ -295,7 +297,6 @@ class Body extends React.Component {
                 placeholder='Enter prefix'
                 value={this.state.prefix}
                 onChange={this.handleChange}
-                autoFocus
               />
               <br />
               <hr />
