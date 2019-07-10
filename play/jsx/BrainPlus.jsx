@@ -191,31 +191,32 @@ class Body extends React.Component {
    * @param {*} e
    * @memberof Body
    */
-  async handleChange (e) {
+  async handleChange (event) {
     let startTime = new Date().getTime()
-    var pw
+
+    var pw = this.state.pw
     var prefix = this.state.prefix
-    var target = e.target
-    if (e.target) {
-      var name = e.target.name
+
+    if (event.target) {
+      var name = event.target.name
     }
 
+    var combined = pw + prefix
+
     if (name === 'pw') {
-      pw = event.target.value
-      this.setState({ pw: pw })
+      this.setState({ pw: event.target.value })
+      combined = event.target.value + prefix
     } else if (name === 'publicKeyVersion') {
-      pw = this.state.pw
       this.setState({ publicKeyVersion: event.target.value })
     } else if (name === 'addressType') {
-      pw = this.state.pw
       this.setState({ addressType: event.target.value })
     } else if (name === 'prefix') {
       this.setState({ prefix: event.target.value })
-      pw = this.state.pw
+      combined = pw + event.target.value
     }
 
     var keyPair = await getKeyPairFromPW(
-      pw + prefix,
+      combined,
       this.state.addressType,
       this.state.publicKeyVersion
     )
