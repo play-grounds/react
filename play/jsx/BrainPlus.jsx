@@ -4,7 +4,7 @@
  * @param {string} str - A string to be hashed
  * @returns {Promise <string>} A promise of a sha256 hash of that string
  */
-async function sha256 (str) {
+async function sha256(str) {
   var bytes = new TextEncoder('utf-8').encode(str)
   const buf = await crypto.subtle.digest('SHA-256', bytes)
   return Array.prototype.map
@@ -18,7 +18,7 @@ async function sha256 (str) {
  * @param {string} str A hex string
  * @returns {int[]} An array of bytes
  */
-function hexToBytes (str) {
+function hexToBytes(str) {
   var result = []
   while (str.length >= 2) {
     result.push(parseInt(str.substring(0, 2), 16))
@@ -34,7 +34,7 @@ function hexToBytes (str) {
  * @param {*} compressed
  * @returns {int[]} Array of bytes
  */
-function getEncoded (pt, compressed) {
+function getEncoded(pt, compressed) {
   var x = pt.getX().toBigInteger()
   var y = pt.getY().toBigInteger()
   var enc = integerToBytes(x, 32)
@@ -57,7 +57,7 @@ function getEncoded (pt, compressed) {
  * @param {string} hash
  * @returns ECKey
  */
-function getECKeyFromHash (hash) {
+function getECKeyFromHash(hash) {
   var eckey = new Bitcoin.ECKey(hexToBytes(hash))
   return eckey
 }
@@ -70,7 +70,7 @@ function getECKeyFromHash (hash) {
  * @param {string} publicKeyVersion Version number of the public key
  * @returns {Bitcoin.Address} A bitcoin private key address
  */
-function getPrivateKeyAddressFromHash (hash, addressType, publicKeyVersion) {
+function getPrivateKeyAddressFromHash(hash, addressType, publicKeyVersion) {
   const OFFSET = 128
   var payload = hexToBytes(hash)
   if (addressType === 'compressed') {
@@ -89,7 +89,7 @@ function getPrivateKeyAddressFromHash (hash, addressType, publicKeyVersion) {
  * @param {*} publicKeyVersion
  * @returns {Bitcoin.Address} A bticoin public key address
  */
-function getPublicKeyFromPrivate (eckey, addressType, publicKeyVersion) {
+function getPublicKeyFromPrivate(eckey, addressType, publicKeyVersion) {
   var curve = getSECCurveByName('secp256k1')
   var publicKey = {}
   var genPt = curve.getG().multiply(eckey.priv)
@@ -117,7 +117,7 @@ function getPublicKeyFromPrivate (eckey, addressType, publicKeyVersion) {
  * @param {*} publicKeyVersion
  * @returns {*} A keypair
  */
-function getKeyPairFromHash (hash, addressType, publicKeyVersion) {
+function getKeyPairFromHash(hash, addressType, publicKeyVersion) {
   var keyPair = {}
   keyPair.hash = hash
   // get privkey from hash
@@ -148,7 +148,7 @@ function getKeyPairFromHash (hash, addressType, publicKeyVersion) {
  * @param {*} publicKeyVersion
  * @returns {*} A key pair
  */
-async function getKeyPairFromPW (pw, addressType, publicKeyVersion) {
+async function getKeyPairFromPW(pw, addressType, publicKeyVersion) {
   var hash = await sha256(pw, addressType, publicKeyVersion)
   var keyPair = getKeyPairFromHash(hash, addressType, publicKeyVersion)
   return keyPair
@@ -166,10 +166,14 @@ class Body extends React.Component {
    * @param {*} props
    * @memberof Body
    */
-  constructor (props) {
+  constructor(props) {
     super(props)
     var prefix = window.location.hash ? decodeURIComponent(window.location.hash).substring(1) : window.location.hash || localStorage.getItem('prefix') || ''
     var target = localStorage.getItem('target')
+    var targets = localStorage.getItem('targets')
+    if (targets) {
+      targets = JSON.parse(targets)
+    }
     this.state = {
       pw: '',
       prefix: prefix,
@@ -178,13 +182,14 @@ class Body extends React.Component {
       addressType: 'uncompressed',
       timeTaken: 0,
       eckey: {},
-      target : target
+      target: target,
+      targets: targets
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
 
-  handleSubmit (e) {
+  handleSubmit(e) {
     e.preventDefault()
   }
 
@@ -194,7 +199,7 @@ class Body extends React.Component {
    * @param {*} e
    * @memberof Body
    */
-  async handleChange (event) {
+  async handleChange(event) {
     let startTime = new Date().getTime()
 
     var pw = this.state.pw
@@ -235,16 +240,26 @@ class Body extends React.Component {
       this.state.publicKeyVersion
     )
 
-    console.log(uncompressed.publicKey.address.toString());
-    console.log(this.state.target);
-    console.log(combined);
+    if (uncompressed.publicKey.address.toString() === this.state.target) {
+      console.log('###### target found!', combined, 'maps to', this.state.target, 'uncompressed')
+    }
 
-    if ( uncompressed.publicKey.address.toString() === this.state.target ) {
-        console.log('###### target found!', combined, 'maps to', this.state.target, 'uncompressed')
+    if (compressed.publicKey.address.toString() === this.state.target) {
+      console.log('###### targets found!', combined, 'maps to', this.state.target, 'compressed')
     }
-    if ( compressed.publicKey.address.toString() === this.state.target ) {
-        console.log('###### target found!', combined, 'maps to', this.state.target, 'compressed')
+
+    if (this.state.targets) {
+      if (uncompressed.publicKey.address.toString().includes(this.state.targets)) {
+        console.log('###### targets found!', combined, 'maps to', this.state.targets, 'uncompressed')
+      }
+
+      if (compressed.publicKey.address.toString().includes(this.state.target)) {
+        console.log('###### target found!', combined, 'maps to', this.state.targets, 'compressed')
+      }
     }
+
+
+
 
     // benchmark
     var timeTaken = new Date().getTime() - startTime
@@ -276,7 +291,7 @@ class Body extends React.Component {
    * @returns
    * @memberof Body
    */
-  render () {
+  render() {
     return (
       <section className='section'>
         <form onSubmit={this.handleSubmit}>
@@ -335,7 +350,7 @@ class Body extends React.Component {
                 placeholder='Private Key'
                 value={this.state.privateKeyAddress}
               />
-              <br/>
+              <br />
               Public Key (uncompressed)
               <br />
               <input
@@ -368,9 +383,9 @@ class Body extends React.Component {
 function App() {
   return (
     <div>
-      <NavbarSolidLogin 
-        className="is-link" 
-        title="Brain Wallet Plus" 
+      <NavbarSolidLogin
+        className="is-link"
+        title="Brain Wallet Plus"
         sourceCode="https://github.com/play-grounds/react/blob/gh-pages/play/brainplus.html" />
       <Body />
     </div>
