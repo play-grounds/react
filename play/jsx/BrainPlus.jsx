@@ -370,8 +370,8 @@ function App() {
     <div>
       <NavbarSolidLogin 
         className="is-link" 
-        title="Brain Wallet" 
-        sourceCode="https://github.com/play-grounds/react/blob/gh-pages/play/brain.html" />
+        title="Brain Wallet Plus" 
+        sourceCode="https://github.com/play-grounds/react/blob/gh-pages/play/brainplus.html" />
       <Body />
     </div>
   )
