@@ -168,7 +168,7 @@ class Body extends React.Component {
    */
   constructor (props) {
     super(props)
-    var prefix = localStorage.getItem('prefix') || ''
+    var prefix = window.location.hash ? window.location.hash.substring(1) : window.location.hash || localStorage.getItem('prefix') || ''
     this.state = {
       pw: '',
       prefix: prefix,
@@ -215,6 +215,10 @@ class Body extends React.Component {
       this.setState({ prefix: event.target.value })
       combined = pw + event.target.value
       localStorage.setItem('prefix', event.target.value)
+      let href = window.location.href.split('#')[0]
+      href += '#'
+      href += event.target.value
+      history.pushState({}, 'Brain Plus', href)
     }
 
     var keyPair = await getKeyPairFromPW(
