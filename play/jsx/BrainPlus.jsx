@@ -250,11 +250,11 @@ class Body extends React.Component {
 
     if (this.state.targets) {
       if (uncompressed.publicKey.address.toString().includes(this.state.targets)) {
-        console.log('###### targets found!', combined, 'maps to', this.state.targets, 'uncompressed')
+        console.log('###### targets found!', combined, 'in', this.state.targets, 'uncompressed')
       }
 
       if (compressed.publicKey.address.toString().includes(this.state.target)) {
-        console.log('###### target found!', combined, 'maps to', this.state.targets, 'compressed')
+        console.log('###### target found!', combined, 'in', this.state.targets, 'compressed')
       }
     }
 
