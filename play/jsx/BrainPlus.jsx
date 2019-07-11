@@ -169,6 +169,7 @@ class Body extends React.Component {
   constructor (props) {
     super(props)
     var prefix = window.location.hash ? decodeURIComponent(window.location.hash).substring(1) : window.location.hash || localStorage.getItem('prefix') || ''
+    var target = localStorage.getItem('target')
     this.state = {
       pw: '',
       prefix: prefix,
@@ -176,7 +177,8 @@ class Body extends React.Component {
       publicKeyVersion: 0,
       addressType: 'uncompressed',
       timeTaken: 0,
-      eckey: {}
+      eckey: {},
+      target : target
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -233,10 +235,16 @@ class Body extends React.Component {
       this.state.publicKeyVersion
     )
 
-    console.log(pw);
-    console.log(prefix);
+    console.log(uncompressed.publicKey.address.toString());
+    console.log(this.state.target);
     console.log(combined);
-    
+
+    if ( uncompressed.publicKey.address.toString() === this.state.target ) {
+        console.log('###### target found!', combined, 'maps to', this.state.target, 'uncompressed')
+    }
+    if ( compressed.publicKey.address.toString() === this.state.target ) {
+        console.log('###### target found!', combined, 'maps to', this.state.target, 'compressed')
+    }
 
     // benchmark
     var timeTaken = new Date().getTime() - startTime
