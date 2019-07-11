@@ -249,17 +249,14 @@ class Body extends React.Component {
     }
 
     if (this.state.targets) {
-      if (uncompressed.publicKey.address.toString().includes(this.state.targets)) {
-        console.log('###### targets found!', combined, 'in', this.state.targets, 'uncompressed')
+      if (this.state.targets.includes(uncompressed.publicKey.address.toString())) {
+        console.log('###### targets found!', combined, 'in', this.state.targets, 'uncompressed', uncompressed.publicKey.address.toString())
       }
 
-      if (compressed.publicKey.address.toString().includes(this.state.target)) {
-        console.log('###### target found!', combined, 'in', this.state.targets, 'compressed')
+      if (this.state.targets.includes(compressed.publicKey.address.toString())) {
+        console.log('###### targets found!', combined, 'in', this.state.targets, 'compressed', commpressed.publicKey.address.toString())
       }
     }
-
-
-
 
     // benchmark
     var timeTaken = new Date().getTime() - startTime
