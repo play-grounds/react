@@ -168,7 +168,7 @@ class Body extends React.Component {
    */
   constructor (props) {
     super(props)
-    var prefix = window.location.hash ? window.location.hash.substring(1) : window.location.hash || localStorage.getItem('prefix') || ''
+    var prefix = window.location.hash ? decodeURIComponent(window.location.hash).substring(1) : window.location.hash || localStorage.getItem('prefix') || ''
     this.state = {
       pw: '',
       prefix: prefix,
@@ -198,7 +198,7 @@ class Body extends React.Component {
     var pw = this.state.pw
     var prefix = this.state.prefix
 
-    if (event.target) {
+    if (event && event.target) {
       var name = event.target.name
     }
 
@@ -221,9 +221,15 @@ class Body extends React.Component {
       history.pushState({}, 'Brain Plus', href)
     }
 
-    var keyPair = await getKeyPairFromPW(
+    var uncompressed = await getKeyPairFromPW(
       combined,
-      this.state.addressType,
+      'uncompressed',
+      this.state.publicKeyVersion
+    )
+
+    var compressed = await getKeyPairFromPW(
+      combined,
+      'compressed',
       this.state.publicKeyVersion
     )
 
@@ -232,17 +238,23 @@ class Body extends React.Component {
 
     // update state
     this.setState({
-      sha256: keyPair.hash,
+      sha256: uncompressed.hash,
 
-      privateKeyInt: keyPair.privateKey.priv,
-      privateKeyAddress: keyPair.privateKeyAddress,
+      privateKeyInt: uncompressed.privateKey.priv,
+      privateKeyAddress: uncompressed.privateKeyAddress,
 
-      publicKeyBytes: keyPair.publicKey.pub,
-      ripe160: keyPair.publicKey.ripe160,
-      publicKeyAddress: keyPair.publicKey.address,
+      publicKeyBytes: uncompressed.publicKey.pub,
+      ripe160: uncompressed.publicKey.ripe160,
+      publicKeyAddress: uncompressed.publicKey.address,
+      publicKeyAddressC: compressed.publicKey.address,
 
       timeTaken: timeTaken
     })
+  }
+
+
+  async componentDidMount() {
+    this.handleChange()
   }
 
   /**
@@ -290,7 +302,6 @@ class Body extends React.Component {
                 onChange={this.handleChange}
                 autoFocus
               />
-              <br />
               <hr />
               <label>Prefix</label>
               <br />
@@ -302,69 +313,32 @@ class Body extends React.Component {
                 value={this.state.prefix}
                 onChange={this.handleChange}
               />
-              <br />
               <hr />
-              Secret Exponent (sha256)
+              Private Key
               <br />
               <input
                 readOnly
                 size='60'
-                placeholder='Secret Exponent (sha256)'
-                value={this.state.sha256}
-              />
-              <br />
-              Secret Exponent (sha256) as Bytes
-              <br />
-              <input
-                readOnly
-                size='60'
-                placeholder='Secret Exponent (sha256) as Bytes'
-                value={hexToBytes(this.state.sha256)}
-              />
-              <br />
-              ECDSA Private Key (BigInteger)
-              <br />
-              <input
-                readOnly
-                size='60'
-                placeholder='ECDSA Private Key (BigInteger)'
-                value={this.state.privateKeyInt}
-              />
-              <br />
-              Private Key Base58 check Address
-              <br />
-              <input
-                readOnly
-                size='60'
-                placeholder='Private Key Base58 check Address'
+                placeholder='Private Key'
                 value={this.state.privateKeyAddress}
               />
-              <hr />
-              ECDSA Public Key as Bytes
+              <br/>
+              Public Key (uncompressed)
               <br />
               <input
                 readOnly
                 size='60'
-                placeholder='ECDSA Public Key as Bytes'
-                value={this.state.publicKeyBytes}
-              />
-              <br />
-              Ripe 160 hash of Public Key as Bytes
-              <br />
-              <input
-                readOnly
-                size='60'
-                placeholder='Ripe 160 hash of Public Key as Bytes'
-                value={this.state.ripe160}
-              />
-              <br />
-              Public Key Base58 check Address
-              <br />
-              <input
-                readOnly
-                size='60'
-                placeholder='Public Key Base58 check Address'
+                placeholder='Public Key (uncompressed)'
                 value={this.state.publicKeyAddress}
+              />
+              <br />
+              Public Key (compressed)
+              <br />
+              <input
+                readOnly
+                size='60'
+                placeholder='Public Key (compressed)'
+                value={this.state.publicKeyAddressC}
               />
               <br />
               <hr />
