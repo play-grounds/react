@@ -269,7 +269,7 @@ class Body extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <div className='columns'>
             <div className='column'>
-              <select
+              <select className='is-hidden'
                 name='addressType'
                 onChange={this.handleChange}
                 value={this.state.addressType}
