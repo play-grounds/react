@@ -202,18 +202,18 @@ class Body extends React.Component {
       var name = event.target.name
     }
 
-    var combined = pw + prefix
+    var combined = prefix + pw
 
     if (name === 'pw') {
       this.setState({ pw: event.target.value })
-      combined = event.target.value + prefix
+      combined = prefix + event.target.value
     } else if (name === 'publicKeyVersion') {
       this.setState({ publicKeyVersion: event.target.value })
     } else if (name === 'addressType') {
       this.setState({ addressType: event.target.value })
     } else if (name === 'prefix') {
       this.setState({ prefix: event.target.value })
-      combined = pw + event.target.value
+      combined = event.target.value + pw
       localStorage.setItem('prefix', event.target.value)
       let href = window.location.href.split('#')[0]
       href += '#'
@@ -232,6 +232,11 @@ class Body extends React.Component {
       'compressed',
       this.state.publicKeyVersion
     )
+
+    console.log(pw);
+    console.log(prefix);
+    console.log(combined);
+    
 
     // benchmark
     var timeTaken = new Date().getTime() - startTime
