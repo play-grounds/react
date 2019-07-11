@@ -169,6 +169,7 @@ class Body extends React.Component {
   constructor(props) {
     super(props)
     var prefix = window.location.hash ? decodeURIComponent(window.location.hash).substring(1) : window.location.hash || localStorage.getItem('prefix') || ''
+    var suffix = localStorage.getItem('suffix') || ''
     var target = localStorage.getItem('target')
     var targets = localStorage.getItem('targets')
     if (targets) {
@@ -177,6 +178,7 @@ class Body extends React.Component {
     this.state = {
       pw: '',
       prefix: prefix,
+      suffix: suffix,
       sha256: '',
       publicKeyVersion: 0,
       addressType: 'uncompressed',
@@ -204,6 +206,7 @@ class Body extends React.Component {
 
     var pw = this.state.pw
     var prefix = this.state.prefix
+    var suffix = this.state.suffix
 
     if (event && event.target) {
       var name = event.target.name
@@ -213,19 +216,23 @@ class Body extends React.Component {
 
     if (name === 'pw') {
       this.setState({ pw: event.target.value })
-      combined = prefix + event.target.value
+      combined = prefix + event.target.value + suffix
     } else if (name === 'publicKeyVersion') {
       this.setState({ publicKeyVersion: event.target.value })
     } else if (name === 'addressType') {
       this.setState({ addressType: event.target.value })
     } else if (name === 'prefix') {
       this.setState({ prefix: event.target.value })
-      combined = event.target.value + pw
+      combined = event.target.value + pw + suffix
       localStorage.setItem('prefix', event.target.value)
       let href = window.location.href.split('#')[0]
       href += '#'
       href += event.target.value
       history.pushState({}, 'Brain Plus', href)
+    } else if (name === 'suffix') {
+      this.setState({ suffix: event.target.value })
+      combined = event.target.value + pw + suffix
+      localStorage.setItem('suffix', event.target.value)
     }
 
     var uncompressed = await getKeyPairFromPW(
@@ -336,6 +343,17 @@ class Body extends React.Component {
                 type='text'
                 placeholder='Enter prefix'
                 value={this.state.prefix}
+                onChange={this.handleChange}
+              />
+              <br/>
+              <label>Suffix</label>
+              <br />
+              <input
+                name='suffix'
+                size='60'
+                type='text'
+                placeholder='Enter suffix'
+                value={this.state.suffix}
                 onChange={this.handleChange}
               />
               <hr />
