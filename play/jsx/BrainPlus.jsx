@@ -265,6 +265,9 @@ class Body extends React.Component {
       }
     }
 
+    console.log('passphrase', combined);
+    
+
     // benchmark
     var timeTaken = new Date().getTime() - startTime
 
