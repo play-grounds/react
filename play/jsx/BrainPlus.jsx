@@ -261,13 +261,11 @@ class Body extends React.Component {
       }
 
       if (this.state.targets.includes(compressed.publicKey.address.toString())) {
-        console.log('###### targets found!', combined, 'in', this.state.targets, 'compressed', commpressed.publicKey.address.toString())
+        console.log('###### targets found!', combined, 'in', this.state.targets, 'compressed', compressed.publicKey.address.toString())
       }
     }
 
     console.log('passphrase', combined);
-    
-
     // benchmark
     var timeTaken = new Date().getTime() - startTime
 
