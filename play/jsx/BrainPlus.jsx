@@ -235,7 +235,7 @@ class Body extends React.Component {
       localStorage.setItem('suffix', event.target.value)
     }
 
-    // @TODO add caching
+    // @TODO add caching 
     var uncompressed = await getKeyPairFromPW(
       combined,
       'uncompressed',
