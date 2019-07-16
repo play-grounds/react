@@ -39,7 +39,8 @@ function useStore(storeInit) {
 }
 
 const store = () => {
-  let initial = URLSearchParams(document,location.search).get('count') || 0
+  let initial = new URLSearchParams(document.location.search).get('count') || 0
+  
   const [count, setCount] = React.useState(initial);
 
   const increment = (amount) => setCount(count + amount);
