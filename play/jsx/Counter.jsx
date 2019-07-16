@@ -39,7 +39,8 @@ function useStore(storeInit) {
 }
 
 const store = () => {
-  const [count, setCount] = React.useState(0);
+  let initial = URLSearchParams(document,location.search).get('count') || 0
+  const [count, setCount] = React.useState(initial);
 
   const increment = (amount) => setCount(count + amount);
   const decrement = () => setCount(count + 30);
