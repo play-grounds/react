@@ -60,9 +60,9 @@ const store = () => {
   return {count, increment, decrement, reset};
 };
 
-function Circle(props) {
+function Circle({rad, ...props}) {
 
-  let rad = props.rad
+  
   if (rad > 410) {
     rad = 410
   }
@@ -71,8 +71,8 @@ function Circle(props) {
   let green = Math.floor(212 - red)
 
   return (
-    <svg width="30" height="30">  <circle cx="15"
-    cy="15" style={{ fill : 'rgb(' + red + ', ' + green +', 0)' }} r={rad / 28}><title>Pie</title></circle></svg>    
+    <svg width="300" height="300">  <circle cx="150"
+    cy="150" style={{ fill : 'rgb(' + red + ', ' + green +', 0)' }} r={rad / 2.8}><title>Pie</title></circle></svg>    
   )
 }
 
