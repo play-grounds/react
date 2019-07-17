@@ -60,7 +60,23 @@ const store = () => {
   return {count, increment, decrement, reset};
 };
 
-function Counter() {
+function Circle(props) {
+
+  let rad = props.rad
+  if (rad > 410) {
+    rad = 410
+  }
+  let percent = rad / 410 
+  let red = Math.floor(percent * 212)
+  let green = Math.floor(212 - red)
+
+  return (
+    <svg width="30" height="30">  <circle cx="15"
+    cy="15" style={{ fill : 'rgb(' + red + ', ' + green +', 0)' }} r={rad / 28}><title>Pie</title></circle></svg>    
+  )
+}
+
+function Points() {
   const {count, increment, decrement, reset} = useStore(store);
 
   function fetchCount (subject) {
@@ -68,14 +84,19 @@ function Counter() {
     
     UI.fetcher.load(subject, {force : true}).then(response => {
       let s = null
-      let p = UI.store.sym('https://w3id.org/cc#amount')
+      let p = UI.store.sym('urn:query:hour')
       let o = null
       let w = UI.store.sym(subject.split('#')[0])
-      let quads = UI.store.statementsMatching(s, p, o, w)
-      let amount = parseInt(quads[0].object.value)
+      let hour = UI.store.statementsMatching(s, p, o, w)
+      let amount = parseInt(hour[0].object.value)
       reset(amount)
       document.title = (amount % 30) + ' ' + (amount%360) + ' ' + amount 
-      console.log(quads[0].object.value);
+      console.log('hour', hour[0].object.value);
+      
+      p = UI.store.sym('urn:query:day')
+      let day = UI.store.statementsMatching(s, p, o, w)
+      amount = parseInt(day[0].object.value)
+      console.log('day', day[0].object.value);
       
     }, err => {
       console.log(err)
@@ -115,6 +136,9 @@ function Counter() {
         <span className="button is-large">L : {count%360 - count%30}</span>
         <span className="button is-large">T : {count}</span>
       </div>
+
+      <Circle rad={count} />
+
       <hr/>
       <button className="button is-link is-large" onClick={() => {increment(5)}}>+5</button>&nbsp;
       <button className="button is-primary is-large" onClick={() => {increment(30)}}>+30</button>
@@ -130,7 +154,7 @@ ReactDOM.render(
   <Provider stores={[store]}>
   <NavbarSolidLogin
     className='is-link'
-    title='Counter App'
+    title='Points App'
     sourceCode='https://github.com/play-grounds/react/blob/gh-pages/play/points.html/' />
 
     <div className="section">
@@ -139,7 +163,7 @@ ReactDOM.render(
           <div className="column">
 
             <div className="notification is-info">
-            <Counter />
+            <Points />
             </div>
 
           </div>
