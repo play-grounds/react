@@ -92,12 +92,16 @@ function Points() {
       reset(amount)
       document.title = (amount % 30) + ' ' + (amount%360) + ' ' + amount 
       console.log('hour', hour[0].object.value);
+
+      if (amount % 30 === 0) {
+        new Audio('audio/positive.wav').play()
+      }
       
       p = UI.store.sym('urn:query:day')
       let day = UI.store.statementsMatching(s, p, o, w)
       amount = parseInt(day[0].object.value)
       console.log('day', day[0].object.value);
-      new Audio('audio/test.wav').play()
+
       
     }, err => {
       console.log(err)
