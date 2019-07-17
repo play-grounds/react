@@ -103,7 +103,7 @@ function Points() {
       let dayInt = parseInt(day[0].object.value)
       console.log('day', day[0].object.value);
 
-      document.title = (dayInt % 30) + ' ' + (dayInt%360) + ' ' + hourInt + ' ' + dayInt 
+      document.title = (dayInt % 30) + ' ' + (dayInt%360 - dayInt%30) + ' ' + hourInt + ' ' + dayInt 
       reset(hourInt, dayInt)
       
     }, err => {
@@ -149,7 +149,7 @@ function Points() {
 
       <div className='buttons'>
         <span className="button is-large is-success">S : {template.day%30}</span>
-        <span className="button is-large is-info">L : {template.day%360 - template.count%30}</span>
+        <span className="button is-large is-info">L : {template.day%360 - template.day%30}</span>
         <span className="button is-large is-primary">T : {template.count}</span>
         <span className="button is-large is-link">D : {template.day}</span>
       </div>
