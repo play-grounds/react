@@ -63,11 +63,12 @@ const store = () => {
 
 function Circle({rad, ...props}) {
 
+  var threshold = new URLSearchParams(document.location.search).get('threshold')  || 410
 
-  if (rad > 410) {
-    rad = 410
+  if (rad > threshold) {
+    rad = threshold
   }
-  let percent = rad / 410 
+  let percent = rad / threshold 
   let red = Math.floor(percent * 212)
   let green = Math.floor(212 - red)
 
