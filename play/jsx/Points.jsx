@@ -147,9 +147,9 @@ function Points() {
       <hr/>
 
       <div className='buttons'>
-        <span className="button is-large">S : {count%30}</span>
-        <span className="button is-large">L : {count%360 - count%30}</span>
-        <span className="button is-large">T : {count}</span>
+        <span className="button is-large is-success">S : {count%30}</span>
+        <span className="button is-large is-info">L : {count%360 - count%30}</span>
+        <span className="button is-large is-primary">T : {count}</span>
       </div>
 
 
