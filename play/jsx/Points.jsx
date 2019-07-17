@@ -93,7 +93,9 @@ function Points() {
       document.title = (amount % 30) + ' ' + (amount%360) + ' ' + amount 
       console.log('hour', hour[0].object.value);
 
-      if (amount % 30 === 0) {
+      if (amount % 360 === 0) {
+        new Audio('audio/cheer.ogg').play()
+      } else if (amount % 30 === 0) {
         new Audio('audio/positive.wav').play()
       }
       
