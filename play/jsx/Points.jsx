@@ -71,10 +71,11 @@ function Circle({rad, ...props}) {
   let percent = rad / threshold 
   let red = Math.floor(percent * 212)
   let green = Math.floor(212 - red)
+  let factor = threshold / 146.0
 
   return (
     <svg width="300" height="300">  <circle cx="150"
-    cy="150" style={{ fill : 'rgb(' + red + ', ' + green +', 0)' }} r={rad / 2.8}><title>Pie</title></circle></svg>    
+    cy="150" style={{ fill : 'rgb(' + red + ', ' + green +', 0)' }} r={rad / factor}><title>Pie</title></circle></svg>    
   )
 }
 
