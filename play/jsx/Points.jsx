@@ -49,15 +49,16 @@ function useStore(storeInit) {
 
 const store = () => {
 
-  let initial = new URLSearchParams(document.location.search).get('count') || 0
+  let initial = {}
+  initial.count = new URLSearchParams(document.location.search).get('count') || 0
   
-  const [count, setCount] = React.useState(initial);
+  const [template, setCount] = React.useState(initial);
 
-  const increment = (amount) => setCount(count + amount);
-  const decrement = () => setCount(count + 30);
-  const reset = (amount) => { let a = amount || 0 ; setCount(a); }
+  const increment = (amount) => setCount({ count : count + amount });
+  const decrement = () => setCount({ count : count + 30});
+  const reset = (amount, day=0) => { let a = amount || 0 ; setCount({ count : a, day : day}); }
 
-  return {count, increment, decrement, reset};
+  return {template, increment, decrement, reset};
 };
 
 function Circle({rad, ...props}) {
@@ -77,7 +78,7 @@ function Circle({rad, ...props}) {
 }
 
 function Points() {
-  const {count, increment, decrement, reset} = useStore(store);
+  const {template, increment, decrement, reset} = useStore(store);
 
   function fetchCount (subject) {
     console.log('fetching', subject);
@@ -88,22 +89,22 @@ function Points() {
       let o = null
       let w = UI.store.sym(subject.split('#')[0])
       let hour = UI.store.statementsMatching(s, p, o, w)
-      let amount = parseInt(hour[0].object.value)
-      reset(amount)
-      document.title = (amount % 30) + ' ' + (amount%360) + ' ' + amount 
+      let hourInt = parseInt(hour[0].object.value)
       console.log('hour', hour[0].object.value);
 
-      if (amount % 360 === 0) {
+      if (hourInt % 360 === 0) {
         new Audio('audio/cheer.ogg').play()
-      } else if (amount % 30 === 0) {
+      } else if (hourInt % 30 === 0) {
         new Audio('audio/positive.wav').play()
       }
       
       p = UI.store.sym('urn:query:day')
       let day = UI.store.statementsMatching(s, p, o, w)
-      amount = parseInt(day[0].object.value)
+      let dayInt = parseInt(day[0].object.value)
       console.log('day', day[0].object.value);
 
+      document.title = (dayInt % 30) + ' ' + (dayInt%360) + ' ' + hourInt + ' ' + dayInt 
+      reset(hourInt, dayInt)
       
     }, err => {
       console.log(err)
@@ -142,14 +143,15 @@ function Points() {
       <h1>Burndown Chart (hourly work)</h1>
       <hr/>
 
-      <Circle rad={count} />
+      <Circle rad={template.count} />
 
       <hr/>
 
       <div className='buttons'>
-        <span className="button is-large is-success">S : {count%30}</span>
-        <span className="button is-large is-info">L : {count%360 - count%30}</span>
-        <span className="button is-large is-primary">T : {count}</span>
+        <span className="button is-large is-success">S : {template.day%30}</span>
+        <span className="button is-large is-info">L : {template.day%360 - template.count%30}</span>
+        <span className="button is-large is-primary">T : {template.count}</span>
+        <span className="button is-large is-link">D : {template.day}</span>
       </div>
 
 
