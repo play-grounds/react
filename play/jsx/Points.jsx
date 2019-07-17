@@ -94,16 +94,16 @@ function Points() {
       let hourInt = parseInt(hour[0].object.value)
       console.log('hour', hour[0].object.value);
 
-      if (hourInt % 360 === 0) {
-        new Audio('audio/cheer.ogg').play()
-      } else if (hourInt % 30 === 0) {
-        new Audio('audio/positive.wav').play()
-      }
-      
       p = UI.store.sym('urn:query:day')
       let day = UI.store.statementsMatching(s, p, o, w)
       let dayInt = parseInt(day[0].object.value)
       console.log('day', day[0].object.value);
+
+      if (dayInt % 360 === 0) {
+        new Audio('audio/cheer.ogg').play()
+      } else if (dayInt % 30 === 0) {
+        new Audio('audio/positive.wav').play()
+      }      
 
       document.title = (dayInt % 30) + ' ' + (dayInt%360 - dayInt%30) + ' ' + hourInt + ' ' + dayInt 
       reset(hourInt, dayInt)
