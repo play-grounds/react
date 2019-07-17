@@ -62,7 +62,7 @@ const store = () => {
 
 function Circle({rad, ...props}) {
 
-  
+
   if (rad > 410) {
     rad = 410
   }
@@ -97,6 +97,7 @@ function Points() {
       let day = UI.store.statementsMatching(s, p, o, w)
       amount = parseInt(day[0].object.value)
       console.log('day', day[0].object.value);
+      new Audio('audio/test.wav').play()
       
     }, err => {
       console.log(err)
