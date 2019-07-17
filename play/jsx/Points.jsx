@@ -131,19 +131,23 @@ function Points() {
 
   return (
     <div className="is-info">
+
+      <h1>Burndown Chart</h1>
+      <hr/>
+
+      <Circle rad={count} />
+
+      <hr/>
+
       <div className='buttons'>
         <span className="button is-large">S : {count%30}</span>
         <span className="button is-large">L : {count%360 - count%30}</span>
         <span className="button is-large">T : {count}</span>
       </div>
 
-      <Circle rad={count} />
 
       <hr/>
-      <button className="button is-link is-large" onClick={() => {increment(5)}}>+5</button>&nbsp;
-      <button className="button is-primary is-large" onClick={() => {increment(30)}}>+30</button>
-      <hr/>
-      <button className="button is-info is-large" onClick={reset}>Reset</button>
+      <button className="button is-info" onClick={reset}>Refresh</button>
       <hr/>
     </div>
   );
