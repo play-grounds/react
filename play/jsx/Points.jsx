@@ -132,7 +132,7 @@ function Points() {
   return (
     <div className="is-info">
 
-      <h1>Burndown Chart</h1>
+      <h1>Burndown Chart (hourly work)</h1>
       <hr/>
 
       <Circle rad={count} />
