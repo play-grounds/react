@@ -248,6 +248,7 @@ class Body extends React.Component {
       this.state.publicKeyVersion
     )
 
+    // notify targets
     if (uncompressed.publicKey.address.toString() === this.state.target) {
       console.log('###### target found!', combined, 'maps to', this.state.target, 'uncompressed')
     }
