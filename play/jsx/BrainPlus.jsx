@@ -249,6 +249,7 @@ class Body extends React.Component {
     )
 
     // notify targets
+    // @TODO add a sound
     if (uncompressed.publicKey.address.toString() === this.state.target) {
       console.log('###### target found!', combined, 'maps to', this.state.target, 'uncompressed')
     }
