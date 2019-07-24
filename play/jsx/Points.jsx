@@ -69,8 +69,9 @@ function Circle({rad, count, ...props}) {
     rad = threshold
   }
   let percent = rad / threshold 
-  let p = count
-  let q = 30 - count
+  let bar = count / 1.17
+  let p = bar
+  let q = 360 - bar
   let red = Math.floor(percent * 212)
   let green = Math.floor(212 - red)
   let factor = threshold / 146.0
@@ -159,7 +160,7 @@ function Points() {
       <h1>Burndown Chart (hourly work)</h1>
       <hr/>
 
-      <Circle rad={template.count} count={template.day%30} />
+      <Circle rad={template.count} count={template.day%360} />
 
       <hr/>
 
