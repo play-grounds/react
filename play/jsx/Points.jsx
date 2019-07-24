@@ -68,13 +68,15 @@ function Circle({rad, count, ...props}) {
   if (rad > threshold) {
     rad = threshold
   }
+
   let percent = rad / threshold 
-  let bar = count / 1.17
-  let p = bar
-  let q = 360 - bar
   let red = Math.floor(percent * 212)
   let green = Math.floor(212 - red)
   let factor = threshold / 146.0
+
+  let bar = 310 * ( count / 360 ) * percent 
+
+  console.log(rad, percent, count, bar, factor)
 
   return (
 
@@ -84,8 +86,8 @@ function Circle({rad, count, ...props}) {
               cy="150" 
               style={{ fill : 'rgb(' + red + ', ' + green +', 0)', 
                 stroke : 'gold',
-                strokeWidth : 10,
-                strokeDasharray : p + '% ' + q + '%'
+                strokeWidth : 11,
+                strokeDasharray : bar + '% ' 
               }} 
               r={rad / factor}>
               <title>Pie</title>              
