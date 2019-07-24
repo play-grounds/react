@@ -74,9 +74,10 @@ function Circle({rad, count, ...props}) {
   let green = Math.floor(212 - red)
   let factor = threshold / 146.0
 
-  let bar = 310 * ( count / 360 ) * percent 
+  let p = 309 * ( count / 360 ) * percent 
+  let q = (309 * percent) - p
 
-  console.log(rad, percent, count, bar, factor)
+  console.log(rad, percent, count, p, factor)
 
   return (
 
@@ -87,7 +88,7 @@ function Circle({rad, count, ...props}) {
               style={{ fill : 'rgb(' + red + ', ' + green +', 0)', 
                 stroke : 'gold',
                 strokeWidth : 11,
-                strokeDasharray : bar + '% ' 
+                strokeDasharray : p + '% ' + q + '%'
               }} 
               r={rad / factor}>
               <title>Pie</title>              
