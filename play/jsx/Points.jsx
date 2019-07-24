@@ -61,21 +61,35 @@ const store = () => {
   return {template, increment, decrement, reset};
 };
 
-function Circle({rad, ...props}) {
-
-  var threshold = new URLSearchParams(document.location.search).get('threshold')  || 410
+function Circle({rad, count, ...props}) {
+  var defaultThreshold = 410
+  var threshold = new URLSearchParams(document.location.search).get('threshold')  || defaultThreshold
 
   if (rad > threshold) {
     rad = threshold
   }
   let percent = rad / threshold 
+  let p = count
+  let q = 30 - count
   let red = Math.floor(percent * 212)
   let green = Math.floor(212 - red)
   let factor = threshold / 146.0
 
   return (
-    <svg width="300" height="300">  <circle cx="150"
-    cy="150" style={{ fill : 'rgb(' + red + ', ' + green +', 0)' }} r={rad / factor}><title>Pie</title></circle></svg>    
+
+    
+    <svg width="300" height="300">  
+      <circle cx="150"
+              cy="150" 
+              style={{ fill : 'rgb(' + red + ', ' + green +', 0)', 
+                stroke : 'gold',
+                strokeWidth : 10,
+                strokeDasharray : p + '% ' + q + '%'
+              }} 
+              r={rad / factor}>
+              <title>Pie</title>              
+      </circle>
+   </svg>
   )
 }
 
@@ -145,7 +159,7 @@ function Points() {
       <h1>Burndown Chart (hourly work)</h1>
       <hr/>
 
-      <Circle rad={template.count} />
+      <Circle rad={template.count} count={template.day%30} />
 
       <hr/>
 
