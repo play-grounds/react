@@ -16,8 +16,8 @@ function BookmarkItem(props) {
   if (props.recalls.match(IMAGE_EXTENSIONS)) {
     return (
       <div>{props.id + 1}. <a target="_blank" href={props.recalls}>{props.title}</a>
-      <br/>
-      <img src={props.recalls} /></div>)
+        <br />
+        <img src={props.recalls} /></div>)
   } else if (props.recalls.match(VIDEO_EXTENSIONS)) {
     return (
       <div>{props.id + 1}. <video controls autoplay='true' loop src={props.recalls} /></div>)
@@ -45,19 +45,19 @@ function getTypeFromSubject(subject) {
 }
 
 class Bookmark extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     let media = this.isMedia(props.subject)
-    this.state = { 'media' : media, 'subject' : props.subject, 'title' : '', bookmark : [ { 'recalls' : '', 'title' : '' } ] }
+    this.state = { 'media': media, 'subject': props.subject, 'title': '', bookmark: [{ 'recalls': '', 'title': '' }] }
   }
 
-  fetchBookmark (subject) {
+  fetchBookmark(subject) {
     console.log('fetch bookmark', subject)
     UI.fetcher.load(subject).then(response => {
       var type = getTypeFromSubject(subject)
       var bm = []
       console.log('type', type);
-      
+
       if (!type) {
         let s = UI.store.sym(subject)
         let p = UI.store.sym('http://purl.org/dc/terms/references')
@@ -74,13 +74,13 @@ class Bookmark extends React.Component {
           o = null
           w = UI.store.sym(subject.split('#')[0])
           let title = UI.store.any(s, p, o, w)
-          let bookmark = { 'recalls' : recalls.value, 'title' : title.value }
+          let bookmark = { 'recalls': recalls.value, 'title': title.value }
           bm.push(bookmark)
         }
 
-        this.setState({'bookmark' : bm })  
+        this.setState({ 'bookmark': bm })
 
-        console.log('bm', bm); 
+        console.log('bm', bm);
 
       } else {
         let s = UI.store.sym(subject)
@@ -93,13 +93,13 @@ class Bookmark extends React.Component {
         o = null
         w = UI.store.sym(subject.split('#')[0])
         let title = UI.store.any(s, p, o, w)
-        let bookmark = [{ 'recalls' : recalls.value, 'title' : title.value }]
-        this.setState({'recalls' : recalls.value, 'title' : title.value, 'bookmark' : bookmark })  
+        let bookmark = [{ 'recalls': recalls.value, 'title': title.value }]
+        this.setState({ 'recalls': recalls.value, 'title': title.value, 'bookmark': bookmark })
       }
     }, err => {
       console.log(err)
     })
-  }  
+  }
 
   componentDidMount() {
     let subject = this.state.subject
@@ -108,13 +108,13 @@ class Bookmark extends React.Component {
     }
   }
 
-  componentWillReceiveProps (props) {
+  componentWillReceiveProps(props) {
     let subject = props.subject
     if (this.isMedia(subject) === false) {
       this.fetchBookmark(subject)
-    }   
+    }
   }
-  
+
   isMedia(subject) {
     // TODO better test for linked data
     let isMedia = false
@@ -126,26 +126,26 @@ class Bookmark extends React.Component {
     return isMedia
   }
 
-  render () {
+  render() {
     let med = this.isMedia(this.props.subject)
     console.log('subject', this.props.subject, med);
-    
+
     if (med === true) {
       return (
         <Media href={this.props.subject} />
-      )  
+      )
     } else {
       const listItems = this.state.bookmark.map((b, i) =>
-      // Wrong! The key should have been specified here:
-      <div>
-        <BookmarkItem id={i} recalls={b.recalls} title={b.title} />
-      </div>
+        // Wrong! The key should have been specified here:
+        <div>
+          <BookmarkItem id={i} recalls={b.recalls} title={b.title} />
+        </div>
 
       );
 
       return (
         <div>{listItems}</div>
-      )        
+      )
     }
   }
 }
