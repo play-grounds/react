@@ -9,7 +9,16 @@ UI.updater = new $rdf.UpdateManager(UI.store)
 class Bookmark extends React.Component {
   constructor (props) {
     super(props)
+    let media = this.isMedia()
+    this.state = { 'media' : media }
   }
+
+  componentDidMount() {
+    if (this.state.media === false) {
+      console.log('fetch bookmark')
+    }        
+  }
+  
   isMedia() {
     // TODO better test for linked data
     if (this.props.subject.match(/#/)) {
@@ -20,8 +29,7 @@ class Bookmark extends React.Component {
   }
 
   render () {
-    let media = this.isMedia()
-    if (media) {
+    if (this.state.media) {
       return (
         <Media href={this.props.subject} />
       )  
