@@ -12,7 +12,7 @@ class Addressbar extends React.Component {
   handleChange (event) {
     this.setState({subject: event.target.value })
     let href =  window.location.href.split('?')[0] 
-    href += '?uri=' + encodeURIComponent(webId)
+    href += '?uri=' + encodeURIComponent(event.target.value)
     href += '&view=' 
     href += this.state.view ? this.state.view : ''
     history.pushState({}, 'Friends App', href)
