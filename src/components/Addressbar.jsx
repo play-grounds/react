@@ -15,7 +15,7 @@ class Addressbar extends React.Component {
     href += '?uri=' + encodeURIComponent(event.target.value)
     href += '&view=' 
     href += this.state.view ? this.state.view : ''
-    history.pushState({}, 'Friends App', href)
+    history.pushState({}, 'App', href)
   }
 
   render () {
