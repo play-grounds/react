@@ -26,7 +26,7 @@ function BookmarkItem(props) {
       <div><video controls autoplay='true' loop src={props.recalls} /></div>)
   } else {
     return (
-      <a target="_blank" href={props.recalls}>{props.title}</a>
+      <div>{props.id + 1}. <a target="_blank" href={props.recalls}>{props.title} <img height="10" width="10" src="./image/External.svg" /></a></div>
     )
   }
 }
@@ -135,10 +135,10 @@ class Bookmark extends React.Component {
         <Media href={this.props.subject} />
       )  
     } else {
-      const listItems = this.state.bookmark.map((b) =>
+      const listItems = this.state.bookmark.map((b, i) =>
       // Wrong! The key should have been specified here:
       <div>
-        <BookmarkItem recalls={b.recalls} title={b.title} />
+        <BookmarkItem id={i} recalls={b.recalls} title={b.title} />
       </div>
 
       );
