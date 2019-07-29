@@ -15,15 +15,15 @@ function BookmarkItem(props) {
 
   if (props.recalls.match(IMAGE_EXTENSIONS)) {
     return (
-      <div><a target="_blank" href={props.recalls}>{props.title}</a>
+      <div>{props.id + 1}. <a target="_blank" href={props.recalls}>{props.title}</a>
       <br/>
       <img src={props.recalls} /></div>)
   } else if (props.recalls.match(VIDEO_EXTENSIONS)) {
     return (
-      <div><video controls autoplay='true' loop src={props.recalls} /></div>)
+      <div>{props.id + 1}. <video controls autoplay='true' loop src={props.recalls} /></div>)
   } else if (props.recalls.match(AUDIO_EXTENSIONS)) {
     return (
-      <div><video controls autoplay='true' loop src={props.recalls} /></div>)
+      <div>{props.id + 1}. <video controls autoplay='true' loop src={props.recalls} /></div>)
   } else {
     return (
       <div>{props.id + 1}. <a target="_blank" href={props.recalls}>{props.title} <img height="10" width="10" src="./image/External.svg" /></a></div>
