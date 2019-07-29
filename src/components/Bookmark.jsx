@@ -9,11 +9,12 @@ UI.updater = new $rdf.UpdateManager(UI.store)
 class Bookmark extends React.Component {
   constructor (props) {
     super(props)
-    let media = this.isMedia()
-    this.state = { 'media' : media, 'subject' : props.subject }
+    let media = this.isMedia(props.subject)
+    this.state = { 'media' : media, 'subject' : props.subject, 'title' : '' }
   }
 
   componentDidMount() {
+    let subject = this.state.subject
     if (this.state.media === false) {
       console.log('fetch bookmark')
       UI.fetcher.load(subject).then(response => {
@@ -22,18 +23,27 @@ class Bookmark extends React.Component {
         let o = null
         let w = UI.store.sym(subject.split('#')[0])
         let recalls = UI.store.any(s, p, o, w)
-        this.setState('subject' : recalls)
+        s = UI.store.sym(this.props.subject)
+        p = UI.store.sym('http://purl.org/dc/terms/title')
+        o = null
+        w = UI.store.sym(subject.split('#')[0])
+        let title = UI.store.any(s, p, o, w)
+        console.log(recalls);
+        
+        this.setState({'subject' : recalls.value, 'title' : title.value })
       })
     }
   }
   
-  isMedia() {
+  isMedia(subject) {
     // TODO better test for linked data
-    if (this.props.subject.match(/#/)) {
-      return false
+    let isMedia = false
+    if (subject.match(/#/)) {
+      isMedia = false
     } else {
-      return true
+      isMedia = true
     }
+    return isMedia
   }
 
   render () {
@@ -43,7 +53,7 @@ class Bookmark extends React.Component {
       )  
     } else {
       return (
-        <Media href={this.state.subject} />
+        <a target="_blank" href={this.state.subject}>{this.state.title}</a>
       )        
     }
   }
