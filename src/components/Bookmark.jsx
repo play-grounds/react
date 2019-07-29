@@ -8,9 +8,27 @@ UI.updater = new $rdf.UpdateManager(UI.store)
 
 
 function BookmarkItem(props) {
-  return (
-    <a target="_blank" href={props.recalls}>{props.title}</a>
-  )
+  const AUDIO_EXTENSIONS = /\.(m4a|mp4a|mpga|mp2|mp2a|mp3|m2a|m3a|wav|weba|aac|oga|spx)($|\?)/i
+  const VIDEO_EXTENSIONS = /\.(mp4|og[gv]|webm|mov|m4v|mkv)($|\?)/i
+  const IMAGE_EXTENSIONS = /\.(png|gif|bmp|svg|jpeg|jpg)($|\?)/i
+
+
+  if (props.recalls.match(IMAGE_EXTENSIONS)) {
+    return (
+      <div><a target="_blank" href={props.recalls}>{props.title}</a>
+      <br/>
+      <img src={props.recalls} /></div>)
+  } else if (props.recalls.match(VIDEO_EXTENSIONS)) {
+    return (
+      <div><video controls autoplay='true' loop src={props.recalls} /></div>)
+  } else if (props.recalls.match(AUDIO_EXTENSIONS)) {
+    return (
+      <div><video controls autoplay='true' loop src={props.recalls} /></div>)
+  } else {
+    return (
+      <a target="_blank" href={props.recalls}>{props.title}</a>
+    )
+  }
 }
 
 function getTypeFromSubject(subject) {
