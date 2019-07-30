@@ -128,6 +128,7 @@ class Bookmark extends React.Component {
   }
 
   setRefreshHandler(subject, handler) {
+    var self = this
     var wss = this.getUpdatesVia(subject)
     console.log('wss', wss, 'subject', subject)
     let w = new WebSocket(wss)
@@ -137,7 +138,7 @@ class Bookmark extends React.Component {
       if (data.match(/pub .*/)) {
         console.log('refresh')
         // hack for now
-        this.refresh
+        self.refresh()
       }
     }
     w.onopen = function () {
