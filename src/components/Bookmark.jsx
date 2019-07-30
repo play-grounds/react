@@ -120,6 +120,35 @@ class Bookmark extends React.Component {
     })
   }
 
+  getUpdatesVia (doc) {
+    var linkHeaders = UI.store.fetcher.getHeader(doc, 'updates-via')
+    console.log('linkHeaders', linkHeaders, 'doc', doc)
+    if (!linkHeaders || !linkHeaders.length) return null
+    return linkHeaders[0].trim()
+  }
+
+  setRefreshHandler(subject, handler) {
+    var wss = this.getUpdatesVia(subject)
+    console.log('wss', wss, 'subject', subject)
+    let w = new WebSocket(wss)
+    w.onmessage = function (m) {
+      let data = m.data      
+      console.log('data', data)
+      if (data.match(/pub .*/)) {
+        console.log('refresh')
+        // hack for now
+        this.refresh
+      }
+    }
+    w.onopen = function () {
+      w.send('sub ' + subject)
+    }  
+  }
+
+  refresh() {
+    this.fetchBookmark(this.state.subject, true)
+  }
+
   componentDidMount() {
     let subject = this.state.subject
     if (this.isMedia(subject) === false) {
@@ -127,7 +156,9 @@ class Bookmark extends React.Component {
     }
     if (subject) {
       console.log('init subject', subject)
-      UI.updater.setRefreshHandler (subject, (subject) => { this.fetchBookmark(subject, true) } ) 
+      setTimeout(() => {
+        this.setRefreshHandler (subject, this.refresh)         
+      }, 1000);
     }
   }
 
