@@ -92,9 +92,10 @@ class Bookmark extends React.Component {
     this.state = { 'media': media, 'subject': props.subject, 'title': '', bookmark: [{ 'recalls': '', 'title': '' }] }
   }
 
-  fetchBookmark(subject) {
+  fetchBookmark(subject, force) {
     console.log('fetch bookmark', subject)
-    UI.fetcher.load(subject).then(response => {
+    force = !! force
+    UI.fetcher.load(subject, { force : force } ).then(response => {
       var type = getTypeFromSubject(subject)
       var bm = []
       console.log('type', type);
@@ -123,6 +124,10 @@ class Bookmark extends React.Component {
     let subject = this.state.subject
     if (this.isMedia(subject) === false) {
       this.fetchBookmark(subject)
+    }
+    if (subject) {
+      console.log('init subject', subject)
+      UI.updater.setRefreshHandler ('https://melvin.solid.live/public/bookmarks.ttl', (subject) => { this.fetchBookmark(subject, true) } ) 
     }
   }
 
