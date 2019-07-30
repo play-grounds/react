@@ -111,6 +111,10 @@ class Bookmark extends React.Component {
           bm.push(getBookmarkFromSubject(subject.object.value))
         }
 
+        bm = bm.sort( function(a,b) { 
+          return (b.created < a.created) ? -1 : ((b.created > a.created) ? 1 : 0);
+        } )
+
         this.setState({ 'bookmark': bm })
 
       } else {
