@@ -28,16 +28,19 @@ function BookmarkItem(props) {
     return (
       <div>
         <table>
-        <tr>
-          <td>{props.id + 1}.&nbsp;</td>
-          <td><a target="_blank" href={props.recalls}>{props.title} <img height="10" width="10" src="./image/External.svg" /></a></td>
-          </tr>
-          <tr>
-          <td></td>
-          <td><sup>10 minutes ago by Melvin Carvalho</sup></td>
-          </tr>
+          <tbody>
+            <tr>
+              <td>{props.id + 1}.&nbsp;</td>
+              <td><a target="_blank" href={props.recalls}>{props.title} <img height="10" width="10" src="./image/External.svg" /></a></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><sup>{props.created} ago by <a href={props.maker} target="_blank">{props.maker}</a></sup></td>
+            </tr>
+
+          </tbody>
         </table>
-             
+
       </div>
     )
   }
@@ -67,7 +70,18 @@ function getBookmarkFromSubject(subject) {
   o = null
   w = UI.store.sym(subject.split('#')[0])
   let title = UI.store.any(s, p, o, w)
-  let bookmark = { 'recalls': recalls.value, 'title': title.value }  
+  s = UI.store.sym(subject)
+  p = UI.store.sym('http://xmlns.com/foaf/0.1/maker')
+  o = null
+  w = UI.store.sym(subject.split('#')[0])
+  let maker = UI.store.any(s, p, o, w)
+  s = UI.store.sym(subject)
+  p = UI.store.sym('http://purl.org/dc/terms/created')
+  o = null
+  w = UI.store.sym(subject.split('#')[0])
+  let created = UI.store.any(s, p, o, w)
+
+  let bookmark = { 'recalls': recalls.value, 'title': title.value, 'maker' : maker.value, 'created' : created.value }
   return bookmark
 }
 
@@ -140,12 +154,10 @@ class Bookmark extends React.Component {
       )
     } else {
       const listItems = this.state.bookmark.map((b, i) =>
-        // Wrong! The key should have been specified here:
         <div>
-          <BookmarkItem id={i} recalls={b.recalls} title={b.title} />
+          <BookmarkItem key={i} id={i} recalls={b.recalls} title={b.title} maker={b.maker} created={b.created} />
         </div>
-
-      );
+      )
 
       return (
         <div>{listItems}</div>
