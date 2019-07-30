@@ -56,6 +56,21 @@ function getTypeFromSubject(subject) {
   }
 }
 
+function getBookmarkFromSubject(subject) {
+  let s = UI.store.sym(subject)
+  let p = UI.store.sym('http://www.w3.org/2002/01/bookmark#recalls')
+  let o = null
+  let w = UI.store.sym(subject.split('#')[0])
+  let recalls = UI.store.any(s, p, o, w)
+  s = UI.store.sym(subject)
+  p = UI.store.sym('http://purl.org/dc/terms/title')
+  o = null
+  w = UI.store.sym(subject.split('#')[0])
+  let title = UI.store.any(s, p, o, w)
+  let bookmark = { 'recalls': recalls.value, 'title': title.value }  
+  return bookmark
+}
+
 class Bookmark extends React.Component {
   constructor(props) {
     super(props)
@@ -75,38 +90,15 @@ class Bookmark extends React.Component {
         let p = UI.store.sym('http://purl.org/dc/terms/references')
         let subjects = UI.store.statementsMatching(s, p)
         for (let subject of subjects) {
-          subject = subject.object.value
-          let s = UI.store.sym(subject)
-          let p = UI.store.sym('http://www.w3.org/2002/01/bookmark#recalls')
-          let o = null
-          let w = UI.store.sym(subject.split('#')[0])
-          let recalls = UI.store.any(s, p, o, w)
-          s = UI.store.sym(subject)
-          p = UI.store.sym('http://purl.org/dc/terms/title')
-          o = null
-          w = UI.store.sym(subject.split('#')[0])
-          let title = UI.store.any(s, p, o, w)
-          let bookmark = { 'recalls': recalls.value, 'title': title.value }
-          bm.push(bookmark)
+          bm.push(getBookmarkFromSubject(subject.object.value))
         }
 
         this.setState({ 'bookmark': bm })
 
-        console.log('bm', bm);
-
       } else {
-        let s = UI.store.sym(subject)
-        let p = UI.store.sym('http://www.w3.org/2002/01/bookmark#recalls')
-        let o = null
-        let w = UI.store.sym(subject.split('#')[0])
-        let recalls = UI.store.any(s, p, o, w)
-        s = UI.store.sym(subject)
-        p = UI.store.sym('http://purl.org/dc/terms/title')
-        o = null
-        w = UI.store.sym(subject.split('#')[0])
-        let title = UI.store.any(s, p, o, w)
-        let bookmark = [{ 'recalls': recalls.value, 'title': title.value }]
-        this.setState({ 'recalls': recalls.value, 'title': title.value, 'bookmark': bookmark })
+        bm.push(getBookmarkFromSubject(subject))
+
+        this.setState({ 'bookmark': bm })
       }
     }, err => {
       console.log(err)
