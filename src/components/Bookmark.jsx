@@ -15,7 +15,7 @@ function BookmarkItem(props) {
 
   if (props.recalls.match(IMAGE_EXTENSIONS)) {
     return (
-      <div>{props.id + 1}. <a target="_blank" href={props.recalls}>{props.title}</a>
+      <div>{props.id + 1}. <a target="_blank" href={props.recalls}>{props.title} <img height="10" width="10" src="./image/External.svg" /></a>
         <br />
         <img src={props.recalls} /></div>)
   } else if (props.recalls.match(VIDEO_EXTENSIONS)) {
