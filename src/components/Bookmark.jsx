@@ -15,9 +15,27 @@ function BookmarkItem(props) {
 
   if (props.recalls.match(IMAGE_EXTENSIONS)) {
     return (
-      <div>{props.id + 1}. <a target="_blank" href={props.recalls}>{props.title} <img height="10" width="10" src="./image/External.svg" /></a>
-        <br />
-        <img src={props.recalls} /></div>)
+      <div>
+        <table>
+          <tbody>
+            <tr>
+              <td>{props.id + 1}.&nbsp;</td>
+              <td><a target="_blank" href={props.recalls}>{props.title}</a> <a target="_blank" href={props.subject}><img height="10" width="10" src="./image/External.svg" /></a></td>
+            </tr>
+            <tr>
+            <td></td>
+              <td><sup>{moment.utc(props.created).fromNow()} by <a href={props.maker} target="_blank" style={{ color : 'inherit' }}>{props.maker}</a></sup></td>
+            </tr>
+            <tr>
+            <td></td>
+              <td><img src={props.recalls} /></td>
+
+            </tr>
+
+          </tbody>
+        </table>
+
+        </div>)
   } else if (props.recalls.match(VIDEO_EXTENSIONS)) {
     return (
       <div>{props.id + 1}. <video controls autoplay='true' loop src={props.recalls} /></div>)
