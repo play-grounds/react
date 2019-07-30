@@ -26,7 +26,19 @@ function BookmarkItem(props) {
       <div>{props.id + 1}. <video controls autoplay='true' loop src={props.recalls} /></div>)
   } else {
     return (
-      <div>{props.id + 1}. <a target="_blank" href={props.recalls}>{props.title} <img height="10" width="10" src="./image/External.svg" /></a></div>
+      <div>
+        <table>
+        <tr>
+          <td>{props.id + 1}.&nbsp;</td>
+          <td><a target="_blank" href={props.recalls}>{props.title} <img height="10" width="10" src="./image/External.svg" /></a></td>
+          </tr>
+          <tr>
+          <td></td>
+          <td><sup>10 minutes ago by Melvin Carvalho</sup></td>
+          </tr>
+        </table>
+             
+      </div>
     )
   }
 }
