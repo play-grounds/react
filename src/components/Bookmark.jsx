@@ -127,7 +127,7 @@ class Bookmark extends React.Component {
     }
     if (subject) {
       console.log('init subject', subject)
-      UI.updater.setRefreshHandler ('https://melvin.solid.live/public/bookmarks.ttl', (subject) => { this.fetchBookmark(subject, true) } ) 
+      UI.updater.setRefreshHandler (subject, (subject) => { this.fetchBookmark(subject, true) } ) 
     }
   }
 
