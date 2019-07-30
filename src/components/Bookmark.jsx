@@ -93,9 +93,12 @@ class Bookmark extends React.Component {
   }
 
   fetchBookmark(subject, force) {
-    console.log('fetch bookmark', subject)
     force = !! force
-    UI.fetcher.load(subject, { force : force } ).then(response => {
+    console.log('fetch bookmark', subject, 'force', force)
+    // hack to force fetcher
+    UI.store = $rdf.graph()
+    UI.fetcher = new $rdf.Fetcher(UI.store)    
+    UI.fetcher.load(subject, {force : true} ).then(response => {
       var type = getTypeFromSubject(subject)
       var bm = []
       console.log('type', type);
