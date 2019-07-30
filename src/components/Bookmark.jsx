@@ -31,11 +31,11 @@ function BookmarkItem(props) {
           <tbody>
             <tr>
               <td>{props.id + 1}.&nbsp;</td>
-              <td><a target="_blank" href={props.recalls}>{props.title} <img height="10" width="10" src="./image/External.svg" /></a></td>
+              <td><a target="_blank" href={props.recalls}>{props.title}</a> <a target="_blank" href={props.subject}><img height="10" width="10" src="./image/External.svg" /></a></td>
             </tr>
             <tr>
               <td></td>
-              <td><sup>{moment.utc(props.created).fromNow()   } ago by <a href={props.maker} target="_blank" style={{ color : 'inherit' }}>{props.maker}</a></sup></td>
+              <td><sup>{moment.utc(props.created).fromNow()} ago by <a href={props.maker} target="_blank" style={{ color : 'inherit' }}>{props.maker}</a></sup></td>
             </tr>
 
           </tbody>
@@ -81,7 +81,7 @@ function getBookmarkFromSubject(subject) {
   w = UI.store.sym(subject.split('#')[0])
   let created = UI.store.any(s, p, o, w)
 
-  let bookmark = { 'recalls': recalls.value, 'title': title.value, 'maker' : maker.value, 'created' : created.value }
+  let bookmark = { 'recalls': recalls.value, 'title': title.value, 'maker' : maker.value, 'created' : created.value, 'subject' : subject }
   return bookmark
 }
 
@@ -155,7 +155,7 @@ class Bookmark extends React.Component {
     } else {
       const listItems = this.state.bookmark.map((b, i) =>
         <div>
-          <BookmarkItem key={i} id={i} recalls={b.recalls} title={b.title} maker={b.maker} created={b.created} />
+          <BookmarkItem key={i} id={i} recalls={b.recalls} title={b.title} maker={b.maker} created={b.created} subject={b.subject}/>
         </div>
       )
 
