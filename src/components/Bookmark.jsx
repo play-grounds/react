@@ -35,7 +35,7 @@ function BookmarkItem(props) {
             </tr>
             <tr>
               <td></td>
-              <td><sup>{moment.utc(props.created).fromNow()} ago by <a href={props.maker} target="_blank" style={{ color : 'inherit' }}>{props.maker}</a></sup></td>
+              <td><sup>{moment.utc(props.created).fromNow()} by <a href={props.maker} target="_blank" style={{ color : 'inherit' }}>{props.maker}</a></sup></td>
             </tr>
 
           </tbody>
