@@ -49,6 +49,7 @@ return (
       <Li href="seed.html" text="Seed App" />
       <Li href="inbox.html" text="Inbox App" />
       <Li href="patch.html" text="Patch App" />
+      <Li href="put.html" text="Put App" />
     </ul>
     <hr/>
     </section>
