@@ -92,7 +92,7 @@ class App extends React.Component {
         </textarea>
         <hr/>
         Command : <br/>
-        fetch("{this.state.inbox}",  { " { 'headers' : { 'content-type' : 'text/turtle', 'slug' : 'test.ttl' }, 'body' : '" + this.state.body + "', 'method' : 'POST' } " } )
+        fetch("{this.state.inbox}",  { " { 'headers' : { 'content-type' : 'text/turtle', 'slug' : 'test' }, 'body' : '" + this.state.body + "', 'method' : 'POST' } " } )
         <hr/>
         <div className="buttons">
         <a className="button is-success" target='_blank' href='https://solid.github.io/solid-idps/'>Send to inbox</a>
