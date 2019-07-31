@@ -7,7 +7,7 @@ UI.fetcher = new $rdf.Fetcher(UI.store)
 UI.updater = new $rdf.UpdateManager(UI.store)
 
 
-function BookmarkItem(props) {
+function PostItem(props) {
   const AUDIO_EXTENSIONS = /\.(m4a|mp4a|mpga|mp2|mp2a|mp3|m2a|m3a|wav|weba|aac|oga|spx)($|\?)/i
   const VIDEO_EXTENSIONS = /\.(mp4|og[gv]|webm|mov|m4v|mkv)($|\?)/i
   const IMAGE_EXTENSIONS = /\.(png|gif|bmp|svg|jpeg|jpg)($|\?)/i
@@ -237,7 +237,7 @@ class Post extends React.Component {
     } else {
       const listItems = this.state.bookmark.map((b, i) =>
         <div>
-          <BookmarkItem key={i} id={i} recalls={b.recalls} title={b.title} maker={b.maker} created={b.created} subject={b.subject}/>
+          <PostItem key={i} id={i} recalls={b.recalls} title={b.title} maker={b.maker} created={b.created} subject={b.subject}/>
         </div>
       )
 
