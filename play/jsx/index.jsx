@@ -47,6 +47,7 @@ return (
       <Li href="outstated.html" text="Outstated Counter" />
       <Li href="counter.html" text="Counter App" />
       <Li href="seed.html" text="Seed App" />
+      <Li href="inbox.html" text="Inbox App" />
     </ul>
     <hr/>
     </section>
