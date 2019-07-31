@@ -63,8 +63,8 @@ class App extends React.Component {
   }
 
 
-  async handleChange(event) {
-    login('https://solid.community')    
+  handleChange(event) {
+    this.setState({ 'body': event.target.value })
   }
 
   async popupLogin(event) {
@@ -88,7 +88,7 @@ class App extends React.Component {
         Payload : 
         <br/>
         <br/>
-        <textarea value={this.state.body}>
+        <textarea value={this.state.body} onChange={this.handleChange}>
         </textarea>
         <hr/>
         Command : <br/>
