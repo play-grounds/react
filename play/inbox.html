@@ -116,7 +116,7 @@ class App extends React.Component {
         {this.state.message}
         <hr/>
         Inbox : <input onChange={this.changeInbox} value={this.state.inbox} />
-        <hr/>
+        <a href={this.state.inbox} target="_blank"> <img height="10" width="10" src="./image/External.svg" /></a> <hr/>
         Slug : <input onChange={this.changeSlug} value={this.state.slug} />
         <hr/>
         Payload : 
