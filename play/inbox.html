@@ -34,9 +34,13 @@ class App extends React.Component {
     this.state = {
       message: '',
       body: '<> <> 1 .',
-      inbox: 'none'
+      inbox: 'none',
+      slug: 'test'
     }
-    this.handleChange = this.handleChange.bind(this)
+    this.changeBody = this.changeBody.bind(this)
+    this.changeSlug = this.changeSlug.bind(this)
+    this.changeInbox = this.changeInbox.bind(this)
+    this.send = this.send.bind(this)
 
     solid.auth.trackSession(session => {
       if (!session) {
@@ -62,9 +66,28 @@ class App extends React.Component {
     })
   }
 
+  send() {
+    console.log('sending', this.state)
+    solid.auth.fetch(this.state.inbox,  
+      { 'headers' : 
+        { 'content-type' : 'text/turtle', 
+          'slug' : this.state.slug }, 
+        'body' : this.state.body, 
+        'method' : 'POST' }   )
+  }
 
-  handleChange(event) {
+
+  changeBody(event) {
     this.setState({ 'body': event.target.value })
+  }
+
+  changeSlug(event) {
+    this.setState({ 'slug': event.target.value })
+  }
+
+  changeInbox(event) {
+    console.log('new inbox', event)
+    this.setState({ 'inbox': event.target.value })
   }
 
   async popupLogin(event) {
@@ -79,23 +102,25 @@ class App extends React.Component {
         title="Inbox" 
         sourceCode="https://github.com/play-grounds/react/blob/gh-pages/play/inbox.html"/>
       <section className="section">
-        <h1>Inbox</h1>
+        <h2>Inbox</h2>
         <hr/>
         {this.state.message}
         <hr/>
-        Inbox : {this.state.inbox}
+        Inbox : <input onChange={this.changeInbox} value={this.state.inbox} />
+        <hr/>
+        Slug : <input onChange={this.changeSlug} value={this.state.slug} />
         <hr/>
         Payload : 
         <br/>
         <br/>
-        <textarea value={this.state.body} onChange={this.handleChange}>
+        <textarea value={this.state.body} onChange={this.changeBody}>
         </textarea>
         <hr/>
         Command : <br/>
-        fetch("{this.state.inbox}",  { " { 'headers' : { 'content-type' : 'text/turtle', 'slug' : 'test' }, 'body' : '" + this.state.body + "', 'method' : 'POST' } " } )
+        fetch("{this.state.inbox}",  { " { 'headers' : { 'content-type' : 'text/turtle', 'slug' : '"+  this.state.slug +"' }, 'body' : '" + this.state.body + "', 'method' : 'POST' } " } )
         <hr/>
         <div className="buttons">
-        <a className="button is-success" target='_blank' href='https://solid.github.io/solid-idps/'>Send to inbox</a>
+        <button className="button is-success" onClick={this.send} target='_blank' href='https://solid.github.io/solid-idps/'>Send to inbox</button>
         
         </div>
         <hr/>
