@@ -21,12 +21,20 @@
 
   <script type="text/babel">
 
+var UI = {}
+UI.store = $rdf.graph()
+UI.fetcher = new $rdf.Fetcher(UI.store)
+UI.updater = new $rdf.UpdateManager(UI.store)
+
+
+
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       message: '',
-      inbox: null
+      body: '<> <> 1 .',
+      inbox: 'none'
     }
     this.handleChange = this.handleChange.bind(this)
 
@@ -34,10 +42,26 @@ class App extends React.Component {
       if (!session) {
         this.setState({ message : 'The user is not logged in' })
       } else {
-        this.setState({ message : `The user is ${session.webId}` })
+        if (session.webId) {
+          this.setState({ message : `The user is ${session.webId}` })
+          this.getProfile(session.webId)
+        }
       }
     })
   }
+
+  getProfile(profile) {
+    console.log('fetching', profile)
+    UI.fetcher.load(profile, {force : true} ).then(response => {
+      let s = UI.store.sym(profile)
+      let p = UI.store.sym('http://www.w3.org/ns/solid/terms#inbox')
+      let o = null
+      let w = UI.store.sym(profile.split('#')[0])
+      let inbox = UI.store.any(s, p, o, w)
+      this.setState({'inbox' : inbox.value})
+    })
+  }
+
 
   async handleChange(event) {
     login('https://solid.community')    
@@ -59,9 +83,19 @@ class App extends React.Component {
         <hr/>
         {this.state.message}
         <hr/>
+        Inbox : {this.state.inbox}
+        <hr/>
+        Payload : 
+        <br/>
+        <br/>
+        <textarea value={this.state.body}>
+        </textarea>
+        <hr/>
+        Command : <br/>
+        fetch("{this.state.inbox}",  { " { 'headers' : { 'content-type' : 'text/turtle', 'slug' : 'test.ttl' }, 'body' : '" + this.state.body + "', 'method' : 'POST' } " } )
         <hr/>
         <div className="buttons">
-        <a className="button is-success" target='_blank' href='https://solid.github.io/solid-idps/'>Sign Up for Solid</a>
+        <a className="button is-success" target='_blank' href='https://solid.github.io/solid-idps/'>Send to inbox</a>
         
         </div>
         <hr/>
