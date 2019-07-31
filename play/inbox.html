@@ -31,11 +31,12 @@ UI.updater = new $rdf.UpdateManager(UI.store)
 class App extends React.Component {
   constructor(props) {
     super(props)
+
     this.state = {
       message: '',
-      body: '<> <> 1 .',
-      inbox: 'none',
-      slug: 'test'
+      body: new URLSearchParams(document.location.search).get('body') || '<> <> 1 .',
+      inbox: new URLSearchParams(document.location.search).get('inbox') || 'none',
+      slug: new URLSearchParams(document.location.search).get('slug') || 'test'
     }
     this.changeBody = this.changeBody.bind(this)
     this.changeSlug = this.changeSlug.bind(this)
@@ -95,6 +96,14 @@ class App extends React.Component {
   }
 
   render() {
+
+    let href =  window.location.href.split('?')[0] 
+    href += '?inbox=' + encodeURIComponent(this.state.inbox)
+    href += '&body=' + encodeURIComponent(this.state.body)
+    href += '&slug=' + encodeURIComponent(this.state.slug)
+    history.pushState({}, 'App', href)
+
+
       return (
     <div>
       <NavbarSolidLogin
