@@ -6,7 +6,7 @@ function Main (props) {
   return (
     <section className='section'>
       <AddressBar subject={subject}>
-        <Bookmark />
+        <Post />
       </AddressBar>
     </section>
   )

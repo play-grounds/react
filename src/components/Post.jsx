@@ -123,7 +123,7 @@ function getBookmarkFromSubject(subject) {
   return bookmark
 }
 
-class Bookmark extends React.Component {
+class Post extends React.Component {
   constructor(props) {
     super(props)
     let media = this.isMedia(props.subject)
@@ -250,4 +250,4 @@ class Bookmark extends React.Component {
 
 
 
-//REMOVE export default Bookmark
+//REMOVE export default Post
