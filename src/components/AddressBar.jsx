@@ -25,7 +25,7 @@ class AddressBar extends React.Component {
     return (<div>
       <label>Address</label>
       <br/> 
-      <input size='66' onChange={this.handleChange} placeholder='uri' value={this.state.subject} /> <a href={this.state.subject} target="_blank"><img height="10" width="10" src="./image/External.svg" /></a>
+      <input style={{ 'width' : '95%' }} onChange={this.handleChange} placeholder='uri' value={this.state.subject} /> <a href={this.state.subject} target="_blank"><img height="10" width="10" src="./image/External.svg" /></a>
       <hr />
 
       {children}
