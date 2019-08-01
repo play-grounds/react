@@ -25,7 +25,7 @@ function PostItem(props) {
             </tr>
             <tr>
             <td></td>
-              <td><sup>{moment.utc(props.created).fromNow()} by <a href={props.maker} target="_blank" style={{ color : 'inherit' }}>{props.maker}</a></sup></td>
+              <td><sup  style={{ color : '#ADB2BB' }}>{moment.utc(props.created).fromNow()} by <a href={props.maker} target="_blank" style={{ color : 'inherit' }}>{props.maker}</a></sup></td>
             </tr>
             <tr>
             <td></td>
@@ -73,7 +73,7 @@ function PostItem(props) {
             </tr>
             <tr>
               <td></td>
-              <td><sup>{moment.utc(props.created).fromNow()} by <a href={props.maker} target="_blank" style={{ color : 'inherit' }}>{props.maker}</a></sup></td>
+              <td><sup style={{ color : '#ADB2BB' }}>{moment.utc(props.created).fromNow()} by <a href={props.maker} target="_blank" style={{ color : 'inherit' }}>{props.maker}</a></sup></td>
             </tr>
 
           </tbody>
