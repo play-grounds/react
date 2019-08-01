@@ -6,6 +6,9 @@ UI.store = $rdf.graph()
 UI.fetcher = new $rdf.Fetcher(UI.store)
 UI.updater = new $rdf.UpdateManager(UI.store)
 
+const SIOC = $rdf.Namespace("http://rdfs.org/sioc/ns#")
+const DCT = $rdf.Namespace('http://purl.org/dc/terms/')
+const RDF = $rdf.Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
 
 function PostItem(props) {
   const AUDIO_EXTENSIONS = /\.(m4a|mp4a|mpga|mp2|mp2a|mp3|m2a|m3a|wav|weba|aac|oga|spx)($|\?)/i
@@ -84,41 +87,30 @@ function PostItem(props) {
   }
 }
 
-function getTypeFromSubject(subject) {
-  console.log('getTypeFromSubject', 'subject');
-  
+function getVal(subject, predicate) {
   let s = UI.store.sym(subject)
-  let p = UI.store.sym('http://www.w3.org/1999/02/22-rdf-syntax-ns#type')
-  let o = null
-  let w = UI.store.sym(subject.split('#')[0])
-  let type = UI.store.any(s, p)
-  if (type) {
-    return type.value
-  } else {
-    return null
-  }
-}
-
-function getPostFromSubject(subject) {
-  console.log('###getPostFromSubject', subject);
-  
-  let s = UI.store.sym(subject)
-  let p = UI.store.sym('http://rdfs.org/sioc/ns#content')
+  let p = predicate
   let o = null
   let w = UI.store.sym(subject.split('#')[0])
   let content = UI.store.any(s, p, o, w)
-  s = UI.store.sym(subject)
-  p = UI.store.sym('http://purl.org/dc/terms/creator')
-  o = null
-  w = UI.store.sym(subject.split('#')[0])
-  let maker = UI.store.any(s, p, o, w)
-  s = UI.store.sym(subject)
-  p = UI.store.sym('http://purl.org/dc/terms/created')
-  o = null
-  w = UI.store.sym(subject.split('#')[0])
-  let created = UI.store.any(s, p, o, w)
+  if (content) {
+    return content.value
+  } else {
+    return undefined
+  }
+}
 
-  let post = { 'content': content.value, 'maker' : maker.value, 'created' : created.value, 'subject' : subject }
+function getTypeFromSubject(subject) {
+  return getVal(subject, RDF('type'))
+}
+
+function getPostFromSubject(subject) {
+  
+  let content = getVal(subject, SIOC('content'))
+  let maker = getVal(subject, DCT('creator'))
+  let created = getVal(subject, DCT('created'))
+
+  let post = { 'content': content, 'maker' : maker, 'created' : created, 'subject' : subject }
   return post
 }
 
@@ -142,7 +134,7 @@ class Post extends React.Component {
 
       if (!type || type == 'http://www.w3.org/ns/iana/media-types/text/turtle#Resource') {
         let s = UI.store.sym(subject)
-        let p = UI.store.sym('http://purl.org/dc/terms/references')
+        let p = DCT('references')
         let subjects = UI.store.statementsMatching(s, p)
         console.log('###subjects', subjects)
         for (let subject of subjects) {
