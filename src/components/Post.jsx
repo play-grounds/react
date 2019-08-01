@@ -9,6 +9,7 @@ UI.updater = new $rdf.UpdateManager(UI.store)
 const SIOC = $rdf.Namespace("http://rdfs.org/sioc/ns#")
 const DCT = $rdf.Namespace('http://purl.org/dc/terms/')
 const RDF = $rdf.Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
+const FOAF = $rdf.Namespace('http://xmlns.com/foaf/0.1/')
 
 function PostItem(props) {
   const AUDIO_EXTENSIONS = /\.(m4a|mp4a|mpga|mp2|mp2a|mp3|m2a|m3a|wav|weba|aac|oga|spx)($|\?)/i
@@ -76,7 +77,7 @@ function PostItem(props) {
             </tr>
             <tr>
               <td></td>
-              <td><sup style={{ color : '#ADB2BB' }}>{moment.utc(props.created).fromNow()} by <a href={props.maker} target="_blank" style={{ color : 'inherit' }}>{props.maker}</a></sup></td>
+              <td><sup style={{ color : '#ADB2BB' }}>{moment.utc(props.created).fromNow()} by <a href={props.maker} target="_blank" style={{ color : 'inherit' }}>{getNameFromSubject(props.maker)}</a></sup></td>
             </tr>
 
           </tbody>
@@ -88,6 +89,8 @@ function PostItem(props) {
 }
 
 function getVal(subject, predicate) {
+  console.log('getVal', subject, predicate)
+  if (!subject || !predicate) return
   let s = UI.store.sym(subject)
   let p = predicate
   let o = null
@@ -104,14 +107,48 @@ function getTypeFromSubject(subject) {
   return getVal(subject, RDF('type'))
 }
 
+function getProfileFromSubject(subject) {
+  var profile = {}
+  profile.type = getVal(subject, RDF('type'))
+  profile.name = getVal(subject, FOAF('name'))
+  profile.nick = getVal(subject, FOAF('nick'))
+  profile.img = getVal(subject, FOAF('img'))
+  profile.image = getVal(subject, FOAF('image'))
+  profile.depiction = getVal(subject, FOAF('depiction'))
+  profile.subject = subject
+  return profile
+}
+
+function getNameFromSubject(subject) {
+  let profile = getProfileFromSubject(subject)
+  let name = profile.name || profile.nick || subject
+  return name
+}
+
+function getAvatarFromSubject(subject) {
+  let profile = getProfileFromSubject(subject)
+  let avatar = profile.img || profile.image || profile.depiction
+  return avatar
+}
+
 function getPostFromSubject(subject) {
   
   let content = getVal(subject, SIOC('content'))
   let maker = getVal(subject, DCT('creator'))
   let created = getVal(subject, DCT('created'))
+  fetchProfile(maker)
 
   let post = { 'content': content, 'maker' : maker, 'created' : created, 'subject' : subject }
   return post
+}
+
+function fetchProfile(subject) {
+  if (!subject) return
+  if (subject.match(/reddit.com.*this$/)) return
+
+  UI.fetcher.load(subject ).then(response => {
+    console.log('fetched', subject)
+  })
 }
 
 class Post extends React.Component {
@@ -124,9 +161,7 @@ class Post extends React.Component {
   fetchPost(subject, force) {
     force = !! force
     // hack to force fetcher
-    UI.store = $rdf.graph()
-    UI.fetcher = new $rdf.Fetcher(UI.store)    
-    UI.fetcher.load(subject, {force : true} ).then(response => {
+    UI.fetcher.load(subject, {'force' : force} ).then(response => {
       var type = getTypeFromSubject(subject)
       var bm = []
 
