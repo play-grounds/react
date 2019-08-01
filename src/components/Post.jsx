@@ -89,7 +89,7 @@ function PostItem(props) {
 }
 
 function getVal(subject, predicate) {
-  console.log('getVal', subject, predicate)
+
   if (!subject || !predicate) return
   let s = UI.store.sym(subject)
   let p = predicate
@@ -131,26 +131,6 @@ function getAvatarFromSubject(subject) {
   return avatar
 }
 
-function getPostFromSubject(subject) {
-  
-  let content = getVal(subject, SIOC('content'))
-  let maker = getVal(subject, DCT('creator'))
-  let created = getVal(subject, DCT('created'))
-  fetchProfile(maker)
-
-  let post = { 'content': content, 'maker' : maker, 'created' : created, 'subject' : subject }
-  return post
-}
-
-function fetchProfile(subject) {
-  if (!subject) return
-  if (subject.match(/reddit.com.*this$/)) return
-
-  UI.fetcher.load(subject ).then(response => {
-    console.log('fetched', subject)
-  })
-}
-
 class Post extends React.Component {
   constructor(props) {
     super(props)
@@ -158,31 +138,57 @@ class Post extends React.Component {
     this.state = { 'subject': props.subject, post: [{ 'content': '' }] }
   }
 
+  getPostFromSubject(subject) {
+    
+    //console.log('getPostFromSubject', subject)
+  
+    let content = getVal(subject, SIOC('content'))
+    let maker = getVal(subject, DCT('creator'))
+    let created = getVal(subject, DCT('created'))
+    //console.log('getPostFromSubject', maker)
+    
+    this.fetchProfile(maker)
+  
+    let post = { 'content': content, 'maker' : maker, 'created' : created, 'subject' : subject }
+    return post
+  }
+  
+  fetchProfile(subject) {
+    console.log('fetchProfile', subject);
+    if (!subject) return
+    if (subject.match(/reddit.com.*this$/)) return
+  
+    UI.fetcher.load(subject ).then(response => {
+      console.log('fetched', subject)      
+    })
+  }
+      
+
   fetchPost(subject, force) {
     force = !! force
     // hack to force fetcher
     UI.fetcher.load(subject, {'force' : force} ).then(response => {
       var type = getTypeFromSubject(subject)
-      var bm = []
+      var posts = []
 
       if (!type || type == 'http://www.w3.org/ns/iana/media-types/text/turtle#Resource') {
         let s = UI.store.sym(subject)
         let p = DCT('references')
         let subjects = UI.store.statementsMatching(s, p)
         for (let subject of subjects) {
-          bm.push(getPostFromSubject(subject.object.value))
+          posts.push(this.getPostFromSubject(subject.object.value))
         }
 
-        bm = bm.sort( function(a,b) { 
+        posts = posts.sort( function(a,b) { 
           return (b.created < a.created) ? -1 : ((b.created > a.created) ? 1 : 0);
         } )
 
-        this.setState({ 'post': bm })
+        this.setState({ 'post': posts })
 
       } else {
-        bm.push(getPostFromSubject(subject))
+        posts.push(this.getPostFromSubject(subject))
 
-        this.setState({ 'post': bm })
+        this.setState({ 'post': posts })
       }
     }, err => {
       console.log(err)
@@ -212,13 +218,14 @@ class Post extends React.Component {
   }
 
   refresh() {
-    this.fetchPost(this.state.subject, true)
+    this.fetchPost(this.state.subject)
   }
 
   componentDidMount() {
     let subject = this.state.subject
     if (this.isMedia(subject) === false) {
       this.fetchPost(subject)
+      setTimeout(() => (this.fetchPost(subject)), 1000)
     }
     if (subject) {
       setTimeout(() => {
