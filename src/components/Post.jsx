@@ -68,7 +68,7 @@ function PostItem(props) {
         <table>
           <tbody>
             <tr>
-              <td></td>
+              <td>{props.id + 1}.&nbsp;</td>
               <td>{props.content} <a target="_blank" href={props.subject}><img height="10" width="10" src="./image/External.svg" /></a></td>
             </tr>
             <tr>
