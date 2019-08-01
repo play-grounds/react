@@ -140,10 +140,11 @@ class Post extends React.Component {
       var bm = []
       console.log('type', type);
 
-      if (!type) {
+      if (!type || type == 'http://www.w3.org/ns/iana/media-types/text/turtle#Resource') {
         let s = UI.store.sym(subject)
-        let p = UI.store.sym('http://www.w3.org/1999/02/22-rdf-syntax-ns#type')
+        let p = UI.store.sym('http://purl.org/dc/terms/references')
         let subjects = UI.store.statementsMatching(s, p)
+        console.log('###subjects', subjects)
         for (let subject of subjects) {
           bm.push(getPostFromSubject(subject.object.value))
         }
