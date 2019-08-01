@@ -118,25 +118,22 @@ class Post extends React.Component {
   constructor(props) {
     super(props)
     let media = this.isMedia(props.subject)
-    this.state = { 'media': media, 'subject': props.subject, post: [{ 'content': '' }] }
+    this.state = { 'subject': props.subject, post: [{ 'content': '' }] }
   }
 
   fetchPost(subject, force) {
     force = !! force
-    console.log('fetch post', subject, 'force', force)
     // hack to force fetcher
-    //UI.store = $rdf.graph()
-    //UI.fetcher = new $rdf.Fetcher(UI.store)    
+    UI.store = $rdf.graph()
+    UI.fetcher = new $rdf.Fetcher(UI.store)    
     UI.fetcher.load(subject, {force : true} ).then(response => {
       var type = getTypeFromSubject(subject)
       var bm = []
-      console.log('type', type);
 
       if (!type || type == 'http://www.w3.org/ns/iana/media-types/text/turtle#Resource') {
         let s = UI.store.sym(subject)
         let p = DCT('references')
         let subjects = UI.store.statementsMatching(s, p)
-        console.log('###subjects', subjects)
         for (let subject of subjects) {
           bm.push(getPostFromSubject(subject.object.value))
         }
@@ -159,7 +156,6 @@ class Post extends React.Component {
 
   getUpdatesVia (doc) {
     var linkHeaders = UI.store.fetcher.getHeader(doc, 'updates-via')
-    console.log('linkHeaders', linkHeaders, 'doc', doc)
     if (!linkHeaders || !linkHeaders.length) return null
     return linkHeaders[0].trim()
   }
@@ -190,7 +186,6 @@ class Post extends React.Component {
       this.fetchPost(subject)
     }
     if (subject) {
-      console.log('init subject', subject)
       setTimeout(() => {
         this.setRefreshHandler (subject, this.refresh)         
       }, 1000);
@@ -217,14 +212,12 @@ class Post extends React.Component {
 
   render() {
     let med = this.isMedia(this.props.subject)
-    console.log('subject', this.props.subject, med);
 
     if (med === true) {
       return (
         <Media href={this.props.subject} />
       )
     } else {
-      console.log('posts', this.state.post)
       const listItems = this.state.post.map((b, i) =>
         <div>
           <PostItem key={i} id={i} content={b.content} maker={b.maker} created={b.created} subject={b.subject}/>
