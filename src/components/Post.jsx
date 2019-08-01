@@ -75,9 +75,9 @@ function PostItem(props) {
               
               <a style={{ 'fontWeight' : 'bold' }} href={props.maker} target="_blank">{getNameFromSubject(props.maker)}</a> &nbsp;
               
-                {moment.utc(props.created).fromNow()} </sup>
+                {moment.utc(props.created).fromNow()} &nbsp; <a target="_blank" href={props.subject}><img height="10" width="10" src="./image/External.svg" /></a> </sup>
               <br/>
-              <span style={{ 'fontFamily' : 'Helvetica', 'fontSize': '14px'}}>  {props.content} <a target="_blank" href={props.subject}><img height="10" width="10" src="./image/External.svg" /></a></span>
+              <span style={{ 'fontFamily' : 'Helvetica', 'fontSize': '14px'}}>  {props.content} </span>
             <hr/>
 
 
