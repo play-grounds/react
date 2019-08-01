@@ -21,26 +21,22 @@ function PostItem(props) {
   if (props.content.match(IMAGE_EXTENSIONS)) {
     return (
       <div>
-        <table>
-          <tbody>
-            <tr>
-              <td>{props.id + 1}.&nbsp;</td>
-              <td><a target="_blank" href={props.content}>{props.content}</a> <a target="_blank" href={props.subject}><img height="10" width="10" src="./image/External.svg" /></a></td>
-            </tr>
-            <tr>
-            <td></td>
-              <td><sup  style={{ color : '#ADB2BB' }}>{moment.utc(props.created).fromNow()} by <a href={props.maker} target="_blank" style={{ color : 'inherit' }}>{props.maker}</a></sup></td>
-            </tr>
-            <tr>
-            <td></td>
-              <td><img src={props.content} /></td>
+            <img src={getAvatarFromSubject(props.maker)} style={{ 'margin' : '1px', 'borderRadius' : '50%', 'height' : '40px', 'width' : '40px' }} width="40" height="40" />&nbsp;
+            
+              <sup  style={{ color : '#ADB2BB', 'verticalAlign' : 'top' }}>
+              
+              <a style={{ 'fontWeight' : 'bold' }} href={props.maker} target="_blank">{getNameFromSubject(props.maker)}</a> &nbsp;
+              
+                {moment.utc(props.created).fromNow()} &nbsp; <a target="_blank" href={props.subject}><img height="10" width="10" src="./image/External.svg" /></a> </sup>
+              <br/>
+              <span style={{ 'fontFamily' : 'Helvetica', 'fontSize': '14px'}}>  {props.content} </span>
+              <img src={props.content} />
+              
+            <hr/>
 
-            </tr>
 
-          </tbody>
-        </table>
-
-        </div>)
+      </div>      
+        )
   } else if (props.content.match(VIDEO_EXTENSIONS)) {
     return (
       <div>{props.id + 1}. <video controls autoplay='true' loop src={props.content} /></div>)
@@ -223,7 +219,7 @@ class Post extends React.Component {
     let subject = this.state.subject
     if (this.isMedia(subject) === false) {
       this.fetchPost(subject)
-      setTimeout(() => (this.fetchPost(subject)), 1000)
+      setTimeout(() => (this.fetchPost(subject)), 1500)
     }
     if (subject) {
       setTimeout(() => {
