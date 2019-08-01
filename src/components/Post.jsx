@@ -29,7 +29,7 @@ function PostItem(props) {
               
                 {moment.utc(props.created).fromNow()} &nbsp; <a target="_blank" href={props.subject}><img height="10" width="10" src="./image/External.svg" /></a> </sup>
               <br/>
-              <span style={{ 'fontFamily' : 'Helvetica', 'fontSize': '14px'}}>  {props.content} </span>
+              <span style={{ 'fontFamily' : 'Helvetica', 'fontSize': '14px'}}>  <a target="_blank" href={props.content}>{props.content}</a> </span>
               <img src={props.content} />
               
             <hr/>
