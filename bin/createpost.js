@@ -13,5 +13,7 @@ console.log(`
 <#${uri}> <http://purl.org/dc/terms/created> "${time}"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n
 <#${uri}> <http://rdfs.org/sioc/ns#content> "${content}" .\n
 <#${uri}> <http://xmlns.com/foaf/0.1/maker> <${user}> .\n
+<#${uri}> <http://purl.org/dc/terms/creator> <${user}> .\n
+<#${uri}> <http://www.w3.org/ns/mblog#author> <${user}> .\n
 `);
 

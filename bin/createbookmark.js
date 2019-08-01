@@ -15,4 +15,6 @@ console.log(`
 <#${uri}> <http://purl.org/dc/terms/title> "${title}" .\n
 <#${uri}> <http://www.w3.org/2002/01/bookmark#recalls> <${recalls}> .\n
 <#${uri}> <http://xmlns.com/foaf/0.1/maker> <${user}> .\n
+<#${uri}> <http://purl.org/dc/terms/creator> <${user}> .\n
+<#${uri}> <http://www.w3.org/ns/mblog#author> <${user}> .\n
 `);
