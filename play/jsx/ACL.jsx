@@ -47,9 +47,7 @@ class Resource extends React.Component {
   }
 }
 
-
-
-class Container extends React.Component {
+class ACL extends React.Component {
   constructor(props) {
     super(props)
 
@@ -101,7 +99,7 @@ function Body(props) {
         <section className='section'>
           <AddressBar subject={subject}
             view={new URLSearchParams(document.location.search).get('view')}>
-            <Container />
+            <ACL />
           </AddressBar>
         </section>
 
@@ -116,8 +114,8 @@ function App() {
     <div>
       <NavbarSolidLogin
         className='is-link'
-        title='Container App'
-        sourceCode='https://github.com/play-grounds/react/blob/gh-pages/play/container.html/' />
+        title='ACL App'
+        sourceCode='https://github.com/play-grounds/react/blob/gh-pages/play/ACL.html/' />
       <Body />
 
     </div>

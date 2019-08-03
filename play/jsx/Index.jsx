@@ -54,6 +54,7 @@ return (
       <Li href="container.html" text="Container App" />
       <Li href="timeline.html" text="Timeline App" />
       <Li href="dashboard.html" text="Dashboard App" />
+      <Li href="acl.html" text="ACL App" />
     </ul>
     <hr/>
     </section>
