@@ -11,6 +11,7 @@ const DCT = $rdf.Namespace('http://purl.org/dc/terms/')
 const RDF = $rdf.Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
 const FOAF = $rdf.Namespace('http://xmlns.com/foaf/0.1/')
 const VCARD = $rdf.Namespace('http://www.w3.org/2006/vcard/ns#')
+const SOLID = $rdf.Namespace('http://www.w3.org/ns/solid/terms#')
 
 function getVal(subject, predicate) {
 
@@ -42,6 +43,7 @@ function getProfileFromSubject(subject) {
   profile.hasPhoto = getVal(subject, VCARD('hasPhoto'))
   profile.fn = getVal(subject, VCARD('fn'))
   profile.nickname = getVal(subject, VCARD('nickname'))
+  profile.timeline = getVal(subject, SOLID('timeline'))
   profile.subject = subject
   return profile
 }
@@ -144,8 +146,15 @@ class Person extends React.Component {
     <div className="content">
       <a href="#">#solid</a> <a href="#">#profile</a>
       <br/>
-      <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
     </div>
+
+    <div className="content">
+      <a target="_blank" href={profile.timeline}>Timeline</a>
+      <br/>
+    </div>
+
+
+
   </div>
 </div>
     )
