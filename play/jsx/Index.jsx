@@ -53,6 +53,7 @@ return (
       <Li href="person.html" text="Profile App" />
       <Li href="container.html" text="Container App" />
       <Li href="timeline.html" text="Timeline App" />
+      <Li href="dashboard.html" text="Dashboard App" />
     </ul>
     <hr/>
     </section>
