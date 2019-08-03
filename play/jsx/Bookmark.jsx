@@ -1,5 +1,5 @@
 // init
-const defaultUri = 'https://i.redd.it/gwctsj9lbs731.jpg'
+const defaultUri = 'https://melvin.solid.live/public/bookmarks.ttl'
 var subject = getQueryStringParam('uri') || defaultUri
 
 function Main (props) {
