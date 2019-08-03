@@ -100,10 +100,10 @@ function Body(props) {
 
       <div>
         <section className='section'>
-          <Addressbar subject={subject}
+          <AddressBar subject={subject}
             view={new URLSearchParams(document.location.search).get('view')}>
             <Timeline />
-          </Addressbar>
+          </AddressBar>
         </section>
 
       </div>

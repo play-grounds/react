@@ -12,12 +12,26 @@
 
     <!-- Don't use this in production: -->
     <script src="js/babel.min.js"></script>
+
+    <style>
+      .section {
+          padding: 3rem 1.5rem;
+          max-width: 50%;
+          margin: 0 auto;
+          background-color: white;
+      }
+      html, body {
+        background-color:#E9EBEE;
+        height:100%;
+      }
+    </style>
+
 </head>
 
 <body>
     <div id="root"></div>
     <script type="text/babel" src="../src/components/bulma/Navbar.jsx"></script>
-    <script type="text/babel" src="../src/components/Addressbar.jsx"></script>
+    <script type="text/babel" src="../src/components/AddressBar.jsx"></script>
     <script type="text/babel" src="jsx/Timeline.jsx"></script>
 
     <link rel="stylesheet" href="css/bulma.css" defer>
