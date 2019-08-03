@@ -40,19 +40,27 @@ function getProfileFromSubject(subject) {
   profile.image = getVal(subject, FOAF('image'))
   profile.depiction = getVal(subject, FOAF('depiction'))
   profile.hasPhoto = getVal(subject, VCARD('hasPhoto'))
+  profile.fn = getVal(subject, VCARD('fn'))
+  profile.nickname = getVal(subject, VCARD('nickname'))
   profile.subject = subject
   return profile
 }
 
 function getNameFromSubject(subject) {
   let profile = getProfileFromSubject(subject)
-  let name = profile.name || profile.nick || subject
+  let name = profile.name || profile.nick || profile.fn || subject 
   return name
+}
+
+function getNickFromSubject(subject) {
+  let profile = getProfileFromSubject(subject)
+  let nick = profile.nickname || profile.nick 
+  return nick
 }
 
 function getAvatarFromSubject(subject) {
   let profile = getProfileFromSubject(subject)
-  let avatar = profile.img || profile.image || profile.depiction || profile.hasPhoto
+  let avatar = profile.nick || profile.image || profile.depiction || profile.hasPhoto
   return avatar
 }
 
@@ -111,9 +119,10 @@ class Person extends React.Component {
   }
 
   render() {
-    let name = this.state.profile ? this.state.profile.name : 'has no name'
     let profile = this.state.profile || {}
+    let name = this.state.profile ? getNameFromSubject(this.state.subject) : 'has no name'
     let avatar = getAvatarFromSubject(this.state.subject) || 'https://bulma.io/images/placeholders/1280x960.png'
+    let nick = getNickFromSubject(this.state.subject) || ''
     console.log('this.state.profile', this.state.profile)
     return (
 
@@ -128,7 +137,7 @@ class Person extends React.Component {
     <div className="media">
       <div className="media-content">
         <p className="title is-4">{name}</p>
-        <p className="subtitle is-6">@{profile.nick}</p>
+        <p className="subtitle is-6">@{nick}</p>
       </div>
     </div>
 
