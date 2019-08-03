@@ -60,7 +60,7 @@ function getNickFromSubject(subject) {
 
 function getAvatarFromSubject(subject) {
   let profile = getProfileFromSubject(subject)
-  let avatar = profile.nick || profile.image || profile.depiction || profile.hasPhoto
+  let avatar = profile.img || profile.image || profile.depiction || profile.hasPhoto
   return avatar
 }
 
