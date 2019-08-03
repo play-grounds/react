@@ -50,7 +50,7 @@ return (
       <Li href="inbox.html" text="Inbox App" />
       <Li href="patch.html" text="Patch App" />
       <Li href="put.html" text="Put App" />
-      <Li href="profile.html" text="Profile App" />
+      <Li href="person.html" text="Profile App" />
     </ul>
     <hr/>
     </section>
