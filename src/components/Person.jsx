@@ -149,7 +149,7 @@ class Person extends React.Component {
     </div>
 
     <div className="content">
-      <a target="_blank" href={profile.timeline}>Timeline</a>
+      <a target="_blank" href={'./timeline.html?uri=' + profile.timeline}>Timeline</a>
       <br/>
     </div>
 
