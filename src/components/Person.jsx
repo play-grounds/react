@@ -10,7 +10,7 @@ const SIOC = $rdf.Namespace("http://rdfs.org/sioc/ns#")
 const DCT = $rdf.Namespace('http://purl.org/dc/terms/')
 const RDF = $rdf.Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
 const FOAF = $rdf.Namespace('http://xmlns.com/foaf/0.1/')
-
+const VCARD = $rdf.Namespace('http://www.w3.org/2006/vcard/ns#')
 
 function getVal(subject, predicate) {
 
@@ -39,6 +39,7 @@ function getProfileFromSubject(subject) {
   profile.img = getVal(subject, FOAF('img'))
   profile.image = getVal(subject, FOAF('image'))
   profile.depiction = getVal(subject, FOAF('depiction'))
+  profile.hasPhoto = getVal(subject, VCARD('hasPhoto'))
   profile.subject = subject
   return profile
 }
@@ -51,7 +52,7 @@ function getNameFromSubject(subject) {
 
 function getAvatarFromSubject(subject) {
   let profile = getProfileFromSubject(subject)
-  let avatar = profile.img || profile.image || profile.depiction
+  let avatar = profile.img || profile.image || profile.depiction || profile.hasPhoto
   return avatar
 }
 
