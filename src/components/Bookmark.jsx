@@ -16,7 +16,7 @@ function BookmarkItem(props) {
 
   if (props.recalls.match(IMAGE_EXTENSIONS)) {
     return (
-      <div>
+      <div className="box">
         <table>
           <tbody>
             <tr>
@@ -45,7 +45,7 @@ function BookmarkItem(props) {
       <div>{props.id + 1}. <video controls autoplay='true' loop src={props.recalls} /></div>)
     } else if (props.recalls.match(URL)) {
       return (
-        <div>
+        <div className="box">
           <table>
             <tbody>
               <tr>
@@ -64,7 +64,7 @@ function BookmarkItem(props) {
       )
       } else {
     return (
-      <div>
+      <div className="box">
         <table>
           <tbody>
             <tr>

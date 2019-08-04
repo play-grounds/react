@@ -15,7 +15,7 @@ function Body(props) {
 
 function Li (props) {
   return (
-    <div className="index">
+    <div className="box">
       <a href={props.href}>{props.text}</a>
     </div>
   )
