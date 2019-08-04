@@ -19,7 +19,36 @@ return <li><a href={props.href}>{props.text}</a></li>
 
 
 function App() {
-return (
+  let apps = [
+  { "uri" : "bookmark.html", "title" :  "Bookmarks" }, 
+  { "uri" : "brain.html", "title" :  "Brain Wallet" }, 
+  { "uri" : "friends.html", "title" :  "Friends in RDF" }, 
+  { "uri" : "solid.html", "title" :  "Solid App" }, 
+  { "uri" : "rdflib.html", "title" :  "Test RDFLib" }, 
+  { "uri" : "tipjar.html", "title" :  "Tipjars" }, 
+  { "uri" : "localStorage.html", "title" :  "Local Storage" }, 
+  { "uri" : "bookmarklet.html", "title" :  "Bookmarklets" }, 
+  { "uri" : "solid-auth-client.html", "title" :  "Solid Auth Client" }, 
+  { "uri" : "wallet.html", "title" :  "Wallet" }, 
+  { "uri" : "credit.html", "title" :  "Credit" }, 
+  { "uri" : "outstated.html", "title" :  "Outstated Counter" }, 
+  { "uri" : "counter.html", "title" :  "Counter App" }, 
+  { "uri" : "seed.html", "title" :  "Seed App" }, 
+  { "uri" : "inbox.html", "title" :  "Inbox App" }, 
+  { "uri" : "patch.html", "title" :  "Patch App" }, 
+  { "uri" : "put.html", "title" :  "Put App" }, 
+  { "uri" : "person.html", "title" :  "Profile App" }, 
+  { "uri" : "container.html", "title" :  "Container App" }, 
+  { "uri" : "timeline.html", "title" :  "Timeline App" }, 
+  { "uri" : "dashboard.html", "title" :  "Dashboard App" }, 
+  { "uri" : "acl.html", "title" :  "ACL App" }
+  ]
+
+  var appList = apps.map((app) => {
+    return <Li href={app.uri} text={app.title} />
+  })
+
+  return (
   <div>
     <NavbarSolidLogin
        className="is-link" 
@@ -33,28 +62,7 @@ return (
       Click on a link below to try out one of our apps.
       <hr/>
     <ul>
-      <Li href="bookmark.html" text="Bookmarks" />
-      <Li href="brain.html" text="Brain Wallet" />
-      <Li href="friends.html" text="Friends in RDF" />
-      <Li href="solid.html" text="Solid App" />
-      <Li href="rdflib.html" text="Test RDFLib" />
-      <Li href="tipjar.html" text="Tipjars" />
-      <Li href="localStorage.html" text="Local Storage" />
-      <Li href="bookmarklet.html" text="Bookmarklets" />
-      <Li href="solid-auth-client.html" text="Solid Auth Client" />
-      <Li href="wallet.html" text="Wallet" />
-      <Li href="credit.html" text="Credit" />
-      <Li href="outstated.html" text="Outstated Counter" />
-      <Li href="counter.html" text="Counter App" />
-      <Li href="seed.html" text="Seed App" />
-      <Li href="inbox.html" text="Inbox App" />
-      <Li href="patch.html" text="Patch App" />
-      <Li href="put.html" text="Put App" />
-      <Li href="person.html" text="Profile App" />
-      <Li href="container.html" text="Container App" />
-      <Li href="timeline.html" text="Timeline App" />
-      <Li href="dashboard.html" text="Dashboard App" />
-      <Li href="acl.html" text="ACL App" />
+      {appList}
     </ul>
     <hr/>
     </section>
