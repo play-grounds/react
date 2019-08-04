@@ -1,5 +1,4 @@
-//REMOVE import React from 'react'
-//REMOVE import Media from './Media.jsx'
+//REMOVE import React from 'react' ; import Person from './Person.jsx'
 
 var UI = {}
 UI.store = $rdf.graph()
