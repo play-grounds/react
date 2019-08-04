@@ -2,7 +2,7 @@
 const defaultUri = 'https://melvincarvalho.com/#me'
 var subject = getQueryStringParam('uri') || defaultUri
 
-function Main (props) {
+function Main(props) {
   return (
     <section className='section'>
       <AddressBar subject={subject}>
@@ -12,7 +12,7 @@ function Main (props) {
   )
 }
 
-function App () {
+function App() {
   return (
     <div>
 
