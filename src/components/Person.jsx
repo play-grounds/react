@@ -50,13 +50,13 @@ function getProfileFromSubject(subject) {
 
 function getNameFromSubject(subject) {
   let profile = getProfileFromSubject(subject)
-  let name = profile.name || profile.nick || profile.fn || subject 
+  let name = profile.name || profile.nick || profile.fn || subject
   return name
 }
 
 function getNickFromSubject(subject) {
   let profile = getProfileFromSubject(subject)
-  let nick = profile.nickname || profile.nick 
+  let nick = profile.nickname || profile.nick
   return nick
 }
 
@@ -76,14 +76,14 @@ class Person extends React.Component {
     console.log('fetchProfile', subject);
     if (!subject) return
     if (subject.match(/reddit.com.*this$/)) return
-  
-    UI.fetcher.load(subject ).then(response => {
+
+    UI.fetcher.load(subject).then(response => {
       console.log('fetched', subject)
-      this.setState({ 'profile' : getProfileFromSubject(subject) })
+      this.setState({ 'profile': getProfileFromSubject(subject) })
     })
   }
 
-  getUpdatesVia (doc) {
+  getUpdatesVia(doc) {
     var linkHeaders = UI.store.fetcher.getHeader(doc, 'updates-via')
     if (!linkHeaders || !linkHeaders.length) return null
     return linkHeaders[0].trim()
@@ -94,7 +94,7 @@ class Person extends React.Component {
     var wss = this.getUpdatesVia(subject)
     let w = new WebSocket(wss)
     w.onmessage = function (m) {
-      let data = m.data      
+      let data = m.data
       if (data.match(/pub .*/)) {
         // hack for now
         self.refresh()
@@ -102,7 +102,7 @@ class Person extends React.Component {
     }
     w.onopen = function () {
       w.send('sub ' + subject)
-    }  
+    }
   }
 
   refresh() {
@@ -129,34 +129,34 @@ class Person extends React.Component {
     return (
 
 
-<div className="card">
-  <div className="card-image">
-    <figure className="image is-4by3">
-      <img src={avatar} alt="Placeholder image" />
-    </figure>
-  </div>
-  <div className="card-content">
-    <div className="media">
-      <div className="media-content">
-        <p className="title is-4">{name}</p>
-        <p className="subtitle is-6">@{nick}</p>
+      <div className="card">
+        <div className="card-image">
+          <figure className="image is-4by3">
+            <img src={avatar} alt="Placeholder image" />
+          </figure>
+        </div>
+        <div className="card-content">
+          <div className="media">
+            <div className="media-content">
+              <p className="title is-4">{name}</p>
+              <p className="subtitle is-6">@{nick}</p>
+            </div>
+          </div>
+
+          <div className="content">
+            <a href="#">#solid</a> <a href="#">#profile</a>
+            <br />
+          </div>
+
+          <div className="content">
+            <a target="_blank" href={'./timeline.html?uri=' + profile.timeline}>Timeline</a>
+            <br />
+          </div>
+
+
+
+        </div>
       </div>
-    </div>
-
-    <div className="content">
-      <a href="#">#solid</a> <a href="#">#profile</a>
-      <br/>
-    </div>
-
-    <div className="content">
-      <a target="_blank" href={'./timeline.html?uri=' + profile.timeline}>Timeline</a>
-      <br/>
-    </div>
-
-
-
-  </div>
-</div>
     )
   }
 }
