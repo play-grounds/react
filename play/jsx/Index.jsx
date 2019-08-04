@@ -14,7 +14,11 @@ function Body(props) {
 }
 
 function Li (props) {
-return <li><a href={props.href}>{props.text}</a></li>
+  return (
+    <div className="index">
+      <a href={props.href}>{props.text}</a>
+    </div>
+  )
 }
 
 
@@ -61,9 +65,7 @@ function App() {
       <br/>
       Click on a link below to try out one of our apps.
       <hr/>
-    <ul>
       {appList}
-    </ul>
     <hr/>
     </section>
 
