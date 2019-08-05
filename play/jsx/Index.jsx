@@ -45,6 +45,7 @@ function App() {
   { "uri" : "container.html", "title" :  "Container App" }, 
   { "uri" : "timeline.html", "title" :  "Timeline App" }, 
   { "uri" : "dashboard.html", "title" :  "Dashboard App" }, 
+  { "uri" : "mind.html", "title" :  "Mind Map App" }, 
   { "uri" : "acl.html", "title" :  "ACL App" }
   ]
 
