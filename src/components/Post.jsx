@@ -10,6 +10,8 @@ const SIOC = $rdf.Namespace("http://rdfs.org/sioc/ns#")
 const DCT = $rdf.Namespace('http://purl.org/dc/terms/')
 const RDF = $rdf.Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
 const FOAF = $rdf.Namespace('http://xmlns.com/foaf/0.1/')
+const SOLID = $rdf.Namespace('http://www.w3.org/ns/solid/terms#')
+const VCARD = $rdf.Namespace('http://www.w3.org/2006/vcard/ns#')
 
 function PostItem(props) {
   const AUDIO_EXTENSIONS = /\.(m4a|mp4a|mpga|mp2|mp2a|mp3|m2a|m3a|wav|weba|aac|oga|spx)($|\?)/i
@@ -109,6 +111,12 @@ function getProfileFromSubject(subject) {
   profile.img = getVal(subject, FOAF('img'))
   profile.image = getVal(subject, FOAF('image'))
   profile.depiction = getVal(subject, FOAF('depiction'))
+  profile.hasPhoto = getVal(subject, VCARD('hasPhoto'))
+  profile.fn = getVal(subject, VCARD('fn'))
+  profile.nickname = getVal(subject, VCARD('nickname'))
+  profile.timeline = getVal(subject, SOLID('timeline'))
+  profile.publicTypeIndex = getVal(subject, SOLID('publicTypeIndex'))
+  profile.privateTypeIndex = getVal(subject, SOLID('privateTypeIndex'))
   profile.subject = subject
   return profile
 }

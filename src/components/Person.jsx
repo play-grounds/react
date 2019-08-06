@@ -43,9 +43,12 @@ function getProfileFromSubject(subject) {
   profile.fn = getVal(subject, VCARD('fn'))
   profile.nickname = getVal(subject, VCARD('nickname'))
   profile.timeline = getVal(subject, SOLID('timeline'))
+  profile.publicTypeIndex = getVal(subject, SOLID('publicTypeIndex'))
+  profile.privateTypeIndex = getVal(subject, SOLID('privateTypeIndex'))
   profile.subject = subject
   return profile
 }
+
 
 function getNameFromSubject(subject) {
   let profile = getProfileFromSubject(subject)
