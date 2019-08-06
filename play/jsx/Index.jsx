@@ -48,6 +48,7 @@ function App() {
   { "uri" : "points.html", "title" :  "Points App" }, 
   { "uri" : "mind.html?data=%7B%22nodeData%22%3A%7B%22id%22%3A%22root%22%2C%22topic%22%3A%22Lightning%20games%22%2C%22root%22%3Atrue%2C%22children%22%3A%5B%7B%22topic%22%3A%22released%22%2C%22id%22%3A%22c63b8604ff228829%22%2C%22selected%22%3Atrue%2C%22new%22%3Atrue%2C%22children%22%3A%5B%7B%22topic%22%3A%22donner%20dungeon%22%2C%22id%22%3A%22c63b847b05a5686b%22%2C%22selected%22%3Atrue%2C%22new%22%3Atrue%7D%2C%7B%22topic%22%3A%22poker%22%2C%22id%22%3A%22c63b840e2e19d384%22%2C%22selected%22%3Atrue%2C%22new%22%3Atrue%7D%2C%7B%22topic%22%3A%22agar%22%2C%22id%22%3A%22c631c9cb1d7ff3cf%22%2C%22selected%22%3Atrue%2C%22new%22%3Atrue%2C%22style%22%3A%7B%22color%22%3A%22%23c0392c%22%7D%7D%5D%7D%2C%7B%22topic%22%3A%22coming%20soon%22%2C%22id%22%3A%22c63b869ec834af65%22%2C%22selected%22%3Atrue%2C%22new%22%3Atrue%2C%22children%22%3A%5B%7B%22topic%22%3A%22Infinite%20Fleet%22%2C%22id%22%3A%22c63b898f4420b806%22%2C%22selected%22%3Atrue%2C%22new%22%3Atrue%2C%22style%22%3A%7B%22fontSize%22%3A%2232%22%2C%22color%22%3A%22%2327ae61%22%2C%22fontWeight%22%3A%22bold%22%7D%7D%5D%7D%5D%2C%22expanded%22%3Atrue%2C%22style%22%3A%7B%22color%22%3A%22%23f1c40e%22%7D%7D%2C%22linkData%22%3A%7B%7D%7D", "title" :  "Mind Map App" }, 
   { "uri" : "groupuris.html", "title" :  "Group URIs" }, 
+  { "uri" : "conference.html", "title" :  "Conference Call" }, 
   { "uri" : "acl.html", "title" :  "ACL App" }
   ]
 
