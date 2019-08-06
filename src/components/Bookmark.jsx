@@ -126,8 +126,13 @@ function getBookmarkFromSubject(subject) {
 class Bookmark extends React.Component {
   constructor(props) {
     super(props)
-    let media = this.isMedia(props.subject)
-    this.state = { 'media': media, 'subject': props.subject, 'title': '', bookmark: [{ 'recalls': '', 'title': '' }] }
+    this.state = { 
+      'subject': props.subject, 
+      bookmark: [{ 
+        'recalls': '', 
+        'title': '' 
+      }] 
+    }
   }
 
   fetchBookmark(subject, force) {
@@ -136,7 +141,7 @@ class Bookmark extends React.Component {
     // hack to force fetcher
     UI.store = $rdf.graph()
     UI.fetcher = new $rdf.Fetcher(UI.store)    
-    UI.fetcher.load(subject, {force : true} ).then(response => {
+    UI.fetcher.load(subject, {force : force} ).then(response => {
       var type = getTypeFromSubject(subject)
       var bm = []
       console.log('type', type);
