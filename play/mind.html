@@ -43,11 +43,11 @@
     <script>
       let d = new URLSearchParams(document.location.search).get('data') 
       console.log('d', d)
-      d = d ? JSON.parse(d) : 'Solid Map'
+      d = d ? JSON.parse(d) : MindElixir.new('Solid Map')
       console.log('d', d)
       let mind = new MindElixir({
         el: '#map',
-        direction: MindElixir.LEFT,
+        direction: MindElixir.RIGHT,
         data: d, // can also set data return from .getAllData()
         draggable: true, // default true
         contextMenu: true, // default true
