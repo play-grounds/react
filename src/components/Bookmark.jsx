@@ -38,7 +38,7 @@ function BookmarkItem (props) {
             </tr>
             <tr>
               <td />
-              <td><img src={props.recalls} /></td>
+              <td><img loading="lazy" src={props.recalls} /></td>
 
             </tr>
 
