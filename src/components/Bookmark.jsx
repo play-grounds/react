@@ -202,7 +202,7 @@ class Bookmark extends React.Component {
 
       for (const b of bm) {
         if (b.maker) {
-          //this.fetchPerson(b.maker)
+          this.fetchPerson(b.maker)
         }
       }
       this.setState({ 'bookmark': bm })
@@ -212,11 +212,14 @@ class Bookmark extends React.Component {
   }
 
   fetchPerson (uri) {
-    UI.fetcher.load(subject).then(response => {
+    if (!uri) return
+    if (uri.match(/reddit.com.*this$/)) return
+
+    UI.fetcher.load(uri).then(response => {
       let profile = getProfileFromSubject(uri)
 
       console.log('profile', profile)
-      this.setState({ subject: profile })
+      this.setState({ uri: profile })
       console.log(this.state)
     })
   }
