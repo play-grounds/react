@@ -37,7 +37,7 @@ function getVal(uri, predicate) {
   }
 }
 
-function getProfileFromSubject(subject) {
+function getProfileFromUri(subject) {
   function get(p) { return getVal(subject, p) }
   return {
     type: get(RDF('type')),
@@ -72,84 +72,29 @@ function getTypeFromSubject(subject) {
   return g(RDF('type'))
 }
 
-/** Bookmark Item
- * 
- * @param {} props 
- */
-function BookmarkItem(props) {
-  const AUDIO_EXTENSIONS = /\.(m4a|mp4a|mpga|mp2|mp2a|mp3|m2a|m3a|wav|weba|aac|oga|spx)($|\?)/i
-  const VIDEO_EXTENSIONS = /\.(mp4|og[gv]|webm|mov|m4v|mkv)($|\?)/i
-  const IMAGE_EXTENSIONS = /\.(png|gif|bmp|svg|jpeg|jpg)($|\?)/i
-  const URL = /http/i
-
-  if (props.recalls.match(IMAGE_EXTENSIONS)) {
-    return (
-      <div className='box'>
-        <table>
-          <tbody>
-            <tr>
-              <td>{props.id + 1}.&nbsp;</td>
-              <td><a target='_blank' href={props.recalls}>{props.title}</a> <a target='_blank' href={props.subject}><img height='10' width='10' src='./image/External.svg' /></a></td>
-            </tr>
-            <tr>
-              <td />
-              <td><sup style={{ color: 'rgb(136,136,136)' }}>{moment.utc(props.created).fromNow()} by <a href={props.maker} target='_blank' style={{ color: '#369' }}>{props.maker}</a></sup></td>
-            </tr>
-            <tr>
-              <td />
-              <td><img loading="lazy" src={props.recalls} /></td>
-
-            </tr>
-
-          </tbody>
-        </table>
-
-      </div>)
-  } else if (props.recalls.match(VIDEO_EXTENSIONS)) {
-    return (
-      <div>{props.id + 1}. <video controls autoplay='true' loop src={props.recalls} /></div>)
-  } else if (props.recalls.match(AUDIO_EXTENSIONS)) {
-    return (
-      <div>{props.id + 1}. <video controls autoplay='true' loop src={props.recalls} /></div>)
-  } else if (props.recalls.match(URL)) {
-    return (
-      <div className='box'>
-        <table>
-          <tbody>
-            <tr>
-              <td>{props.id + 1}.&nbsp;</td>
-              <td><a target='_blank' href={props.recalls}>{props.title}</a> <a target='_blank' href={props.subject}><img height='10' width='10' src='./image/External.svg' /></a></td>
-            </tr>
-            <tr>
-              <td />
-              <td><sup style={{ color: 'rgb(136,136,136)' }}>{moment.utc(props.created).fromNow()} by <a href={props.maker} target='_blank' style={{ color: '#369' }}>{props.maker}</a></sup></td>            </tr>
-
-          </tbody>
-        </table>
-
-      </div>
-    )
+function getBookmarkDocFromTypeIndex(uri) {
+  if (!uri) return
+  let s = null
+  let p = SOLID('forClass')
+  let o = BOOK('Bookmark')
+  let w = UI.store.sym(uri.split('#')[0])
+  let typeRegistration = UI.store.any(s, p, o, w)
+  if (typeRegistration) {
+    let s = typeRegistration
+    let o = null
+    let p = SOLID('instance')
+    let w = UI.store.sym(uri.split('#')[0])
+    let bookmarkDoc = UI.store.any(s, p, o, w)
+    if (bookmarkDoc) {
+      return bookmarkDoc.value
+    } else {
+      return undefined
+    }
   } else {
-    return (
-      <div className='box'>
-        <table>
-          <tbody>
-            <tr>
-              <td>{props.id + 1}.&nbsp;</td>
-              <td><a target='_blank' href={props.recalls}>{props.title}</a> <a target='_blank' href={props.subject}><img height='10' width='10' src='./image/External.svg' /></a></td>
-            </tr>
-            <tr>
-              <td />
-              <td><sup style={{ color: 'rgb(136,136,136)' }}>{moment.utc(props.created).fromNow()} by <a href={props.maker} target='_blank' style={{ color: '#369' }}>{props.maker}</a></sup></td>
-            </tr>
-
-          </tbody>
-        </table>
-
-      </div>
-    )
-  }
+    return undefined
+  }  
 }
+
 
 /** 
  *  Bookmark or set of bookmarks
@@ -209,13 +154,28 @@ class Bookmark extends React.Component {
     }
 
     UI.fetcher.load(uri).then(response => {
-      let profile = getProfileFromSubject(uri)
+      let profile = getProfileFromUri(uri)
 
       let o = {}
       o[uri] = profile
       this.setState(o)
+      if (uri === this.state.webId) {
+        console.log('#### found WebId', profile.publicTypeIndex);
+        this.fetchPublicTypeIndex(profile.publicTypeIndex)     
+      }
     })
   }
+
+  fetchPublicTypeIndex(uri) {
+    UI.fetcher.load(uri).then(response => {
+      let bookmarkDoc = getBookmarkDocFromTypeIndex(uri)
+      console.log('bookmarkDoc', bookmarkDoc);
+      if (bookmarkDoc) {
+        this.setState({'subject' : bookmarkDoc})
+      }
+    })
+  }
+
 
   getUpdatesVia(doc) {
     var linkHeaders = UI.store.fetcher.getHeader(doc, 'updates-via')
@@ -253,6 +213,16 @@ class Bookmark extends React.Component {
         this.setRefreshHandler(subject, this.refresh)
       }, 1000)
     }
+    // check for WebId
+    solid.auth.trackSession(session => {
+      if (!session)
+        console.log('The user is not logged in')
+      else {
+        console.log(`The user is ${session.webId}`)
+        this.setState({ webId : session.webId })
+        this.fetchPerson(session.webId)
+      }
+    })
   }
 
   componentWillReceiveProps(props) {
@@ -288,7 +258,7 @@ class Bookmark extends React.Component {
     } else {
       const listItems = this.state.bookmark.map((b, i) =>
         <div>
-          <BookmarkItem key={i} id={i} recalls={b.recalls} title={b.title} maker={getName(b.maker)} created={b.created} subject={b.subject} />
+          <BookmarkItem key={i} id={i} recalls={b.recalls} title={b.title} maker={b.maker} name={getName(b.maker)} created={b.created} subject={b.subject} />
         </div>
       )
 
@@ -296,6 +266,85 @@ class Bookmark extends React.Component {
         <div>{listItems}</div>
       )
     }
+  }
+}
+
+/** Bookmark Item
+ * 
+ * @param {} props 
+ */
+function BookmarkItem(props) {
+  const AUDIO_EXTENSIONS = /\.(m4a|mp4a|mpga|mp2|mp2a|mp3|m2a|m3a|wav|weba|aac|oga|spx)($|\?)/i
+  const VIDEO_EXTENSIONS = /\.(mp4|og[gv]|webm|mov|m4v|mkv)($|\?)/i
+  const IMAGE_EXTENSIONS = /\.(png|gif|bmp|svg|jpeg|jpg)($|\?)/i
+  const URL = /http/i
+
+  if (props.recalls.match(IMAGE_EXTENSIONS)) {
+    return (
+      <div className='box'>
+        <table>
+          <tbody>
+            <tr>
+              <td>{props.id + 1}.&nbsp;</td>
+              <td><a target='_blank' href={props.recalls}>{props.title}</a> <a target='_blank' href={props.subject}><img height='10' width='10' src='./image/External.svg' /></a></td>
+            </tr>
+            <tr>
+              <td />
+              <td><sup style={{ color: 'rgb(136,136,136)' }}>{moment.utc(props.created).fromNow()} by <a href={props.maker} target='_blank' style={{ color: '#369' }}>{props.name}</a></sup></td>
+            </tr>
+            <tr>
+              <td />
+              <td><img loading="lazy" src={props.recalls} /></td>
+
+            </tr>
+
+          </tbody>
+        </table>
+
+      </div>)
+  } else if (props.recalls.match(VIDEO_EXTENSIONS)) {
+    return (
+      <div>{props.id + 1}. <video controls autoplay='true' loop src={props.recalls} /></div>)
+  } else if (props.recalls.match(AUDIO_EXTENSIONS)) {
+    return (
+      <div>{props.id + 1}. <video controls autoplay='true' loop src={props.recalls} /></div>)
+  } else if (props.recalls.match(URL)) {
+    return (
+      <div className='box'>
+        <table>
+          <tbody>
+            <tr>
+              <td>{props.id + 1}.&nbsp;</td>
+              <td><a target='_blank' href={props.recalls}>{props.title}</a> <a target='_blank' href={props.subject}><img height='10' width='10' src='./image/External.svg' /></a></td>
+            </tr>
+            <tr>
+              <td />
+              <td><sup style={{ color: 'rgb(136,136,136)' }}>{moment.utc(props.created).fromNow()} by <a href={props.maker} target='_blank' style={{ color: '#369' }}>{props.name}</a></sup></td>            </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+    )
+  } else {
+    return (
+      <div className='box'>
+        <table>
+          <tbody>
+            <tr>
+              <td>{props.id + 1}.&nbsp;</td>
+              <td><a target='_blank' href={props.recalls}>{props.title}</a> <a target='_blank' href={props.subject}><img height='10' width='10' src='./image/External.svg' /></a></td>
+            </tr>
+            <tr>
+              <td />
+              <td><sup style={{ color: 'rgb(136,136,136)' }}>{moment.utc(props.created).fromNow()} by <a href={props.maker} target='_blank' style={{ color: '#369' }}>{props.name}</a></sup></td>
+            </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+    )
   }
 }
 
