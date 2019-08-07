@@ -202,7 +202,7 @@ class Bookmark extends React.Component {
 
       for (const b of bm) {
         if (b.maker) {
-          this.fetchPerson(b.maker)
+          //this.fetchPerson(b.maker)
         }
       }
       this.setState({ 'bookmark': bm })
