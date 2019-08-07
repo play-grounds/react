@@ -213,14 +213,21 @@ class Bookmark extends React.Component {
 
   fetchPerson (uri) {
     if (!uri) return
-    if (uri.match(/reddit.com.*this$/)) return
+    if (uri.match(/reddit.com.*this$/)) {
+      let o = {}
+      o[uri] = { name : uri.replace(/.*reddit.com.*user.(.*).this/, '$1') }
+      this.setState(o)
+      return
+    }
 
     UI.fetcher.load(uri).then(response => {
       let profile = getProfileFromSubject(uri)
 
       console.log('profile', profile)
-      this.setState({ uri: profile })
-      console.log(this.state)
+      let o = {}
+      o[uri] = profile
+      this.setState(o)
+      console.log('state', this.state)
     })
   }
 
@@ -288,6 +295,11 @@ class Bookmark extends React.Component {
   render () {
     let med = this.isMedia(this.props.subject)
     console.log('subject', this.props.subject, med)
+    var self = this
+
+    function getName(maker) {
+      return self.state[maker] ? self.state[maker].name : maker
+    }
 
     if (med === true) {
       return (
@@ -296,7 +308,7 @@ class Bookmark extends React.Component {
     } else {
       const listItems = this.state.bookmark.map((b, i) =>
         <div>
-          <BookmarkItem key={i} id={i} recalls={b.recalls} title={b.title} maker={b.maker} created={b.created} subject={b.subject} />
+          <BookmarkItem key={i} id={i} recalls={b.recalls} title={b.title} maker={getName(b.maker)} created={b.created} subject={b.subject} />
         </div>
       )
 
