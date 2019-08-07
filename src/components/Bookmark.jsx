@@ -3,6 +3,10 @@
 // Structure
 // Bookmark
 //   Person
+// WebId
+//   PublicTypeIndex
+//     Bookmark instance
+//       Bookmark File(s)
 
 // init
 var UI = {}
