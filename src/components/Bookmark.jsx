@@ -1,10 +1,10 @@
-// REMOVE import React from 'react'
-// REMOVE import Media from './Media.jsx'
+// REMOVE import React from 'react' 
 
 // Structure
 // Bookmark
 //   Person
 
+// init
 var UI = {}
 UI.store = $rdf.graph()
 UI.fetcher = new $rdf.Fetcher(UI.store)
@@ -16,8 +16,63 @@ const RDF = $rdf.Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
 const FOAF = $rdf.Namespace('http://xmlns.com/foaf/0.1/')
 const VCARD = $rdf.Namespace('http://www.w3.org/2006/vcard/ns#')
 const SOLID = $rdf.Namespace('http://www.w3.org/ns/solid/terms#')
+const BOOK = $rdf.Namespace('http://www.w3.org/2002/01/bookmark#')
 
-function BookmarkItem (props) {
+// helpers
+function getVal(uri, predicate) {
+  if (!uri || !predicate) return
+  let s = UI.store.sym(uri)
+  let p = predicate
+  let o = null
+  let w = UI.store.sym(uri.split('#')[0])
+  let content = UI.store.any(s, p, o, w)
+  if (content) {
+    return content.value
+  } else {
+    return undefined
+  }
+}
+
+function getProfileFromSubject(subject) {
+  function get(p) { return getVal(subject, p) }
+  return {
+    type: get(RDF('type')),
+    name: get(FOAF('name')),
+    nick: get(FOAF('nick')),
+    img: get(FOAF('img')),
+    image: get(FOAF('image')),
+    depiction: get(FOAF('depiction')),
+    hasPhoto: get(VCARD('hasPhoto')),
+    fn: get(VCARD('fn')),
+    nickname: get(VCARD('nickname')),
+    timeline: get(SOLID('timeline')),
+    publicTypeIndex: get(SOLID('publicTypeIndex')),
+    privateTypeIndex: get(SOLID('privateTypeIndex')),
+    subject: subject
+  }
+}
+
+function getBookmarkFromSubject(subject) {
+  function g(p) { return getVal(subject, p) }
+  return {
+    recalls: g(BOOK('recalls')) || 'lorem',
+    title: g(DCT('title')) || 'lorem',
+    maker: g(FOAF('maker')),
+    created: g(DCT('created')),
+    subject: subject
+  }
+}
+
+function getTypeFromSubject(subject) {
+  function g(p) { return getVal(subject, p) }
+  return g(RDF('type'))
+}
+
+/** Bookmark Item
+ * 
+ * @param {} props 
+ */
+function BookmarkItem(props) {
   const AUDIO_EXTENSIONS = /\.(m4a|mp4a|mpga|mp2|mp2a|mp3|m2a|m3a|wav|weba|aac|oga|spx)($|\?)/i
   const VIDEO_EXTENSIONS = /\.(mp4|og[gv]|webm|mov|m4v|mkv)($|\?)/i
   const IMAGE_EXTENSIONS = /\.(png|gif|bmp|svg|jpeg|jpg)($|\?)/i
@@ -34,7 +89,7 @@ function BookmarkItem (props) {
             </tr>
             <tr>
               <td />
-              <td><sup style={{ color : 'rgb(136,136,136)' }}>{moment.utc(props.created).fromNow()} by <a href={props.maker} target='_blank' style={{ color: '#369' }}>{props.maker}</a></sup></td>
+              <td><sup style={{ color: 'rgb(136,136,136)' }}>{moment.utc(props.created).fromNow()} by <a href={props.maker} target='_blank' style={{ color: '#369' }}>{props.maker}</a></sup></td>
             </tr>
             <tr>
               <td />
@@ -63,7 +118,7 @@ function BookmarkItem (props) {
             </tr>
             <tr>
               <td />
-              <td><sup style={{ color : 'rgb(136,136,136)' }}>{moment.utc(props.created).fromNow()} by <a href={props.maker} target='_blank' style={{ color: '#369' }}>{props.maker}</a></sup></td>            </tr>
+              <td><sup style={{ color: 'rgb(136,136,136)' }}>{moment.utc(props.created).fromNow()} by <a href={props.maker} target='_blank' style={{ color: '#369' }}>{props.maker}</a></sup></td>            </tr>
 
           </tbody>
         </table>
@@ -81,7 +136,7 @@ function BookmarkItem (props) {
             </tr>
             <tr>
               <td />
-              <td><sup style={{ color : 'rgb(136,136,136)' }}>{moment.utc(props.created).fromNow()} by <a href={props.maker} target='_blank' style={{ color: '#369' }}>{props.maker}</a></sup></td>
+              <td><sup style={{ color: 'rgb(136,136,136)' }}>{moment.utc(props.created).fromNow()} by <a href={props.maker} target='_blank' style={{ color: '#369' }}>{props.maker}</a></sup></td>
             </tr>
 
           </tbody>
@@ -92,79 +147,11 @@ function BookmarkItem (props) {
   }
 }
 
-function getTypeFromSubject (subject) {
-  let s = UI.store.sym(subject)
-  let p = UI.store.sym('http://www.w3.org/1999/02/22-rdf-syntax-ns#type')
-  let o = null
-  let w = UI.store.sym(subject.split('#')[0])
-  let type = UI.store.any(s, p, o, w)
-  if (type) {
-    return type.value
-  } else {
-    return null
-  }
-}
-
-function getProfileFromSubject (subject) {
-  var profile = {}
-  profile.type = getVal(subject, RDF('type'))
-  profile.name = getVal(subject, FOAF('name'))
-  profile.nick = getVal(subject, FOAF('nick'))
-  profile.img = getVal(subject, FOAF('img'))
-  profile.image = getVal(subject, FOAF('image'))
-  profile.depiction = getVal(subject, FOAF('depiction'))
-  profile.hasPhoto = getVal(subject, VCARD('hasPhoto'))
-  profile.fn = getVal(subject, VCARD('fn'))
-  profile.nickname = getVal(subject, VCARD('nickname'))
-  profile.timeline = getVal(subject, SOLID('timeline'))
-  profile.publicTypeIndex = getVal(subject, SOLID('publicTypeIndex'))
-  profile.privateTypeIndex = getVal(subject, SOLID('privateTypeIndex'))
-  profile.subject = subject
-  return profile
-}
-
-function getBookmarkFromSubject (subject) {
-  let s = UI.store.sym(subject)
-  let p = UI.store.sym('http://www.w3.org/2002/01/bookmark#recalls')
-  let o = null
-  let w = UI.store.sym(subject.split('#')[0])
-  let recalls = UI.store.any(s, p, o, w)
-  s = UI.store.sym(subject)
-  p = UI.store.sym('http://purl.org/dc/terms/title')
-  o = null
-  w = UI.store.sym(subject.split('#')[0])
-  let title = UI.store.any(s, p, o, w)
-  s = UI.store.sym(subject)
-  p = UI.store.sym('http://xmlns.com/foaf/0.1/maker')
-  o = null
-  w = UI.store.sym(subject.split('#')[0])
-  let maker = UI.store.any(s, p, o, w)
-  s = UI.store.sym(subject)
-  p = UI.store.sym('http://purl.org/dc/terms/created')
-  o = null
-  w = UI.store.sym(subject.split('#')[0])
-  let created = UI.store.any(s, p, o, w)
-
-  let bookmark = { 'recalls': recalls.value, 'title': title.value, 'maker': maker.value, 'created': created.value, 'subject': subject }
-  return bookmark
-}
-
-function getVal (subject, predicate) {
-  if (!subject || !predicate) return
-  let s = UI.store.sym(subject)
-  let p = predicate
-  let o = null
-  let w = UI.store.sym(subject.split('#')[0])
-  let content = UI.store.any(s, p, o, w)
-  if (content) {
-    return content.value
-  } else {
-    return undefined
-  }
-}
-
+/** 
+ *  Bookmark or set of bookmarks
+ */
 class Bookmark extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       'subject': props.subject,
@@ -176,13 +163,11 @@ class Bookmark extends React.Component {
     }
   }
 
-  fetchBookmark (subject, force) {
+  fetchBookmark(subject, force) {
     force = !!force
-    console.log('fetch bookmark', subject, 'force', force)
-    UI.fetcher.load(subject, {force: force}).then(response => {
+    UI.fetcher.load(subject, { force: force }).then(response => {
       var type = getTypeFromSubject(subject)
       var bm = []
-      console.log('type', type)
 
       if (!type) {
         let s = UI.store.sym(subject)
@@ -210,11 +195,11 @@ class Bookmark extends React.Component {
     })
   }
 
-  fetchPerson (uri) {
+  fetchPerson(uri) {
     if (!uri) return
     if (uri.match(/reddit.com.*this$/)) {
       let o = {}
-      o[uri] = { name : uri.replace(/.*reddit.com.*user.(.*).this/, '$1') }
+      o[uri] = { name: uri.replace(/.*reddit.com.*user.(.*).this/, '$1') }
       this.setState(o)
       return
     }
@@ -222,31 +207,25 @@ class Bookmark extends React.Component {
     UI.fetcher.load(uri).then(response => {
       let profile = getProfileFromSubject(uri)
 
-      console.log('profile', profile)
       let o = {}
       o[uri] = profile
       this.setState(o)
-      console.log('state', this.state)
     })
   }
 
-  getUpdatesVia (doc) {
+  getUpdatesVia(doc) {
     var linkHeaders = UI.store.fetcher.getHeader(doc, 'updates-via')
-    console.log('linkHeaders', linkHeaders, 'doc', doc)
     if (!linkHeaders || !linkHeaders.length) return null
     return linkHeaders[0].trim()
   }
 
-  setRefreshHandler (subject, handler) {
+  setRefreshHandler(subject, handler) {
     var self = this
     var wss = this.getUpdatesVia(subject)
-    console.log('wss', wss, 'subject', subject)
     let w = new WebSocket(wss)
     w.onmessage = function (m) {
       let data = m.data
-      console.log('data', data)
       if (data.match(/pub .*/)) {
-        console.log('refresh')
         // hack for now
         self.refresh()
       }
@@ -256,31 +235,30 @@ class Bookmark extends React.Component {
     }
   }
 
-  refresh () {
+  refresh() {
     this.fetchBookmark(this.state.subject, true)
   }
 
-  componentDidMount () {
+  componentDidMount() {
     let subject = this.state.subject
     if (this.isMedia(subject) === false) {
       this.fetchBookmark(subject)
     }
     if (subject) {
-      console.log('init subject', subject)
       setTimeout(() => {
         this.setRefreshHandler(subject, this.refresh)
       }, 1000)
     }
   }
 
-  componentWillReceiveProps (props) {
+  componentWillReceiveProps(props) {
     let subject = props.subject
     if (this.isMedia(subject) === false) {
       this.fetchBookmark(subject)
     }
   }
 
-  isMedia (subject) {
+  isMedia(subject) {
     // TODO better test for linked data
     let isMedia = false
     if (subject.match(/.ttl/)) {
@@ -291,9 +269,8 @@ class Bookmark extends React.Component {
     return isMedia
   }
 
-  render () {
+  render() {
     let med = this.isMedia(this.props.subject)
-    console.log('subject', this.props.subject, med)
     var self = this
 
     function getName(maker) {
