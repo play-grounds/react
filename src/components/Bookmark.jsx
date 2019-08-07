@@ -63,8 +63,7 @@ function BookmarkItem (props) {
             </tr>
             <tr>
               <td />
-              <td><sup>{moment.utc(props.created).fromNow()} by <a href={props.maker} target='_blank' style={{ color: 'inherit' }}>{props.maker}</a></sup></td>
-            </tr>
+              <td><sup style={{ color : 'rgb(136,136,136)' }}>{moment.utc(props.created).fromNow()} by <a href={props.maker} target='_blank' style={{ color: '#369' }}>{props.maker}</a></sup></td>            </tr>
 
           </tbody>
         </table>
@@ -82,7 +81,7 @@ function BookmarkItem (props) {
             </tr>
             <tr>
               <td />
-              <td><sup>{moment.utc(props.created).fromNow()} by <a style={{ color : '#369' }} href={props.maker} target='_blank' >{props.maker}</a></sup></td>
+              <td><sup style={{ color : 'rgb(136,136,136)' }}>{moment.utc(props.created).fromNow()} by <a href={props.maker} target='_blank' style={{ color: '#369' }}>{props.maker}</a></sup></td>
             </tr>
 
           </tbody>
