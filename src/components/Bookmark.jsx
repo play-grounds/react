@@ -1,34 +1,43 @@
-//REMOVE import React from 'react'
-//REMOVE import Media from './Media.jsx'
+// REMOVE import React from 'react'
+// REMOVE import Media from './Media.jsx'
+
+// Structure
+// Bookmark
+//   Person
 
 var UI = {}
 UI.store = $rdf.graph()
 UI.fetcher = new $rdf.Fetcher(UI.store)
 UI.updater = new $rdf.UpdateManager(UI.store)
 
+const SIOC = $rdf.Namespace('http://rdfs.org/sioc/ns#')
+const DCT = $rdf.Namespace('http://purl.org/dc/terms/')
+const RDF = $rdf.Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
+const FOAF = $rdf.Namespace('http://xmlns.com/foaf/0.1/')
+const VCARD = $rdf.Namespace('http://www.w3.org/2006/vcard/ns#')
+const SOLID = $rdf.Namespace('http://www.w3.org/ns/solid/terms#')
 
-function BookmarkItem(props) {
+function BookmarkItem (props) {
   const AUDIO_EXTENSIONS = /\.(m4a|mp4a|mpga|mp2|mp2a|mp3|m2a|m3a|wav|weba|aac|oga|spx)($|\?)/i
   const VIDEO_EXTENSIONS = /\.(mp4|og[gv]|webm|mov|m4v|mkv)($|\?)/i
   const IMAGE_EXTENSIONS = /\.(png|gif|bmp|svg|jpeg|jpg)($|\?)/i
   const URL = /http/i
 
-
   if (props.recalls.match(IMAGE_EXTENSIONS)) {
     return (
-      <div className="box">
+      <div className='box'>
         <table>
           <tbody>
             <tr>
               <td>{props.id + 1}.&nbsp;</td>
-              <td><a target="_blank" href={props.recalls}>{props.title}</a> <a target="_blank" href={props.subject}><img height="10" width="10" src="./image/External.svg" /></a></td>
+              <td><a target='_blank' href={props.recalls}>{props.title}</a> <a target='_blank' href={props.subject}><img height='10' width='10' src='./image/External.svg' /></a></td>
             </tr>
             <tr>
-            <td></td>
-              <td><sup>{moment.utc(props.created).fromNow()} by <a href={props.maker} target="_blank" style={{ color : 'inherit' }}>{props.maker}</a></sup></td>
+              <td />
+              <td><sup>{moment.utc(props.created).fromNow()} by <a href={props.maker} target='_blank' style={{ color: 'inherit' }}>{props.maker}</a></sup></td>
             </tr>
             <tr>
-            <td></td>
+              <td />
               <td><img src={props.recalls} /></td>
 
             </tr>
@@ -36,44 +45,44 @@ function BookmarkItem(props) {
           </tbody>
         </table>
 
-        </div>)
+      </div>)
   } else if (props.recalls.match(VIDEO_EXTENSIONS)) {
     return (
       <div>{props.id + 1}. <video controls autoplay='true' loop src={props.recalls} /></div>)
   } else if (props.recalls.match(AUDIO_EXTENSIONS)) {
     return (
       <div>{props.id + 1}. <video controls autoplay='true' loop src={props.recalls} /></div>)
-    } else if (props.recalls.match(URL)) {
-      return (
-        <div className="box">
-          <table>
-            <tbody>
-              <tr>
-                <td>{props.id + 1}.&nbsp;</td>
-                <td><a target="_blank" href={props.recalls}>{props.title}</a> <a target="_blank" href={props.subject}><img height="10" width="10" src="./image/External.svg" /></a></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td><sup>{moment.utc(props.created).fromNow()} by <a href={props.maker} target="_blank" style={{ color : 'inherit' }}>{props.maker}</a></sup></td>
-              </tr>
-  
-            </tbody>
-          </table>
-  
-        </div>
-      )
-      } else {
+  } else if (props.recalls.match(URL)) {
     return (
-      <div className="box">
+      <div className='box'>
         <table>
           <tbody>
             <tr>
               <td>{props.id + 1}.&nbsp;</td>
-              <td><a target="_blank" href={props.recalls}>{props.title}</a> <a target="_blank" href={props.subject}><img height="10" width="10" src="./image/External.svg" /></a></td>
+              <td><a target='_blank' href={props.recalls}>{props.title}</a> <a target='_blank' href={props.subject}><img height='10' width='10' src='./image/External.svg' /></a></td>
             </tr>
             <tr>
-              <td></td>
-              <td><sup>{moment.utc(props.created).fromNow()} by <a href={props.maker} target="_blank" style={{ color : 'inherit' }}>{props.maker}</a></sup></td>
+              <td />
+              <td><sup>{moment.utc(props.created).fromNow()} by <a href={props.maker} target='_blank' style={{ color: 'inherit' }}>{props.maker}</a></sup></td>
+            </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+    )
+  } else {
+    return (
+      <div className='box'>
+        <table>
+          <tbody>
+            <tr>
+              <td>{props.id + 1}.&nbsp;</td>
+              <td><a target='_blank' href={props.recalls}>{props.title}</a> <a target='_blank' href={props.subject}><img height='10' width='10' src='./image/External.svg' /></a></td>
+            </tr>
+            <tr>
+              <td />
+              <td><sup>{moment.utc(props.created).fromNow()} by <a href={props.maker} target='_blank' style={{ color: 'inherit' }}>{props.maker}</a></sup></td>
             </tr>
 
           </tbody>
@@ -84,7 +93,7 @@ function BookmarkItem(props) {
   }
 }
 
-function getTypeFromSubject(subject) {
+function getTypeFromSubject (subject) {
   let s = UI.store.sym(subject)
   let p = UI.store.sym('http://www.w3.org/1999/02/22-rdf-syntax-ns#type')
   let o = null
@@ -97,7 +106,25 @@ function getTypeFromSubject(subject) {
   }
 }
 
-function getBookmarkFromSubject(subject) {
+function getProfileFromSubject (subject) {
+  var profile = {}
+  profile.type = getVal(subject, RDF('type'))
+  profile.name = getVal(subject, FOAF('name'))
+  profile.nick = getVal(subject, FOAF('nick'))
+  profile.img = getVal(subject, FOAF('img'))
+  profile.image = getVal(subject, FOAF('image'))
+  profile.depiction = getVal(subject, FOAF('depiction'))
+  profile.hasPhoto = getVal(subject, VCARD('hasPhoto'))
+  profile.fn = getVal(subject, VCARD('fn'))
+  profile.nickname = getVal(subject, VCARD('nickname'))
+  profile.timeline = getVal(subject, SOLID('timeline'))
+  profile.publicTypeIndex = getVal(subject, SOLID('publicTypeIndex'))
+  profile.privateTypeIndex = getVal(subject, SOLID('privateTypeIndex'))
+  profile.subject = subject
+  return profile
+}
+
+function getBookmarkFromSubject (subject) {
   let s = UI.store.sym(subject)
   let p = UI.store.sym('http://www.w3.org/2002/01/bookmark#recalls')
   let o = null
@@ -119,32 +146,44 @@ function getBookmarkFromSubject(subject) {
   w = UI.store.sym(subject.split('#')[0])
   let created = UI.store.any(s, p, o, w)
 
-  let bookmark = { 'recalls': recalls.value, 'title': title.value, 'maker' : maker.value, 'created' : created.value, 'subject' : subject }
+  let bookmark = { 'recalls': recalls.value, 'title': title.value, 'maker': maker.value, 'created': created.value, 'subject': subject }
   return bookmark
 }
 
+function getVal (subject, predicate) {
+  if (!subject || !predicate) return
+  let s = UI.store.sym(subject)
+  let p = predicate
+  let o = null
+  let w = UI.store.sym(subject.split('#')[0])
+  let content = UI.store.any(s, p, o, w)
+  if (content) {
+    return content.value
+  } else {
+    return undefined
+  }
+}
+
 class Bookmark extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
-    this.state = { 
-      'subject': props.subject, 
-      bookmark: [{ 
-        'recalls': '', 
-        'title': '' 
-      }] 
+    this.state = {
+      'subject': props.subject,
+      bookmark: [{
+        'recalls': '',
+        'title': ''
+      }],
+      person: {}
     }
   }
 
-  fetchBookmark(subject, force) {
-    force = !! force
+  fetchBookmark (subject, force) {
+    force = !!force
     console.log('fetch bookmark', subject, 'force', force)
-    // hack to force fetcher
-    UI.store = $rdf.graph()
-    UI.fetcher = new $rdf.Fetcher(UI.store)    
-    UI.fetcher.load(subject, {force : force} ).then(response => {
+    UI.fetcher.load(subject, {force: force}).then(response => {
       var type = getTypeFromSubject(subject)
       var bm = []
-      console.log('type', type);
+      console.log('type', type)
 
       if (!type) {
         let s = UI.store.sym(subject)
@@ -154,19 +193,31 @@ class Bookmark extends React.Component {
           bm.push(getBookmarkFromSubject(subject.object.value))
         }
 
-        bm = bm.sort( function(a,b) { 
-          return (b.created < a.created) ? -1 : ((b.created > a.created) ? 1 : 0);
-        } )
-
-        this.setState({ 'bookmark': bm })
-
+        bm = bm.sort(function (a, b) {
+          return (b.created < a.created) ? -1 : ((b.created > a.created) ? 1 : 0)
+        })
       } else {
         bm.push(getBookmarkFromSubject(subject))
-
-        this.setState({ 'bookmark': bm })
       }
+
+      for (const b of bm) {
+        if (b.maker) {
+          this.fetchPerson(b.maker)
+        }
+      }
+      this.setState({ 'bookmark': bm })
     }, err => {
       console.log(err)
+    })
+  }
+
+  fetchPerson (uri) {
+    UI.fetcher.load(subject).then(response => {
+      let profile = getProfileFromSubject(uri)
+
+      console.log('profile', profile)
+      this.setState({ subject: profile })
+      console.log(this.state)
     })
   }
 
@@ -177,13 +228,13 @@ class Bookmark extends React.Component {
     return linkHeaders[0].trim()
   }
 
-  setRefreshHandler(subject, handler) {
+  setRefreshHandler (subject, handler) {
     var self = this
     var wss = this.getUpdatesVia(subject)
     console.log('wss', wss, 'subject', subject)
     let w = new WebSocket(wss)
     w.onmessage = function (m) {
-      let data = m.data      
+      let data = m.data
       console.log('data', data)
       if (data.match(/pub .*/)) {
         console.log('refresh')
@@ -193,14 +244,14 @@ class Bookmark extends React.Component {
     }
     w.onopen = function () {
       w.send('sub ' + subject)
-    }  
+    }
   }
 
-  refresh() {
+  refresh () {
     this.fetchBookmark(this.state.subject, true)
   }
 
-  componentDidMount() {
+  componentDidMount () {
     let subject = this.state.subject
     if (this.isMedia(subject) === false) {
       this.fetchBookmark(subject)
@@ -208,19 +259,19 @@ class Bookmark extends React.Component {
     if (subject) {
       console.log('init subject', subject)
       setTimeout(() => {
-        this.setRefreshHandler (subject, this.refresh)         
-      }, 1000);
+        this.setRefreshHandler(subject, this.refresh)
+      }, 1000)
     }
   }
 
-  componentWillReceiveProps(props) {
+  componentWillReceiveProps (props) {
     let subject = props.subject
     if (this.isMedia(subject) === false) {
       this.fetchBookmark(subject)
     }
   }
 
-  isMedia(subject) {
+  isMedia (subject) {
     // TODO better test for linked data
     let isMedia = false
     if (subject.match(/.ttl/)) {
@@ -231,9 +282,9 @@ class Bookmark extends React.Component {
     return isMedia
   }
 
-  render() {
+  render () {
     let med = this.isMedia(this.props.subject)
-    console.log('subject', this.props.subject, med);
+    console.log('subject', this.props.subject, med)
 
     if (med === true) {
       return (
@@ -242,7 +293,7 @@ class Bookmark extends React.Component {
     } else {
       const listItems = this.state.bookmark.map((b, i) =>
         <div>
-          <BookmarkItem key={i} id={i} recalls={b.recalls} title={b.title} maker={b.maker} created={b.created} subject={b.subject}/>
+          <BookmarkItem key={i} id={i} recalls={b.recalls} title={b.title} maker={b.maker} created={b.created} subject={b.subject} />
         </div>
       )
 
@@ -253,6 +304,4 @@ class Bookmark extends React.Component {
   }
 }
 
-
-
-//REMOVE export default Bookmark
+// REMOVE export default Bookmark
