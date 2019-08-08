@@ -23,57 +23,52 @@ const SOLID = $rdf.Namespace('http://www.w3.org/ns/solid/terms#')
 const BOOK = $rdf.Namespace('http://www.w3.org/2002/01/bookmark#')
 
 // helpers
-function getVal(uri, predicate) {
-  if (!uri || !predicate) return
-  let s = UI.store.sym(uri)
+function getObject(subject, predicate) {
+  if (!subject || !predicate) return
+  let s = UI.store.sym(subject)
   let p = predicate
   let o = null
-  let w = UI.store.sym(uri.split('#')[0])
-  let content = UI.store.any(s, p, o, w)
-  if (content) {
-    return content.value
-  } else {
-    return undefined
-  }
+  let w = UI.store.sym(subject.split('#')[0])
+  return UI.store.anyValue(s, p, o, w)
 }
 
 function getProfileFromUri(subject) {
-  function get(p) {
-    return getVal(subject, p)
+  function g(p) {
+    return getObject(subject, p)
   }
   return {
-    type: get(RDF('type')),
-    name: get(FOAF('name')),
-    nick: get(FOAF('nick')),
-    img: get(FOAF('img')),
-    image: get(FOAF('image')),
-    depiction: get(FOAF('depiction')),
-    hasPhoto: get(VCARD('hasPhoto')),
-    fn: get(VCARD('fn')),
-    nickname: get(VCARD('nickname')),
-    timeline: get(SOLID('timeline')),
-    publicTypeIndex: get(SOLID('publicTypeIndex')),
-    privateTypeIndex: get(SOLID('privateTypeIndex')),
-    subject: subject
+    type: g(RDF('type')),
+    name: g(FOAF('name')),
+    nick: g(FOAF('nick')),
+    img: g(FOAF('img')),
+    image: g(FOAF('image')),
+    depiction: g(FOAF('depiction')),
+    hasPhoto: g(VCARD('hasPhoto')),
+    fn: g(VCARD('fn')),
+    nickname: g(VCARD('nickname')),
+    timeline: g(SOLID('timeline')),
+    publicTypeIndex: g(SOLID('publicTypeIndex')),
+    privateTypeIndex: g(SOLID('privateTypeIndex')),
+    subject: subject,
   }
 }
 
 function getBookmarkFromSubject(subject) {
   function g(p) {
-    return getVal(subject, p)
+    return getObject(subject, p)
   }
   return {
     recalls: g(BOOK('recalls')) || 'lorem',
     title: g(DCT('title')) || 'lorem',
     maker: g(FOAF('maker')),
     created: g(DCT('created')),
-    subject: subject
+    subject: subject,
   }
 }
 
 function getTypeFromSubject(subject) {
   function g(p) {
-    return getVal(subject, p)
+    return getObject(subject, p)
   }
   return g(RDF('type'))
 }
@@ -112,10 +107,10 @@ class Bookmark extends React.Component {
       bookmark: [
         {
           recalls: '',
-          title: ''
-        }
+          title: '',
+        },
       ],
-      person: {}
+      person: {},
     }
   }
 
