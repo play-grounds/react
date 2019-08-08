@@ -157,7 +157,10 @@ function Points () {
         <span className='button is-large is-info'>T : {template.count}</span>
         <span className='button is-large is-link'>D : {template.day}</span>
         <span className='button is-large is-danger'>
-          E : {(new Date().getTime() - localStorage.getItem('zero')) / 1000}
+          E :{' '}
+          {Math.floor(
+            (new Date().getTime() - localStorage.getItem('zero')) / 1000
+          )}
         </span>
       </div>
 
