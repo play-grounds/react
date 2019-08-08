@@ -171,7 +171,13 @@ class Bookmark extends React.Component {
       let bookmarkDoc = getBookmarkDocFromTypeIndex(uri)
       console.log('bookmarkDoc', bookmarkDoc);
       if (bookmarkDoc) {
-        this.setState({'subject' : bookmarkDoc})
+        console.log('this.props', this.props);
+        if (bookmarkDoc && this.props.subject !== bookmarkDoc) {
+          console.log('setting subject to', bookmarkDoc, 'from', this.props.subject);          
+          this.props.setState( {subject : bookmarkDoc } )
+        } else {
+          console.log('subject unchanged6', bookmarkDoc);          
+        }
       }
     })
   }
