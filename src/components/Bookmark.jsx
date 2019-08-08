@@ -24,9 +24,18 @@ function getObject(subject, predicate) {
   return UI.store.anyValue(s, p, o, w)
 }
 
-function getProfileFromUri(subject) {
+function getSubject(predicate, object) {
+  if (!predicate || !object) return
+  let s = null
+  let p = predicate
+  let o = UI.store.sym(object)
+  let w = UI.store.sym(subject.split('#')[0])
+  return UI.store.anyValue(s, p, o, w)
+}
+
+function getProfileFromUri(uri) {
   function g(p) {
-    return getObject(subject, p)
+    return getObject(uri, p)
   }
   return {
     type: g(RDF('type')),
@@ -45,9 +54,9 @@ function getProfileFromUri(subject) {
   }
 }
 
-function getBookmarkFromUri(subject) {
+function getBookmarkFromUri(uri) {
   function g(p) {
-    return getObject(subject, p)
+    return getObject(uri, p)
   }
   return {
     recalls: g(BOOK('recalls')) || 'lorem',
@@ -58,33 +67,19 @@ function getBookmarkFromUri(subject) {
   }
 }
 
-function getTypeFromSubject(subject) {
+function getTypeFromUri(uri) {
   function g(p) {
-    return getObject(subject, p)
+    return getObject(uri, p)
   }
   return g(RDF('type'))
 }
 
 function getBookmarkDocFromTypeIndex(uri) {
   if (!uri) return
-  let s = null
-  let p = SOLID('forClass')
-  let o = BOOK('Bookmark')
-  let w = UI.store.sym(uri.split('#')[0])
-  let typeRegistration = UI.store.any(s, p, o, w)
+
+  let typeRegistration = getSubject(SOLID('forClass'), BOOK('Bookmark'))
   if (typeRegistration) {
-    let s = typeRegistration
-    let o = null
-    let p = SOLID('instance')
-    let w = UI.store.sym(uri.split('#')[0])
-    let bookmarkDoc = UI.store.any(s, p, o, w)
-    if (bookmarkDoc) {
-      return bookmarkDoc.value
-    } else {
-      return undefined
-    }
-  } else {
-    return undefined
+    return getObject(typeRegistration, SOLID('instance'))
   }
 }
 
@@ -110,7 +105,7 @@ class Bookmark extends React.Component {
     force = !!force
     UI.fetcher.load(subject, { force: force }).then(
       response => {
-        var type = getTypeFromSubject(subject)
+        var type = getTypeFromUri(subject)
         var bm = []
 
         if (!type) {
