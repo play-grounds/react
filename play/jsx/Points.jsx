@@ -63,7 +63,7 @@ const store = () => {
   const reset = (amount, day = 0) => {
     let a = amount || 0
     setTemplate({ count: a, day: day })
-    if (a % 360 === 0) {
+    if (day % 360 === 0) {
       localStorage.setItem('zero', new Date().getTime())
       console.log(localStorage.getItem('zero'))
     }
