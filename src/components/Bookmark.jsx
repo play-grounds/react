@@ -45,7 +45,7 @@ function getProfileFromUri(subject) {
   }
 }
 
-function getBookmarkFromSubject(subject) {
+function getBookmarkFromUri(subject) {
   function g(p) {
     return getObject(subject, p)
   }
@@ -118,14 +118,14 @@ class Bookmark extends React.Component {
           let p = UI.store.sym('http://purl.org/dc/terms/references')
           let subjects = UI.store.statementsMatching(s, p)
           for (let subject of subjects) {
-            bm.push(getBookmarkFromSubject(subject.object.value))
+            bm.push(getBookmarkFromUri(subject.object.value))
           }
 
           bm = bm.sort(function(a, b) {
             return b.created < a.created ? -1 : b.created > a.created ? 1 : 0
           })
         } else {
-          bm.push(getBookmarkFromSubject(subject))
+          bm.push(getBookmarkFromUri(subject))
         }
 
         for (const b of bm) {
