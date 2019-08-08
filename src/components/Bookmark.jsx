@@ -14,14 +14,6 @@ UI.store = $rdf.graph()
 UI.fetcher = new $rdf.Fetcher(UI.store)
 UI.updater = new $rdf.UpdateManager(UI.store)
 
-const SIOC = $rdf.Namespace('http://rdfs.org/sioc/ns#')
-const DCT = $rdf.Namespace('http://purl.org/dc/terms/')
-const RDF = $rdf.Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
-const FOAF = $rdf.Namespace('http://xmlns.com/foaf/0.1/')
-const VCARD = $rdf.Namespace('http://www.w3.org/2006/vcard/ns#')
-const SOLID = $rdf.Namespace('http://www.w3.org/ns/solid/terms#')
-const BOOK = $rdf.Namespace('http://www.w3.org/2002/01/bookmark#')
-
 // helpers
 function getObject(subject, predicate) {
   if (!subject || !predicate) return
