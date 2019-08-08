@@ -15,7 +15,7 @@ UI.fetcher = new $rdf.Fetcher(UI.store)
 UI.updater = new $rdf.UpdateManager(UI.store)
 
 // helpers
-function getObject(subject, predicate) {
+function getObject (subject, predicate) {
   if (!subject || !predicate) return
   let s = UI.store.sym(subject)
   let p = predicate
@@ -24,7 +24,7 @@ function getObject(subject, predicate) {
   return UI.store.anyValue(s, p, o, w)
 }
 
-function getSubject(predicate, object) {
+function getSubject (predicate, object) {
   if (!predicate || !object) return
   let s = null
   let p = predicate
@@ -33,8 +33,8 @@ function getSubject(predicate, object) {
   return UI.store.anyValue(s, p, o, w)
 }
 
-function getProfileFromUri(uri) {
-  function g(p) {
+function getProfileFromUri (uri) {
+  function g (p) {
     return getObject(uri, p)
   }
   return {
@@ -50,12 +50,12 @@ function getProfileFromUri(uri) {
     timeline: g(SOLID('timeline')),
     publicTypeIndex: g(SOLID('publicTypeIndex')),
     privateTypeIndex: g(SOLID('privateTypeIndex')),
-    subject: subject,
+    subject: uri
   }
 }
 
-function getBookmarkFromUri(uri) {
-  function g(p) {
+function getBookmarkFromUri (uri) {
+  function g (p) {
     return getObject(uri, p)
   }
   return {
@@ -63,18 +63,18 @@ function getBookmarkFromUri(uri) {
     title: g(DCT('title')) || 'lorem',
     maker: g(FOAF('maker')),
     created: g(DCT('created')),
-    subject: subject,
+    subject: uri
   }
 }
 
-function getTypeFromUri(uri) {
-  function g(p) {
+function getTypeFromUri (uri) {
+  function g (p) {
     return getObject(uri, p)
   }
   return g(RDF('type'))
 }
 
-function getBookmarkDocFromTypeIndex(uri) {
+function getBookmarkDocFromTypeIndex (uri) {
   if (!uri) return
 
   let typeRegistration = getSubject(SOLID('forClass'), BOOK('Bookmark'))
@@ -87,21 +87,21 @@ function getBookmarkDocFromTypeIndex(uri) {
  *  Bookmark or set of bookmarks
  */
 class Bookmark extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       subject: props.subject,
       bookmark: [
         {
           recalls: '',
-          title: '',
-        },
+          title: ''
+        }
       ],
-      person: {},
+      person: {}
     }
   }
 
-  fetchBookmark(subject, force) {
+  fetchBookmark (subject, force) {
     force = !!force
     UI.fetcher.load(subject, { force: force }).then(
       response => {
@@ -116,7 +116,7 @@ class Bookmark extends React.Component {
             bm.push(getBookmarkFromUri(subject.object.value))
           }
 
-          bm = bm.sort(function(a, b) {
+          bm = bm.sort(function (a, b) {
             return b.created < a.created ? -1 : b.created > a.created ? 1 : 0
           })
         } else {
@@ -136,7 +136,7 @@ class Bookmark extends React.Component {
     )
   }
 
-  fetchPerson(uri) {
+  fetchPerson (uri) {
     if (!uri) return
     if (uri.match(/reddit.com.*this$/)) {
       let o = {}
@@ -158,7 +158,7 @@ class Bookmark extends React.Component {
     })
   }
 
-  fetchPublicTypeIndex(uri) {
+  fetchPublicTypeIndex (uri) {
     UI.fetcher.load(uri).then(response => {
       let bookmarkDoc = getBookmarkDocFromTypeIndex(uri)
       console.log('bookmarkDoc', bookmarkDoc, 'from', uri)
@@ -180,33 +180,33 @@ class Bookmark extends React.Component {
     })
   }
 
-  getUpdatesVia(doc) {
+  getUpdatesVia (doc) {
     var linkHeaders = UI.store.fetcher.getHeader(doc, 'updates-via')
     if (!linkHeaders || !linkHeaders.length) return null
     return linkHeaders[0].trim()
   }
 
-  setRefreshHandler(subject, handler) {
+  setRefreshHandler (subject, handler) {
     var self = this
     var wss = this.getUpdatesVia(subject)
     let w = new WebSocket(wss)
-    w.onmessage = function(m) {
+    w.onmessage = function (m) {
       let data = m.data
       if (data.match(/pub .*/)) {
         // hack for now
         self.refresh()
       }
     }
-    w.onopen = function() {
+    w.onopen = function () {
       w.send('sub ' + subject)
     }
   }
 
-  refresh() {
+  refresh () {
     this.fetchBookmark(this.state.subject, true)
   }
 
-  componentDidMount() {
+  componentDidMount () {
     let subject = this.state.subject
     if (this.isMedia(subject) === false) {
       this.fetchBookmark(subject)
@@ -223,14 +223,14 @@ class Bookmark extends React.Component {
     })
   }
 
-  componentWillReceiveProps(props) {
+  componentWillReceiveProps (props) {
     let subject = props.subject
     if (this.isMedia(subject) === false) {
       this.fetchBookmark(subject)
     }
   }
 
-  isMedia(subject) {
+  isMedia (subject) {
     // TODO better test for linked data
     let isMedia = false
     if (subject.match(/.ttl/)) {
@@ -241,11 +241,11 @@ class Bookmark extends React.Component {
     return isMedia
   }
 
-  render() {
+  render () {
     let med = this.isMedia(this.props.subject)
     var self = this
 
-    function getName(maker) {
+    function getName (maker) {
       return self.state[maker] ? self.state[maker].name : maker
     }
 
@@ -276,7 +276,7 @@ class Bookmark extends React.Component {
  *
  * @param {} props
  */
-function BookmarkItem(props) {
+function BookmarkItem (props) {
   const AUDIO_EXTENSIONS = /\.(m4a|mp4a|mpga|mp2|mp2a|mp3|m2a|m3a|wav|weba|aac|oga|spx)($|\?)/i
   const VIDEO_EXTENSIONS = /\.(mp4|og[gv]|webm|mov|m4v|mkv)($|\?)/i
   const IMAGE_EXTENSIONS = /\.(png|gif|bmp|svg|jpeg|jpg)($|\?)/i
@@ -284,17 +284,17 @@ function BookmarkItem(props) {
 
   if (props.recalls.match(IMAGE_EXTENSIONS)) {
     return (
-      <div className="box">
+      <div className='box'>
         <table>
           <tbody>
             <tr>
               <td>{props.id + 1}.&nbsp;</td>
               <td>
-                <a target="_blank" href={props.recalls}>
+                <a target='_blank' href={props.recalls}>
                   {props.title}
                 </a>{' '}
-                <a target="_blank" href={props.subject}>
-                  <img height="10" width="10" src="./image/External.svg" />
+                <a target='_blank' href={props.subject}>
+                  <img height='10' width='10' src='./image/External.svg' />
                 </a>
               </td>
             </tr>
@@ -305,7 +305,7 @@ function BookmarkItem(props) {
                   {moment.utc(props.created).fromNow()} by{' '}
                   <a
                     href={props.maker}
-                    target="_blank"
+                    target='_blank'
                     style={{ color: '#369' }}
                   >
                     {props.name}
@@ -316,7 +316,7 @@ function BookmarkItem(props) {
             <tr>
               <td />
               <td>
-                <img loading="lazy" src={props.recalls} />
+                <img loading='lazy' src={props.recalls} />
               </td>
             </tr>
           </tbody>
@@ -327,29 +327,29 @@ function BookmarkItem(props) {
     return (
       <div>
         {props.id + 1}.{' '}
-        <video controls autoplay="true" loop src={props.recalls} />
+        <video controls autoplay='true' loop src={props.recalls} />
       </div>
     )
   } else if (props.recalls.match(AUDIO_EXTENSIONS)) {
     return (
       <div>
         {props.id + 1}.{' '}
-        <video controls autoplay="true" loop src={props.recalls} />
+        <video controls autoplay='true' loop src={props.recalls} />
       </div>
     )
   } else if (props.recalls.match(URL)) {
     return (
-      <div className="box">
+      <div className='box'>
         <table>
           <tbody>
             <tr>
               <td>{props.id + 1}.&nbsp;</td>
               <td>
-                <a target="_blank" href={props.recalls}>
+                <a target='_blank' href={props.recalls}>
                   {props.title}
                 </a>{' '}
-                <a target="_blank" href={props.subject}>
-                  <img height="10" width="10" src="./image/External.svg" />
+                <a target='_blank' href={props.subject}>
+                  <img height='10' width='10' src='./image/External.svg' />
                 </a>
               </td>
             </tr>
@@ -360,7 +360,7 @@ function BookmarkItem(props) {
                   {moment.utc(props.created).fromNow()} by{' '}
                   <a
                     href={props.maker}
-                    target="_blank"
+                    target='_blank'
                     style={{ color: '#369' }}
                   >
                     {props.name}
@@ -374,17 +374,17 @@ function BookmarkItem(props) {
     )
   } else {
     return (
-      <div className="box">
+      <div className='box'>
         <table>
           <tbody>
             <tr>
               <td>{props.id + 1}.&nbsp;</td>
               <td>
-                <a target="_blank" href={props.recalls}>
+                <a target='_blank' href={props.recalls}>
                   {props.title}
                 </a>{' '}
-                <a target="_blank" href={props.subject}>
-                  <img height="10" width="10" src="./image/External.svg" />
+                <a target='_blank' href={props.subject}>
+                  <img height='10' width='10' src='./image/External.svg' />
                 </a>
               </td>
             </tr>
@@ -395,7 +395,7 @@ function BookmarkItem(props) {
                   {moment.utc(props.created).fromNow()} by{' '}
                   <a
                     href={props.maker}
-                    target="_blank"
+                    target='_blank'
                     style={{ color: '#369' }}
                   >
                     {props.name}
