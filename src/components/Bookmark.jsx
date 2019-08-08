@@ -170,9 +170,10 @@ class Bookmark extends React.Component {
     UI.fetcher.load(uri).then(response => {
       let bookmarkDoc = getBookmarkDocFromTypeIndex(uri)
       console.log('bookmarkDoc', bookmarkDoc);
+      let uri = new URLSearchParams(document.location.search).get('uri')
       if (bookmarkDoc) {
         console.log('this.props', this.props);
-        if (bookmarkDoc && this.props.subject !== bookmarkDoc) {
+        if (bookmarkDoc && !uri && this.props.subject !== bookmarkDoc) {
           console.log('setting subject to', bookmarkDoc, 'from', this.props.subject);          
           this.props.setState( {subject : bookmarkDoc } )
         } else {
