@@ -229,11 +229,7 @@ class Bookmark extends React.Component {
     if (this.isMedia(subject) === false) {
       this.fetchBookmark(subject)
     }
-    if (subject) {
-      setTimeout(() => {
-        this.setRefreshHandler(subject, this.refresh)
-      }, 1000)
-    }
+
     // check for WebId
     solid.auth.trackSession(session => {
       if (!session) console.log('The user is not logged in')

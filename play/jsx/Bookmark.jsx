@@ -1,5 +1,5 @@
 // init
-const defaultUri = 'https://markbook.org/data/EarthPorn.ttl5'
+const defaultUri = 'https://markbook.org/data/EarthPorn.ttl'
 var subject = getQueryStringParam('uri') || defaultUri
 
 function Main(props) {
