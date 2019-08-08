@@ -1,10 +1,10 @@
 // init
-const defaultUri = 'https://markbook.org/data/EarthPorn.ttl'
+const defaultUri = 'https://markbook.org/data/EarthPorn.ttl5'
 var subject = getQueryStringParam('uri') || defaultUri
 
-function Main (props) {
+function Main(props) {
   return (
-    <section className='section'>
+    <section className="section">
       <AddressBar subject={subject}>
         <Bookmark />
       </AddressBar>
@@ -12,22 +12,18 @@ function Main (props) {
   )
 }
 
-function App () {
+function App() {
   return (
     <div>
-
       <NavbarSolidLogin
-        className='is-link'
-        title='Bookmark'
-        sourceCode='https://github.com/play-grounds/react/blob/gh-pages/play/bookmark.html' />
+        className="is-link"
+        title="Bookmark"
+        sourceCode="https://github.com/play-grounds/react/blob/gh-pages/play/bookmark.html"
+      />
 
       <Main />
-
     </div>
   )
 }
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-)
+ReactDOM.render(<App />, document.getElementById('root'))
