@@ -38,6 +38,8 @@ function getProfileFromUri (uri) {
     return getObject(uri, p)
   }
   return {
+    '@id': uri,
+    '@type': g(RDF('type')),
     type: g(RDF('type')),
     name: g(FOAF('name')),
     nick: g(FOAF('nick')),
@@ -59,6 +61,8 @@ function getBookmarkFromUri (uri) {
     return getObject(uri, p)
   }
   return {
+    '@id': uri,
+    '@type': g(RDF('type')),
     recalls: g(BOOK('recalls')) || 'lorem',
     title: g(DCT('title')) || 'lorem',
     maker: g(FOAF('maker')),
