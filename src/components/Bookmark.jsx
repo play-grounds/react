@@ -169,15 +169,15 @@ class Bookmark extends React.Component {
   fetchPublicTypeIndex(uri) {
     UI.fetcher.load(uri).then(response => {
       let bookmarkDoc = getBookmarkDocFromTypeIndex(uri)
-      console.log('bookmarkDoc', bookmarkDoc);
-      let uri = new URLSearchParams(document.location.search).get('uri')
+      console.log('bookmarkDoc', bookmarkDoc, 'from', uri);
+      let queryUri = new URLSearchParams(document.location.search).get('uri')
       if (bookmarkDoc) {
         console.log('this.props', this.props);
-        if (bookmarkDoc && !uri && this.props.subject !== bookmarkDoc) {
+        if (bookmarkDoc && !queryUri && this.props.subject !== bookmarkDoc) {
           console.log('setting subject to', bookmarkDoc, 'from', this.props.subject);          
           this.props.setState( {subject : bookmarkDoc } )
         } else {
-          console.log('subject unchanged6', bookmarkDoc);          
+          console.log('subject unchanged', bookmarkDoc);          
         }
       }
     })
