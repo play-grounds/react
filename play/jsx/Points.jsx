@@ -165,7 +165,12 @@ function Points () {
       </div>
 
       <hr />
-      <button className='button is-info' onClick={reset}>
+      <button
+        className='button is-info'
+        onClick={() => {
+          localStorage.setItem('zero', new Date().getTime())
+        }}
+      >
         Refresh
       </button>
       <hr />
