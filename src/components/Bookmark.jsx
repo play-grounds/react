@@ -1,4 +1,4 @@
-// REMOVE import React from 'react' 
+// REMOVE import React from 'react'
 
 // Structure
 // Bookmark
@@ -38,7 +38,9 @@ function getVal(uri, predicate) {
 }
 
 function getProfileFromUri(subject) {
-  function get(p) { return getVal(subject, p) }
+  function get(p) {
+    return getVal(subject, p)
+  }
   return {
     type: get(RDF('type')),
     name: get(FOAF('name')),
@@ -57,7 +59,9 @@ function getProfileFromUri(subject) {
 }
 
 function getBookmarkFromSubject(subject) {
-  function g(p) { return getVal(subject, p) }
+  function g(p) {
+    return getVal(subject, p)
+  }
   return {
     recalls: g(BOOK('recalls')) || 'lorem',
     title: g(DCT('title')) || 'lorem',
@@ -68,7 +72,9 @@ function getBookmarkFromSubject(subject) {
 }
 
 function getTypeFromSubject(subject) {
-  function g(p) { return getVal(subject, p) }
+  function g(p) {
+    return getVal(subject, p)
+  }
   return g(RDF('type'))
 }
 
@@ -92,56 +98,60 @@ function getBookmarkDocFromTypeIndex(uri) {
     }
   } else {
     return undefined
-  }  
+  }
 }
 
-
-/** 
+/**
  *  Bookmark or set of bookmarks
  */
 class Bookmark extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      'subject': props.subject,
-      bookmark: [{
-        'recalls': '',
-        'title': ''
-      }],
+      subject: props.subject,
+      bookmark: [
+        {
+          recalls: '',
+          title: ''
+        }
+      ],
       person: {}
     }
   }
 
   fetchBookmark(subject, force) {
     force = !!force
-    UI.fetcher.load(subject, { force: force }).then(response => {
-      var type = getTypeFromSubject(subject)
-      var bm = []
+    UI.fetcher.load(subject, { force: force }).then(
+      response => {
+        var type = getTypeFromSubject(subject)
+        var bm = []
 
-      if (!type) {
-        let s = UI.store.sym(subject)
-        let p = UI.store.sym('http://purl.org/dc/terms/references')
-        let subjects = UI.store.statementsMatching(s, p)
-        for (let subject of subjects) {
-          bm.push(getBookmarkFromSubject(subject.object.value))
+        if (!type) {
+          let s = UI.store.sym(subject)
+          let p = UI.store.sym('http://purl.org/dc/terms/references')
+          let subjects = UI.store.statementsMatching(s, p)
+          for (let subject of subjects) {
+            bm.push(getBookmarkFromSubject(subject.object.value))
+          }
+
+          bm = bm.sort(function(a, b) {
+            return b.created < a.created ? -1 : b.created > a.created ? 1 : 0
+          })
+        } else {
+          bm.push(getBookmarkFromSubject(subject))
         }
 
-        bm = bm.sort(function (a, b) {
-          return (b.created < a.created) ? -1 : ((b.created > a.created) ? 1 : 0)
-        })
-      } else {
-        bm.push(getBookmarkFromSubject(subject))
-      }
-
-      for (const b of bm) {
-        if (b.maker) {
-          this.fetchPerson(b.maker)
+        for (const b of bm) {
+          if (b.maker) {
+            this.fetchPerson(b.maker)
+          }
         }
+        this.setState({ bookmark: bm })
+      },
+      err => {
+        console.log(err)
       }
-      this.setState({ 'bookmark': bm })
-    }, err => {
-      console.log(err)
-    })
+    )
   }
 
   fetchPerson(uri) {
@@ -160,8 +170,8 @@ class Bookmark extends React.Component {
       o[uri] = profile
       this.setState(o)
       if (uri === this.state.webId) {
-        console.log('#### found WebId', profile.publicTypeIndex);
-        this.fetchPublicTypeIndex(profile.publicTypeIndex)     
+        console.log('#### found WebId', profile.publicTypeIndex)
+        this.fetchPublicTypeIndex(profile.publicTypeIndex)
       }
     })
   }
@@ -169,20 +179,24 @@ class Bookmark extends React.Component {
   fetchPublicTypeIndex(uri) {
     UI.fetcher.load(uri).then(response => {
       let bookmarkDoc = getBookmarkDocFromTypeIndex(uri)
-      console.log('bookmarkDoc', bookmarkDoc, 'from', uri);
+      console.log('bookmarkDoc', bookmarkDoc, 'from', uri)
       let queryUri = new URLSearchParams(document.location.search).get('uri')
       if (bookmarkDoc) {
-        console.log('this.props', this.props);
+        console.log('this.props', this.props)
         if (bookmarkDoc && !queryUri && this.props.subject !== bookmarkDoc) {
-          console.log('setting subject to', bookmarkDoc, 'from', this.props.subject);          
-          this.props.setState( {subject : bookmarkDoc } )
+          console.log(
+            'setting subject to',
+            bookmarkDoc,
+            'from',
+            this.props.subject
+          )
+          this.props.setState({ subject: bookmarkDoc })
         } else {
-          console.log('subject unchanged', bookmarkDoc);          
+          console.log('subject unchanged', bookmarkDoc)
         }
       }
     })
   }
-
 
   getUpdatesVia(doc) {
     var linkHeaders = UI.store.fetcher.getHeader(doc, 'updates-via')
@@ -194,14 +208,14 @@ class Bookmark extends React.Component {
     var self = this
     var wss = this.getUpdatesVia(subject)
     let w = new WebSocket(wss)
-    w.onmessage = function (m) {
+    w.onmessage = function(m) {
       let data = m.data
       if (data.match(/pub .*/)) {
         // hack for now
         self.refresh()
       }
     }
-    w.onopen = function () {
+    w.onopen = function() {
       w.send('sub ' + subject)
     }
   }
@@ -222,11 +236,10 @@ class Bookmark extends React.Component {
     }
     // check for WebId
     solid.auth.trackSession(session => {
-      if (!session)
-        console.log('The user is not logged in')
+      if (!session) console.log('The user is not logged in')
       else {
         console.log(`The user is ${session.webId}`)
-        this.setState({ webId : session.webId })
+        this.setState({ webId: session.webId })
         this.fetchPerson(session.webId)
       }
     })
@@ -259,26 +272,31 @@ class Bookmark extends React.Component {
     }
 
     if (med === true) {
-      return (
-        <Media href={this.props.subject} />
-      )
+      return <Media href={this.props.subject} />
     } else {
-      const listItems = this.state.bookmark.map((b, i) =>
+      const listItems = this.state.bookmark.map((b, i) => (
         <div>
-          <BookmarkItem key={i} id={i} recalls={b.recalls} title={b.title} maker={b.maker} name={getName(b.maker)} created={b.created} subject={b.subject} />
+          <BookmarkItem
+            key={i}
+            id={i}
+            recalls={b.recalls}
+            title={b.title}
+            maker={b.maker}
+            name={getName(b.maker)}
+            created={b.created}
+            subject={b.subject}
+          />
         </div>
-      )
+      ))
 
-      return (
-        <div>{listItems}</div>
-      )
+      return <div>{listItems}</div>
     }
   }
 }
 
 /** Bookmark Item
- * 
- * @param {} props 
+ *
+ * @param {} props
  */
 function BookmarkItem(props) {
   const AUDIO_EXTENSIONS = /\.(m4a|mp4a|mpga|mp2|mp2a|mp3|m2a|m3a|wav|weba|aac|oga|spx)($|\?)/i
@@ -288,68 +306,127 @@ function BookmarkItem(props) {
 
   if (props.recalls.match(IMAGE_EXTENSIONS)) {
     return (
-      <div className='box'>
+      <div className="box">
         <table>
           <tbody>
             <tr>
               <td>{props.id + 1}.&nbsp;</td>
-              <td><a target='_blank' href={props.recalls}>{props.title}</a> <a target='_blank' href={props.subject}><img height='10' width='10' src='./image/External.svg' /></a></td>
+              <td>
+                <a target="_blank" href={props.recalls}>
+                  {props.title}
+                </a>{' '}
+                <a target="_blank" href={props.subject}>
+                  <img height="10" width="10" src="./image/External.svg" />
+                </a>
+              </td>
             </tr>
             <tr>
               <td />
-              <td><sup style={{ color: 'rgb(136,136,136)' }}>{moment.utc(props.created).fromNow()} by <a href={props.maker} target='_blank' style={{ color: '#369' }}>{props.name}</a></sup></td>
+              <td>
+                <sup style={{ color: 'rgb(136,136,136)' }}>
+                  {moment.utc(props.created).fromNow()} by{' '}
+                  <a
+                    href={props.maker}
+                    target="_blank"
+                    style={{ color: '#369' }}
+                  >
+                    {props.name}
+                  </a>
+                </sup>
+              </td>
             </tr>
             <tr>
               <td />
-              <td><img loading="lazy" src={props.recalls} /></td>
-
+              <td>
+                <img loading="lazy" src={props.recalls} />
+              </td>
             </tr>
-
           </tbody>
         </table>
-
-      </div>)
+      </div>
+    )
   } else if (props.recalls.match(VIDEO_EXTENSIONS)) {
     return (
-      <div>{props.id + 1}. <video controls autoplay='true' loop src={props.recalls} /></div>)
+      <div>
+        {props.id + 1}.{' '}
+        <video controls autoplay="true" loop src={props.recalls} />
+      </div>
+    )
   } else if (props.recalls.match(AUDIO_EXTENSIONS)) {
     return (
-      <div>{props.id + 1}. <video controls autoplay='true' loop src={props.recalls} /></div>)
+      <div>
+        {props.id + 1}.{' '}
+        <video controls autoplay="true" loop src={props.recalls} />
+      </div>
+    )
   } else if (props.recalls.match(URL)) {
     return (
-      <div className='box'>
+      <div className="box">
         <table>
           <tbody>
             <tr>
               <td>{props.id + 1}.&nbsp;</td>
-              <td><a target='_blank' href={props.recalls}>{props.title}</a> <a target='_blank' href={props.subject}><img height='10' width='10' src='./image/External.svg' /></a></td>
+              <td>
+                <a target="_blank" href={props.recalls}>
+                  {props.title}
+                </a>{' '}
+                <a target="_blank" href={props.subject}>
+                  <img height="10" width="10" src="./image/External.svg" />
+                </a>
+              </td>
             </tr>
             <tr>
               <td />
-              <td><sup style={{ color: 'rgb(136,136,136)' }}>{moment.utc(props.created).fromNow()} by <a href={props.maker} target='_blank' style={{ color: '#369' }}>{props.name}</a></sup></td>            </tr>
-
+              <td>
+                <sup style={{ color: 'rgb(136,136,136)' }}>
+                  {moment.utc(props.created).fromNow()} by{' '}
+                  <a
+                    href={props.maker}
+                    target="_blank"
+                    style={{ color: '#369' }}
+                  >
+                    {props.name}
+                  </a>
+                </sup>
+              </td>{' '}
+            </tr>
           </tbody>
         </table>
-
       </div>
     )
   } else {
     return (
-      <div className='box'>
+      <div className="box">
         <table>
           <tbody>
             <tr>
               <td>{props.id + 1}.&nbsp;</td>
-              <td><a target='_blank' href={props.recalls}>{props.title}</a> <a target='_blank' href={props.subject}><img height='10' width='10' src='./image/External.svg' /></a></td>
+              <td>
+                <a target="_blank" href={props.recalls}>
+                  {props.title}
+                </a>{' '}
+                <a target="_blank" href={props.subject}>
+                  <img height="10" width="10" src="./image/External.svg" />
+                </a>
+              </td>
             </tr>
             <tr>
               <td />
-              <td><sup style={{ color: 'rgb(136,136,136)' }}>{moment.utc(props.created).fromNow()} by <a href={props.maker} target='_blank' style={{ color: '#369' }}>{props.name}</a></sup></td>
+              <td>
+                <sup style={{ color: 'rgb(136,136,136)' }}>
+                  {moment.utc(props.created).fromNow()} by{' '}
+                  <a
+                    href={props.maker}
+                    target="_blank"
+                    style={{ color: '#369' }}
+                  >
+                    {props.name}
+                  </a>
+                </sup>
+              </td>
             </tr>
-
           </tbody>
         </table>
-
       </div>
     )
   }
