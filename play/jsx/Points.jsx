@@ -56,55 +56,20 @@ const store = () => {
   initial.count =
     new URLSearchParams(document.location.search).get('count') || 0
 
-  const [template, setCount] = React.useState(initial)
+  const [template, setTemplate] = React.useState(initial)
 
-  const increment = amount => setCount({ count: count + amount })
-  const decrement = () => setCount({ count: count + 30 })
+  const increment = amount => setTemplate({ count: count + amount })
+  const decrement = () => setTemplate({ count: count + 30 })
   const reset = (amount, day = 0) => {
     let a = amount || 0
-    setCount({ count: a, day: day })
+    setTemplate({ count: a, day: day })
+    if (a % 360 === 0) {
+      localStorage.setItem('zero', new Date().getTime())
+      console.log(localStorage.getItem('zero'))
+    }
   }
 
   return { template, increment, decrement, reset }
-}
-
-function Circle ({ rad, count, ...props }) {
-  var defaultThreshold = 410
-  var threshold =
-    new URLSearchParams(document.location.search).get('threshold') ||
-    defaultThreshold
-
-  if (rad > threshold) {
-    rad = threshold
-  }
-
-  let percent = rad / threshold
-  let red = Math.floor(percent * 212)
-  let green = Math.floor(212 - red)
-  let factor = threshold / 146.0
-
-  let p = 309 * (count / 360) * percent
-  let q = 309 * percent - p
-
-  console.log(rad, percent, count, p, factor)
-
-  return (
-    <svg width='300' height='300'>
-      <circle
-        cx='150'
-        cy='150'
-        style={{
-          fill: 'rgb(' + red + ', ' + green + ', 0)',
-          stroke: 'gold',
-          strokeWidth: 11,
-          strokeDasharray: p + '% ' + q + '%'
-        }}
-        r={rad / factor}
-      >
-        <title>Pie</title>
-      </circle>
-    </svg>
-  )
 }
 
 function Points () {
@@ -191,6 +156,9 @@ function Points () {
         </span>
         <span className='button is-large is-info'>T : {template.count}</span>
         <span className='button is-large is-link'>D : {template.day}</span>
+        <span className='button is-large is-danger'>
+          E : {(new Date().getTime() - localStorage.getItem('zero')) / 1000}
+        </span>
       </div>
 
       <hr />
@@ -224,3 +192,42 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 )
+
+function Circle ({ rad, count, ...props }) {
+  var defaultThreshold = 410
+  var threshold =
+    new URLSearchParams(document.location.search).get('threshold') ||
+    defaultThreshold
+
+  if (rad > threshold) {
+    rad = threshold
+  }
+
+  let percent = rad / threshold
+  let red = Math.floor(percent * 212)
+  let green = Math.floor(212 - red)
+  let factor = threshold / 146.0
+
+  let p = 309 * (count / 360) * percent
+  let q = 309 * percent - p
+
+  console.log(rad, percent, count, p, factor)
+
+  return (
+    <svg width='300' height='300'>
+      <circle
+        cx='150'
+        cy='150'
+        style={{
+          fill: 'rgb(' + red + ', ' + green + ', 0)',
+          stroke: 'gold',
+          strokeWidth: 11,
+          strokeDasharray: p + '% ' + q + '%'
+        }}
+        r={rad / factor}
+      >
+        <title>Pie</title>
+      </circle>
+    </svg>
+  )
+}
