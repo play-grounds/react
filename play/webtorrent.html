@@ -34,53 +34,11 @@ class App extends React.Component {
 
     this.state = {
       message: '',
-      uri: new URLSearchParams(document.location.search).get('uri') || 'none'
+      magnet: new URLSearchParams(document.location.search).get('magnet') || ''
     }
-    this.changeUri = this.changeUri.bind(this)
-    this.send = this.send.bind(this)
 
-    solid.auth.trackSession(session => {
-      if (!session) {
-        this.setState({ message : 'The user is not logged in' })
-      } else {
-        if (session.webId) {
-          this.setState({ message : `The user is ${session.webId}` })
-          this.getProfile(session.webId)
-        }
-      }
-    })
   }
 
-  getProfile(profile) {
-    console.log('fetching', profile)
-    UI.fetcher.load(profile, {force : true} ).then(response => {
-      let s = UI.store.sym(profile)
-      let p = UI.store.sym('http://www.w3.org/ns/solid/terms#publicTypeIndex')
-      let o = null
-      let w = UI.store.sym(profile.split('#')[0])
-      let uri = UI.store.any(s, p, o, w)
-      this.setState({'uri' : uri.value})
-    })
-  }
-
-  send() {
-    console.log('sending', this.state)
-    solid.auth.fetch(this.state.uri,  
-      { 'headers' : 
-        { 'content-type' : 'application/sparql-update', 
-          }, 
-        'body' : '', 
-        'method' : 'PATCH' }   )
-  }
-
-
-  changeUri(event) {
-    this.setState({ 'uri': event.target.value })
-  }
-
-  async popupLogin(event) {
-    login('https://solid.community/common/popup.html')    
-  }
 
   render() {
 
