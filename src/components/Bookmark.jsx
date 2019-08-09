@@ -134,10 +134,10 @@ class Bookmark extends React.Component {
         }
         this.setState({ bookmark: bm })
         for (const i in bm) {
+          let b = bm[i]
           let o = {}
-          o[bm.subject] = i
+          o[b.subject] = b
           this.setState(o)
-          console.log('state', this.state)
         }
       },
       err => {

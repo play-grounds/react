@@ -156,20 +156,11 @@ function Points () {
       <hr />
 
       <div className='buttons'>
-        <span className='button is-large is-warning'>
-          S : {template.day % 30}
-        </span>
-        <span className='button is-large is-success'>
-          L : {(template.day % 360) - (template.day % 30)}
-        </span>
-        <span className='button is-large is-info'>T : {template.count}</span>
-        <span className='button is-large is-link'>D : {template.day}</span>
-        <span className='button is-large is-danger'>
-          E :{' '}
-          {Math.floor(
-            (new Date().getTime() - localStorage.getItem('zero')) / 1000
-          )}
-        </span>
+        <span className='button is-large is-warning'>S : {s}</span>
+        <span className='button is-large is-success'>L : {l}</span>
+        <span className='button is-large is-info'>T : {t}</span>
+        <span className='button is-large is-link'>D : {d}</span>
+        <span className='button is-large is-danger'>E : {e}</span>
         <span className='button is-large is-light'>A : {a}</span>
       </div>
 
