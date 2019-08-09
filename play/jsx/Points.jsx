@@ -4,7 +4,7 @@ UI.store = $rdf.graph()
 UI.fetcher = new $rdf.Fetcher(UI.store)
 UI.updater = new $rdf.UpdateManager(UI.store)
 
-If (!localStorage.getItem('zero')) {
+if (!localStorage.getItem('zero')) {
   localStorage.setItem('zero', new Date().getTime())
 }
 
@@ -171,7 +171,7 @@ function Points () {
   let e = Math.floor(
     (new Date().getTime() - localStorage.getItem('zero')) / 1000
   )
-  let a = Math.round((e / (template.day % 360)) * 100) / 100
+  let a = (1000 - Math.round((e / (template.day % 360)) * 100)) / 100
 
   return (
     <div className='is-info'>
