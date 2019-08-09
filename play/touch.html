@@ -34,7 +34,6 @@ class App extends React.Component {
       message: '',
       uri: new URLSearchParams(document.location.search).get('uri') || 'none'
     }
-    this.changeBody = this.changeBody.bind(this)
     this.changeUri = this.changeUri.bind(this)
     this.send = this.send.bind(this)
 
@@ -73,10 +72,6 @@ class App extends React.Component {
   }
 
 
-  changeBody(event) {
-    this.setState({ 'body': event.target.value })
-  }
-
   changeUri(event) {
     this.setState({ 'uri': event.target.value })
   }
@@ -89,7 +84,6 @@ class App extends React.Component {
 
     let href =  window.location.href.split('?')[0] 
     href += '?uri=' + encodeURIComponent(this.state.uri)
-    href += '&body=' + encodeURIComponent(this.state.body)
     history.pushState({}, 'App', href)
 
 
