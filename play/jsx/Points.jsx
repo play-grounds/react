@@ -59,7 +59,20 @@ const store = () => {
   const [template, setTemplate] = React.useState(initial)
 
   const increment = amount => setTemplate({ count: count + amount })
+
+  const touch = (amount, day = 0) =>
+    setTemplate({
+      count: amount,
+      day: day,
+      now: new Date().getTime()
+    })
+
   const decrement = () => setTemplate({ count: count + 30 })
+
+  const getStore = () => {
+    return template
+  }
+
   const reset = (amount, day = 0) => {
     let a = amount || 0
     setTemplate({ count: a, day: day })
@@ -69,11 +82,11 @@ const store = () => {
     }
   }
 
-  return { template, increment, decrement, reset }
+  return { template, increment, decrement, touch, reset }
 }
 
 function Points () {
-  const { template, increment, decrement, reset } = useStore(store)
+  const { template, reset, touch } = useStore(store)
 
   function fetchCount (subject) {
     console.log('fetching', subject)
@@ -115,6 +128,15 @@ function Points () {
     )
   }
 
+  const [seconds, setSeconds] = React.useState(0)
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setSeconds(seconds => seconds + 1)
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [])
+
   React.useEffect(() => {
     fetchCount(subject)
 
@@ -146,6 +168,7 @@ function Points () {
     (new Date().getTime() - localStorage.getItem('zero')) / 1000
   )
   let a = Math.round((e / (template.day % 360)) * 100) / 100
+
   return (
     <div className='is-info'>
       <h1>Burndown Chart (hourly work)</h1>
