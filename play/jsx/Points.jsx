@@ -145,7 +145,7 @@ function Points () {
   let e = Math.floor(
     (new Date().getTime() - localStorage.getItem('zero')) / 1000
   )
-  let a = e / (template.day % 360)
+  let a = Math.round((e / (template.day % 360)) * 100) / 100
   return (
     <div className='is-info'>
       <h1>Burndown Chart (hourly work)</h1>
@@ -170,7 +170,7 @@ function Points () {
             (new Date().getTime() - localStorage.getItem('zero')) / 1000
           )}
         </span>
-        <span className='button is-large is-danger'>A : {a}</span>
+        <span className='button is-large is-light'>A : {a}</span>
       </div>
 
       <hr />
