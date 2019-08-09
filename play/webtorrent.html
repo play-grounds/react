@@ -84,10 +84,6 @@ class App extends React.Component {
 
   render() {
 
-    let href =  window.location.href.split('?')[0] 
-    href += '?uri=' + encodeURIComponent(this.state.uri)
-    history.pushState({}, 'App', href)
-
 
       return (
     <div>
