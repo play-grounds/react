@@ -4,6 +4,10 @@ UI.store = $rdf.graph()
 UI.fetcher = new $rdf.Fetcher(UI.store)
 UI.updater = new $rdf.UpdateManager(UI.store)
 
+If (!localStorage.getItem('zero')) {
+  localStorage.setItem('zero', new Date().getTime())
+}
+
 var subject =
   new URLSearchParams(document.location.search).get('uri') ||
   'https://melvin.solid.live/credit/count.ttl'
