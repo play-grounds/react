@@ -138,6 +138,14 @@ function Points () {
     }
   }, [])
 
+  let s = template.day % 30
+  let l = (template.day % 360) - s
+  let t = template.count
+  let d = template.day
+  let e = Math.floor(
+    (new Date().getTime() - localStorage.getItem('zero')) / 1000
+  )
+  let a = e / (template.day % 360)
   return (
     <div className='is-info'>
       <h1>Burndown Chart (hourly work)</h1>
@@ -162,6 +170,7 @@ function Points () {
             (new Date().getTime() - localStorage.getItem('zero')) / 1000
           )}
         </span>
+        <span className='button is-large is-danger'>A : {a}</span>
       </div>
 
       <hr />
