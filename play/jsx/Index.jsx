@@ -39,6 +39,7 @@ function App () {
     { uri: 'person.html', title: 'Profile App' },
     { uri: 'container.html', title: 'Container App' },
     { uri: 'timeline.html', title: 'Timeline App' },
+    { uri: 'webtorrent.html', title: 'Webtorrent App' },
     { uri: 'dashboard.html', title: 'Dashboard App' },
     { uri: 'points.html', title: 'Points App' },
     {
