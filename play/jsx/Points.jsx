@@ -162,17 +162,18 @@ function Points () {
         <span className='button is-large is-link'>D : {d}</span>
         <span className='button is-large is-danger'>E : {e}</span>
         <span className='button is-large is-light'>A : {a}</span>
+
+        <button
+          className='button is-large is-info'
+          onClick={() => {
+            localStorage.setItem('zero', new Date().getTime())
+          }}
+        >
+          Reset
+        </button>
       </div>
 
       <hr />
-      <button
-        className='button is-info'
-        onClick={() => {
-          localStorage.setItem('zero', new Date().getTime())
-        }}
-      >
-        Refresh
-      </button>
       <hr />
     </div>
   )
