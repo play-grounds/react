@@ -92,11 +92,18 @@ function getBookmarkDocFromTypeIndex (uri) {
  */
 class Bookmark extends React.Component {
   constructor (props) {
-    cogoToast.loading('Loading Bookmarks', {
-      hideAfter: 3
+    // cogoToast.loading('Loading Bookmarks', {
+    //   hideAfter: 3
+    // })
+    super(props)
+
+    let hide = cogoToast.loading('Loading Bookmarks', {
+      hideAfter: 0,
+      onClick: hide => {
+        hide()
+      }
     })
 
-    super(props)
     this.state = {
       subject: props.subject,
       bookmark: [
@@ -105,8 +112,10 @@ class Bookmark extends React.Component {
           title: ''
         }
       ],
-      person: {}
+      person: {},
+      hide: hide
     }
+    this.hide = this.hide.bind(this)
   }
 
   fetchBookmark (subject, force) {
@@ -143,11 +152,16 @@ class Bookmark extends React.Component {
           o[b.subject] = b
           this.setState(o)
         }
+        this.hide()
       },
       err => {
         console.log(err)
       }
     )
+  }
+
+  hide () {
+    this.state.hide()
   }
 
   fetchPerson (uri) {
