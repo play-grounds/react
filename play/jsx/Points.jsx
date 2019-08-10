@@ -4,8 +4,8 @@ UI.store = $rdf.graph()
 UI.fetcher = new $rdf.Fetcher(UI.store)
 UI.updater = new $rdf.UpdateManager(UI.store)
 
-if (!localStorage.getItem('zero')) {
-  localStorage.setItem('zero', new Date().getTime())
+if (!localStorage.getItem('startTime')) {
+  localStorage.setItem('startTime', new Date().getTime())
 }
 
 var subject =
@@ -81,8 +81,8 @@ const store = () => {
     let a = amount || 0
     setTemplate({ count: a, day: day })
     if (day % 360 === 0) {
-      localStorage.setItem('zero', new Date().getTime())
-      console.log(localStorage.getItem('zero'))
+      localStorage.setItem('startTime', new Date().getTime())
+      console.log(localStorage.getItem('startTime'))
     }
   }
 
@@ -163,14 +163,14 @@ function Points () {
     }
   }, [])
 
+  let startTime = localStorage.getItem('startTime') || 0
+  let startScore = localStorage.getItem('startScore') || 0
   let s = template.day % 30
   let l = (template.day % 360) - s
   let t = template.count
   let d = template.day
-  let e = Math.floor(
-    (new Date().getTime() - localStorage.getItem('zero')) / 1000
-  )
-  let a = (1000 - Math.round((e / (template.day % 360)) * 100)) / 100
+  let e = Math.floor((new Date().getTime() - startTime) / 1000)
+  let a = (1000 - Math.round((e / (s + l - startScore)) * 100)) / 100
 
   return (
     <div className='is-info'>
@@ -192,7 +192,8 @@ function Points () {
         <button
           className='button is-large is-info'
           onClick={() => {
-            localStorage.setItem('zero', new Date().getTime())
+            localStorage.setItem('startTime', new Date().getTime())
+            localStorage.setItem('startScore', s + l)
           }}
         >
           Reset
