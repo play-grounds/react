@@ -134,6 +134,7 @@ function Points () {
 
   const [seconds, setSeconds] = React.useState(0)
 
+  // update timer
   React.useEffect(() => {
     const interval = setInterval(() => {
       setSeconds(seconds => seconds + 1)
@@ -146,8 +147,6 @@ function Points () {
 
     let uri = location.href
     let wss = uri.replace('http', 'ws')
-    let touchUri = 'https://melvin.solid.live/touch.ttl'
-    touchUri = subject
     let w = new WebSocket('wss://melvin.solid.live/')
     w.onmessage = function (m) {
       let data = m.data
@@ -160,7 +159,7 @@ function Points () {
       }
     }
     w.onopen = function () {
-      w.send('sub ' + touchUri)
+      w.send('sub ' + subject)
     }
   }, [])
 
