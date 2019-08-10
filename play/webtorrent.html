@@ -95,6 +95,14 @@ ReactDOM.render(
         e.preventDefault() // Prevent page refresh
 
         var torrentId = document.querySelector('form textarea[name=torrentId]').value
+
+        let magnet = new URLSearchParams(document.location.search).get('magnet')
+        if (magnet) {
+          let defaultMagnet = '08ada5a7a6183aae1e09d831df6748d566095a10'
+          log('#################', magnet, defaultMagnet)
+          torrentId = torrentId.replace(defaultMagnet, magnet)
+        }
+
         log('Adding ' + torrentId)
         client.add(torrentId, onTorrent)
       })
@@ -130,9 +138,10 @@ ReactDOM.render(
       }
 
       function log(str) {
-        var p = document.createElement('p')
-        p.innerHTML = str
-        document.querySelector('.log').appendChild(p)
+        // var p = document.createElement('p')
+        // p.innerHTML = str
+        // document.querySelector('.log').appendChild(p)
+        console.log('LOG : ', str)
       }
     </script>
   </section>
