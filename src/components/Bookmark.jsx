@@ -93,7 +93,6 @@ function getBookmarkDocFromTypeIndex (uri) {
 class Bookmark extends React.Component {
   constructor (props) {
     cogoToast.loading('Loading Bookmarks', {
-      position: 'top-right',
       hideAfter: 3
     })
 
