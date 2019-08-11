@@ -108,7 +108,7 @@ const store = () => {
     setTemplate({ count: count, day: day })
 
     if (day % 30 === 0) {
-      cogoToast.success('Pace: ' + a)
+      cogoToast.info(a, { heading: 'Pace' })
     }
   }
 
