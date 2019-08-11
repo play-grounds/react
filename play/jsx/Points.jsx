@@ -111,7 +111,7 @@ const store = () => {
         console.log(localStorage.getItem('startTime'))
       }
       localStorage.setItem('startTime', new Date().getTime())
-      localStorage.setItem('startScore', c)
+      localStorage.setItem('startScore', 0)
     }
     setTemplate({ count: count, day: day })
 
