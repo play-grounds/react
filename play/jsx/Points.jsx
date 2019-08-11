@@ -146,8 +146,6 @@ function Points () {
     )
   }
 
-  const [seconds, setSeconds] = React.useState(0)
-
   function pushLast (val) {
     if (!val) return
 
@@ -163,6 +161,7 @@ function Points () {
   }
 
   // update timer
+  const [seconds, setSeconds] = React.useState(0)
   React.useEffect(() => {
     const interval = setInterval(() => {
       setSeconds(seconds => seconds + 1)

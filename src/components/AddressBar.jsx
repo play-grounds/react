@@ -1,7 +1,7 @@
-//REMOVE import React from 'react' ; import ReactDOM from 'react-dom'
+// REMOVE import React from 'react' ; import ReactDOM from 'react-dom'
 
 class AddressBar extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     if (props.subject) {
       this.state = {
@@ -13,22 +13,27 @@ class AddressBar extends React.Component {
     this.setState = this.setState.bind(this)
   }
 
-  handleChange(event) {
+  handleChange (event) {
     this.setState({ subject: event.target.value })
-    history.pushState(
-      {},
-      'Bookmark App',
-      window.location.href.split('?')[0] +
-        '?uri=' +
-        encodeURIComponent(event.target.value)
-    )
+
+    if (event.target.value !== '') {
+      history.pushState(
+        {},
+        'Bookmark App',
+        window.location.href.split('?')[0] +
+          '?uri=' +
+          encodeURIComponent(event.target.value)
+      )
+    } else {
+      history.pushState({}, 'Bookmark App', window.location.href.split('?')[0])
+    }
   }
 
-  setSubject(subject) {
+  setSubject (subject) {
     this.setState({ subject: subject })
   }
 
-  render() {
+  render () {
     var self = this
 
     const children = React.Children.map(this.props.children, child => {
@@ -45,11 +50,11 @@ class AddressBar extends React.Component {
         <input
           style={{ width: '95%' }}
           onChange={this.handleChange}
-          placeholder="uri"
+          placeholder='uri'
           value={this.state.subject}
         />{' '}
-        <a href={this.state.subject} target="_blank">
-          <img height="10" width="10" src="./image/External.svg" />
+        <a href={this.state.subject} target='_blank'>
+          <img height='10' width='10' src='./image/External.svg' />
         </a>
         <hr />
         {children}
@@ -58,4 +63,4 @@ class AddressBar extends React.Component {
   }
 }
 
-//REMOVE export default AddressBar
+// REMOVE export default AddressBar
