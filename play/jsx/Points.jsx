@@ -106,6 +106,10 @@ const store = () => {
       localStorage.setItem('startScore', c)
     }
     setTemplate({ count: count, day: day })
+
+    if (day % 30 === 0) {
+      cogoToast.success('Pace: ' + a)
+    }
   }
 
   return { template, increment, decrement, touch, reset }
