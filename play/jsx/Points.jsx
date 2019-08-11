@@ -80,27 +80,27 @@ const store = () => {
     return template
   }
 
-  const reset = (amount, day = 0, push = false) => {
-    amount = amount || 0
+  const reset = (count, day = 0, push = false) => {
+    count = count || 0
 
     let startTime = localStorage.getItem('startTime') || 0
     let startScore = localStorage.getItem('startScore') || 0
     let c = day % 360
     let s = day % 30
     let l = c - s
-    let t = amount
+    let t = count
     let d = day
     let e = Math.floor((new Date().getTime() - startTime) / 1000)
     let a = (1000 - Math.round((e / (s + l - startScore)) * 100)) / 100
 
-    if (day % 355 === 0) {
+    if (count % 360 === 0) {
       localStorage.setItem('startTime', new Date().getTime())
       if (push) {
         pushLast(a)
         console.log(localStorage.getItem('startTime'))
       }
     }
-    setTemplate({ count: amount, day: day })
+    setTemplate({ count: count, day: day })
   }
 
   return { template, increment, decrement, touch, reset }
