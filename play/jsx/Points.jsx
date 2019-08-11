@@ -7,6 +7,9 @@ UI.updater = new $rdf.UpdateManager(UI.store)
 if (!localStorage.getItem('startTime')) {
   localStorage.setItem('startTime', new Date().getTime())
 }
+if (!localStorage.getItem('startScore')) {
+  localStorage.setItem('startScore', 0)
+}
 
 var subject =
   new URLSearchParams(document.location.search).get('uri') ||
