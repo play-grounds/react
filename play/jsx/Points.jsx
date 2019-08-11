@@ -78,12 +78,24 @@ const store = () => {
   }
 
   const reset = (amount, day = 0) => {
-    let a = amount || 0
-    setTemplate({ count: a, day: day })
+    amount = amount || 0
+
+    let startTime = localStorage.getItem('startTime') || 0
+    let startScore = localStorage.getItem('startScore') || 0
+    let c = day % 360
+    let s = day % 30
+    let l = c - s
+    let t = amount
+    let d = day
+    let e = Math.floor((new Date().getTime() - startTime) / 1000)
+    let a = (1000 - Math.round((e / (s + l - startScore)) * 100)) / 100
+
     if (day % 360 === 0) {
       localStorage.setItem('startTime', new Date().getTime())
+      pushLast(a)
       console.log(localStorage.getItem('startTime'))
     }
+    setTemplate({ count: amount, day: day })
   }
 
   return { template, increment, decrement, touch, reset }
@@ -134,6 +146,20 @@ function Points () {
 
   const [seconds, setSeconds] = React.useState(0)
 
+  function pushLast (val) {
+    if (!val) return
+
+    let last = localStorage.getItem('last')
+    if (!last) {
+      localStorage.setItem('last', JSON.stringify([]))
+    }
+    let ret = JSON.parse(localStorage.getItem('last'))
+    if (val !== ret[ret.length - 1]) {
+      ret.push(val)
+      localStorage.setItem('last', JSON.stringify(ret))
+    }
+  }
+
   // update timer
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -165,12 +191,17 @@ function Points () {
 
   let startTime = localStorage.getItem('startTime') || 0
   let startScore = localStorage.getItem('startScore') || 0
+  let c = template.day % 360
   let s = template.day % 30
-  let l = (template.day % 360) - s
+  let l = c - s
   let t = template.count
   let d = template.day
   let e = Math.floor((new Date().getTime() - startTime) / 1000)
   let a = (1000 - Math.round((e / (s + l - startScore)) * 100)) / 100
+
+  if (c === 355) {
+    pushLast(a)
+  }
 
   return (
     <div className='is-info'>
@@ -201,6 +232,7 @@ function Points () {
       </div>
 
       <hr />
+      {localStorage.getItem('last')}
       <hr />
     </div>
   )
