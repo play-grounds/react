@@ -129,8 +129,8 @@ const store = () => {
     // }
 
     if (day % 30 === 0) {
-      let e = Math.floor((new Date().getTime() - localTime) / 1000)
-      let a = Math.round(e / 30)
+      let e = new Date().getTime() - localTime
+      let a = Math.round(e / 300) / 100
       localStorage.setItem('localTime', new Date().getTime())
       localStorage.setItem('localScore', day % 30)
       cogoToast.info('Pace', { heading: 10 - a })
@@ -217,7 +217,7 @@ function Points () {
     w.onmessage = function (m) {
       let data = m.data
       console.log('data', data)
-      cogoToast.success('Data', { heading: data })
+      cogoToast.success(data, { position: 'top-right' })
 
       if (data.match(/pub .*/)) {
         UI.store = $rdf.graph()
