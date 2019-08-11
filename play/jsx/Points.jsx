@@ -200,10 +200,6 @@ function Points () {
   let e = Math.floor((new Date().getTime() - startTime) / 1000)
   let a = (1000 - Math.round((e / (s + l - startScore)) * 100)) / 100
 
-  if (c === 355) {
-    pushLast(a)
-  }
-
   return (
     <div className='is-info'>
       <h1>Burndown Chart (hourly work)</h1>
@@ -233,7 +229,9 @@ function Points () {
       </div>
 
       <hr />
-      {localStorage.getItem('last')}
+      {JSON.parse(localStorage.getItem('last'))
+        .reverse()
+        .join(' | ')}
       <hr />
     </div>
   )
