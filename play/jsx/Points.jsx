@@ -134,7 +134,7 @@ const store = () => {
       localStorage.setItem('localTime', new Date().getTime())
       localStorage.setItem('localScore', day % 30)
       cogoToast.info('Pace', { heading: 10 - a })
-      cogoToast.info('Pace', { heading: e })
+      cogoToast.info('Elapsed', { heading: e })
     }
   }
 
