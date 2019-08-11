@@ -229,7 +229,7 @@ function Points () {
       </div>
 
       <hr />
-      {JSON.parse(localStorage.getItem('last'))
+      {JSON.parse(localStorage.getItem('last') || JSON.stringify([]))
         .reverse()
         .join(' | ')}
       <hr />
