@@ -103,6 +103,20 @@ const store = () => {
   return { template, increment, decrement, touch, reset }
 }
 
+function pushLast (val) {
+  if (!val) return
+
+  let last = localStorage.getItem('last')
+  if (!last) {
+    localStorage.setItem('last', JSON.stringify([]))
+  }
+  let ret = JSON.parse(localStorage.getItem('last'))
+  if (val !== ret[ret.length - 1]) {
+    ret.push(val)
+    localStorage.setItem('last', JSON.stringify(ret))
+  }
+}
+
 function Points () {
   const { template, reset, touch } = useStore(store)
 
@@ -144,20 +158,6 @@ function Points () {
         console.log(err)
       }
     )
-  }
-
-  function pushLast (val) {
-    if (!val) return
-
-    let last = localStorage.getItem('last')
-    if (!last) {
-      localStorage.setItem('last', JSON.stringify([]))
-    }
-    let ret = JSON.parse(localStorage.getItem('last'))
-    if (val !== ret[ret.length - 1]) {
-      ret.push(val)
-      localStorage.setItem('last', JSON.stringify(ret))
-    }
   }
 
   // update timer
@@ -278,7 +278,7 @@ function Circle ({ rad, count, ...props }) {
   let p = 309 * (count / 360) * percent
   let q = 309 * percent - p
 
-  console.log(rad, percent, count, p, factor)
+  // console.log(rad, percent, count, p, factor)
 
   return (
     <svg width='300' height='300'>
