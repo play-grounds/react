@@ -94,11 +94,12 @@ const store = () => {
     let a = (1000 - Math.round((e / (s + l - startScore)) * 100)) / 100
 
     if (count % 360 === 0) {
-      localStorage.setItem('startTime', new Date().getTime())
       if (push) {
         pushLast(a)
         console.log(localStorage.getItem('startTime'))
       }
+      localStorage.setItem('startTime', new Date().getTime())
+      localStorage.setItem('startScore', 0)
     }
     setTemplate({ count: count, day: day })
   }
