@@ -77,7 +77,7 @@ const store = () => {
     return template
   }
 
-  const reset = (amount, day = 0) => {
+  const reset = (amount, day = 0, push = false) => {
     amount = amount || 0
 
     let startTime = localStorage.getItem('startTime') || 0
@@ -92,8 +92,10 @@ const store = () => {
 
     if (day % 360 === 0) {
       localStorage.setItem('startTime', new Date().getTime())
-      pushLast(a)
-      console.log(localStorage.getItem('startTime'))
+      if (push) {
+        pushLast(a)
+        console.log(localStorage.getItem('startTime'))
+      }
     }
     setTemplate({ count: amount, day: day })
   }
@@ -136,7 +138,7 @@ function Points () {
           hourInt +
           ' ' +
           dayInt
-        reset(hourInt, dayInt)
+        reset(hourInt, dayInt, true)
       },
       err => {
         console.log(err)
