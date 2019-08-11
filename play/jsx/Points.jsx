@@ -93,7 +93,9 @@ const store = () => {
     let e = Math.floor((new Date().getTime() - startTime) / 1000)
     let a = (1000 - Math.round((e / (s + l - startScore)) * 100)) / 100
 
-    if (day % 360 === 355) {
+    console.log('day % 360', day % 360, 'a', a)
+
+    if (day % 360 === 0) {
       console.log('###### resetting', count, day, push)
 
       if (push) {
@@ -101,7 +103,7 @@ const store = () => {
         console.log(localStorage.getItem('startTime'))
       }
       localStorage.setItem('startTime', new Date().getTime())
-      localStorage.setItem('startScore', 0)
+      localStorage.setItem('startScore', c)
     }
     setTemplate({ count: count, day: day })
   }
@@ -111,6 +113,7 @@ const store = () => {
 
 function pushLast (val) {
   if (!val) return
+  console.log('###### pushing', val)
 
   let last = localStorage.getItem('last')
   if (!last) {
