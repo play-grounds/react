@@ -95,7 +95,7 @@ const store = () => {
 
     console.log('day % 360', day % 360, 'a', a)
 
-    if (day % 360 === 0) {
+    if (day % 360 === 355) {
       console.log('###### resetting', count, day, push)
 
       if (push) {
