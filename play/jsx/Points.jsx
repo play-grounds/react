@@ -115,12 +115,26 @@ const store = () => {
     }
     setTemplate({ count: count, day: day })
 
+    // if (day % 5 === 0) {
+    //   let e = Math.floor((new Date().getTime() - localTime) / 1000)
+    //   let a = Math.round(e / 30)
+    //   localStorage.setItem('localTime', new Date().getTime())
+    //   localStorage.setItem('localScore', day % 30)
+    //   cogoToast.info('Fast', {
+    //     heading: (new Date().getTime() - parseInt(localTime)) / 1000
+    //   })
+    //   cogoToast.info('dates', {
+    //     heading: new Date().getTime() - parseInt(localTime)
+    //   })
+    // }
+
     if (day % 30 === 0) {
       let e = Math.floor((new Date().getTime() - localTime) / 1000)
-      let a = (1000 - Math.round((e / (s + l - localScore)) * 100)) / 100
+      let a = Math.round(e / 30)
       localStorage.setItem('localTime', new Date().getTime())
       localStorage.setItem('localScore', day % 30)
-      cogoToast.info('Pace', { heading: a })
+      cogoToast.info('Pace', { heading: 10 - a })
+      cogoToast.info('Pace', { heading: e })
     }
   }
 
