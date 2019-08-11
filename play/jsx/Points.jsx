@@ -90,7 +90,7 @@ const store = () => {
     let e = Math.floor((new Date().getTime() - startTime) / 1000)
     let a = (1000 - Math.round((e / (s + l - startScore)) * 100)) / 100
 
-    if (day % 360 === 0) {
+    if (day % 355 === 0) {
       localStorage.setItem('startTime', new Date().getTime())
       if (push) {
         pushLast(a)
