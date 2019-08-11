@@ -10,6 +10,12 @@ if (!localStorage.getItem('startTime')) {
 if (!localStorage.getItem('startScore')) {
   localStorage.setItem('startScore', 0)
 }
+if (!localStorage.getItem('localTime')) {
+  localStorage.setItem('localTime', new Date().getTime())
+}
+if (!localStorage.getItem('localScore')) {
+  localStorage.setItem('localScore', 0)
+}
 
 var subject =
   new URLSearchParams(document.location.search).get('uri') ||
@@ -85,6 +91,8 @@ const store = () => {
 
     let startTime = localStorage.getItem('startTime') || 0
     let startScore = localStorage.getItem('startScore') || 0
+    let localTime = localStorage.getItem('localTime') || 0
+    let localScore = localStorage.getItem('localScore') || 0
     let c = day % 360
     let s = day % 30
     let l = c - s
@@ -108,6 +116,10 @@ const store = () => {
     setTemplate({ count: count, day: day })
 
     if (day % 30 === 0) {
+      let e = Math.floor((new Date().getTime() - localTime) / 1000)
+      let a = (1000 - Math.round((e / (s + l - localScore)) * 100)) / 100
+      localStorage.setItem('localTime', new Date().getTime())
+      localStorage.setItem('localScore', c)
       cogoToast.info(a, { heading: 'Pace' })
     }
   }
