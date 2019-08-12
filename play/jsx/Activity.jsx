@@ -112,7 +112,8 @@ function Activity () {
 
         cogoToast.info(hourInt, {
           position: 'top-right',
-          heading: 'Melvin Carvalho'
+          heading: 'Melvin Carvalho',
+          hideAfter: 60
         })
 
         p = UI.store.sym('urn:query:day')
