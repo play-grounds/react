@@ -166,7 +166,7 @@ ReactDOM.render(
 
     <p id="msg"></p>
 
-    <input type="text" name="speech-msg" id="speech-msg" x-webkit-speech>
+    <input type="text" onChange="handleMessage()" name="speech-msg" id="speech-msg" x-webkit-speech>
 
     <div class="option">
       <label for="voice">Voice</label>
@@ -193,6 +193,16 @@ ReactDOM.render(
 
 
   <script>
+
+    function handleMessage() {
+      var speechMsgInput = document.getElementById('speech-msg');
+      var msg = speechMsgInput.value
+      console.log('msg', msg);
+
+      let href = window.location.href.split('?')[0]
+      href += '?message=' + encodeURIComponent(msg)
+      history.pushState({}, 'App', href)
+    }
 
     /*
      * Check for browser support
@@ -242,7 +252,6 @@ ReactDOM.render(
         if (voice.name === 'english_rp') {
           option.selected = true
         }
-
 
         // Add the option to the voice selector.
         voiceSelect.appendChild(option);
