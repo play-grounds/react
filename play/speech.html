@@ -212,6 +212,10 @@ ReactDOM.render(
 
     // Get the text input element.
     var speechMsgInput = document.getElementById('speech-msg');
+    var qsMsg = new URLSearchParams(document.location.search).get('message')
+    if (qsMsg) {
+      speechMsgInput.value = qsMsg
+    }
 
     // Get the voice select element.
     var voiceSelect = document.getElementById('voice');
@@ -235,6 +239,10 @@ ReactDOM.render(
         // Set the options value and text.
         option.value = voice.name;
         option.innerHTML = voice.name;
+        if (voice.name === 'english_rp') {
+          option.selected = true
+        }
+
 
         // Add the option to the voice selector.
         voiceSelect.appendChild(option);
