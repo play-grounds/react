@@ -69,63 +69,12 @@ const store = () => {
 
   const decrement = () => setTemplate({ count: count + 30 })
 
-  const getStore = () => {
-    return template
-  }
-
   const reset = (count, day = 0, push = false) => {
     count = count || 0
 
-    let startTime = localStorage.getItem('startTime') || 0
-    let startScore = localStorage.getItem('startScore') || 0
-    let localTime = localStorage.getItem('localTime') || 0
-    let localScore = localStorage.getItem('localScore') || 0
-    let c = day % 360
-    let s = day % 30
-    let l = c - s
-    let t = count
-    let d = day
-    let e = Math.floor((new Date().getTime() - startTime) / 1000)
-    let a = (1000 - Math.round((e / (s + l - startScore)) * 100)) / 100
-
     console.log('day % 360', day % 360, 'a', a)
 
-    if (day % 360 === 355) {
-      console.log('###### resetting', count, day, push)
-
-      if (push) {
-        pushLast(a)
-        console.log(localStorage.getItem('startTime'))
-      }
-      localStorage.setItem('startTime', new Date().getTime())
-      localStorage.setItem('startScore', 0)
-    }
     setTemplate({ count: count, day: day })
-
-    // if (day % 5 === 0) {
-    //   let e = Math.floor((new Date().getTime() - localTime) / 1000)
-    //   let a = Math.round(e / 30)
-    //   localStorage.setItem('localTime', new Date().getTime())
-    //   localStorage.setItem('localScore', day % 30)
-    //   cogoToast.info('Fast', {
-    //     heading: (new Date().getTime() - parseInt(localTime)) / 1000
-    //   })
-    //   cogoToast.info('dates', {
-    //     heading: new Date().getTime() - parseInt(localTime)
-    //   })
-    // }
-
-    if (day % 30 === 0) {
-      let e = new Date().getTime() - localTime
-      let a = Math.round(e / 300) / 100
-      localStorage.setItem('localTime', new Date().getTime())
-      localStorage.setItem('localScore', day % 30)
-      cogoToast.info('Pace', {
-        heading: Math.round(1000 - a * 100) / 100,
-        hideAfter: 60
-      })
-      // cogoToast.info('Elapsed', { heading: e })
-    }
   }
 
   return { template, increment, decrement, touch, reset }
@@ -161,7 +110,10 @@ function Activity () {
         let hour = UI.store.statementsMatching(s, p, o, w)
         let hourInt = hour[0].object.value
 
-        cogoToast.info(hourInt, { position: 'top-right' })
+        cogoToast.info(hourInt, {
+          position: 'top-right',
+          heading: 'Melvin Carvalho'
+        })
 
         p = UI.store.sym('urn:query:day')
         let day = UI.store.statementsMatching(s, p, o, w)
