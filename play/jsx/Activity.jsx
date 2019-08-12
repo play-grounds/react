@@ -51,6 +51,8 @@ function useStore (storeInit) {
   return instance
 }
 
+var activities = []
+
 const store = () => {
   let initial = {}
   initial.count =
@@ -64,15 +66,16 @@ const store = () => {
     setTemplate({
       count: amount,
       day: day,
-      now: new Date().getTime()
+      now: new Date().toISOString()
     })
 
   const decrement = () => setTemplate({ count: count + 30 })
 
-  const reset = (count, day = 0, push = false) => {
+  const reset = (count, day = 0, activity) => {
     count = count || 0
 
-    console.log('day % 360', day % 360, 'a', a)
+    activities.push({ time: new Date().toISOString(), text: activity })
+    console.log('activities', activities)
 
     setTemplate({ count: count, day: day })
   }
@@ -116,12 +119,7 @@ function Activity () {
           hideAfter: 60
         })
 
-        p = UI.store.sym('urn:query:day')
-        let day = UI.store.statementsMatching(s, p, o, w)
-        let dayInt = parseInt(day[0].object.value)
-        console.log('day', day[0].object.value)
-
-        reset(hourInt, dayInt, true)
+        reset(hourInt, hourInt, hourInt)
       },
       err => {
         console.log(err)
@@ -161,11 +159,31 @@ function Activity () {
     }
   }, [])
 
+  const reversed = activities.slice().reverse()
+  const activityList = reversed.map(function (activity) {
+    return (
+      <div>
+        <a
+          style={{ color: '#369' }}
+          href='https://melvincarvalho.com/#me'
+          target='_blank'
+        >
+          Melvin Carvalho
+        </a>{' '}
+        {activity.text}{' '}
+        <sub style={{ color: 'rgb(136,136,136)' }}>
+          ({moment.utc(activity.time).fromNow()})
+        </sub>
+      </div>
+    )
+  })
+
   return (
     <div className='is-info'>
       <h1>Activity Stream</h1>
 
       <hr />
+      {activityList}
     </div>
   )
 }
@@ -192,42 +210,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 )
-
-function Circle ({ rad, count, ...props }) {
-  var defaultThreshold = 410
-  var threshold =
-    new URLSearchParams(document.location.search).get('threshold') ||
-    defaultThreshold
-
-  if (rad > threshold) {
-    rad = threshold
-  }
-
-  let percent = rad / threshold
-  let red = Math.floor(percent * 212)
-  let green = Math.floor(212 - red)
-  let factor = threshold / 146.0
-
-  let p = 309 * (count / 360) * percent
-  let q = 309 * percent - p
-
-  // console.log(rad, percent, count, p, factor)
-
-  return (
-    <svg width='300' height='300'>
-      <circle
-        cx='150'
-        cy='150'
-        style={{
-          fill: 'rgb(' + red + ', ' + green + ', 0)',
-          stroke: 'gold',
-          strokeWidth: 11,
-          strokeDasharray: p + '% ' + q + '%'
-        }}
-        r={rad / factor}
-      >
-        <title>Pie</title>
-      </circle>
-    </svg>
-  )
-}
