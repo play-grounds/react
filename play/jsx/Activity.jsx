@@ -45,7 +45,7 @@ function useStore (storeInit) {
 
   // complain if instance wasn't initialized
   if (!instance) {
-    throw new Error('Provided store instance did not initialized correctly!')
+    throw new Error('Provided store instance did not initialize correctly!')
   }
 
   return instance
@@ -62,13 +62,6 @@ const store = () => {
 
   const increment = amount => setTemplate({ count: count + amount })
 
-  const touch = (amount, day = 0) =>
-    setTemplate({
-      count: amount,
-      day: day,
-      now: new Date().toISOString()
-    })
-
   const decrement = () => setTemplate({ count: count + 30 })
 
   const reset = (count, day = 0, activity) => {
@@ -80,26 +73,11 @@ const store = () => {
     setTemplate({ count: count, day: day })
   }
 
-  return { template, increment, decrement, touch, reset }
-}
-
-function pushLast (val) {
-  if (!val) return
-  console.log('###### pushing', val)
-
-  let last = localStorage.getItem('last')
-  if (!last) {
-    localStorage.setItem('last', JSON.stringify([]))
-  }
-  let ret = JSON.parse(localStorage.getItem('last'))
-  if (val !== ret[ret.length - 1]) {
-    ret.push(val)
-    localStorage.setItem('last', JSON.stringify(ret))
-  }
+  return { template, increment, decrement, reset }
 }
 
 function Activity () {
-  const { template, reset, touch } = useStore(store)
+  const { template, reset } = useStore(store)
 
   function fetchCount (subject) {
     console.log('fetching', subject)
@@ -145,13 +123,11 @@ function Activity () {
     w.onmessage = function (m) {
       let data = m.data
       console.log('data', data)
-      // cogoToast.success(data, { position: 'top-right' })
 
       if (data.match(/pub .*/)) {
         UI.store = $rdf.graph()
         UI.fetcher = new $rdf.Fetcher(UI.store)
         fetchCount(subject)
-        // location.reload()
       }
     }
     w.onopen = function () {
