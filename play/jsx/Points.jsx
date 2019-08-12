@@ -133,7 +133,7 @@ const store = () => {
       let a = Math.round(e / 300) / 100
       localStorage.setItem('localTime', new Date().getTime())
       localStorage.setItem('localScore', day % 30)
-      cogoToast.info('Pace', { heading: Math.round(1000 - a * 100) / 100 })
+      cogoToast.info('Pace', { heading: Math.round(1000 - a * 100) / 100, hideAfter : 15})
       // cogoToast.info('Elapsed', { heading: e })
     }
   }
