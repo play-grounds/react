@@ -64,13 +64,17 @@ const store = () => {
 
   const decrement = () => setTemplate({ count: count + 30 })
 
-  const reset = (count, day = 0, activity) => {
+  const reset = (count, updated, activity) => {
     count = count || 0
 
-    activities.push({ time: new Date().toISOString(), text: activity })
+    activities.push({ time: updated, text: activity })
     console.log('activities', activities)
 
-    setTemplate({ count: count, day: day })
+    activities = activities.sort(function (a, b) {
+      return b.updated < a.updated ? -1 : b.updated > a.updated ? 1 : 0
+    })
+
+    setTemplate({ count: count, updated: updated })
   }
 
   return { template, increment, decrement, reset }
@@ -99,10 +103,15 @@ function Activity () {
 
         activities = []
         for (const a in hour) {
-          console.log('a', a)
+          let subject = hour[a].subject
+          let s = subject
+          let p = AS('summary')
+          let summary = UI.store.anyValue(s, p)
 
-          let activity = hour[a].object.value
-          reset(activity, activity, activity)
+          p = AS('updated')
+          let updated = UI.store.anyValue(s, p)
+
+          reset(summary, updated, summary)
         }
       },
       err => {
