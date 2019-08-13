@@ -97,7 +97,13 @@ function Activity () {
           hideAfter: 60
         })
 
-        reset(hourInt, hourInt, hourInt)
+        activities = []
+        for (const a in hour) {
+          console.log('a', a)
+
+          let activity = hour[a].object.value
+          reset(activity, activity, activity)
+        }
       },
       err => {
         console.log(err)
@@ -139,17 +145,7 @@ function Activity () {
   const activityList = reversed.map(function (activity) {
     return (
       <div>
-        <a
-          style={{ color: '#369' }}
-          href='https://melvincarvalho.com/#me'
-          target='_blank'
-        >
-          Melvin Carvalho
-        </a>{' '}
-        {activity.text}{' '}
-        <sub style={{ color: 'rgb(136,136,136)' }}>
-          ({moment.utc(activity.time).fromNow()})
-        </sub>
+        <ActivityItem activity={activity} />
       </div>
     )
   })
@@ -160,6 +156,24 @@ function Activity () {
 
       <hr />
       {activityList}
+    </div>
+  )
+}
+
+function ActivityItem (props) {
+  return (
+    <div>
+      <a
+        style={{ color: '#369' }}
+        href='https://melvincarvalho.com/#me'
+        target='_blank'
+      >
+        Melvin Carvalho
+      </a>{' '}
+      {props.activity.text}{' '}
+      <sub style={{ color: 'rgb(136,136,136)' }}>
+        ({moment.utc(props.activity.time).fromNow()})
+      </sub>
     </div>
   )
 }
