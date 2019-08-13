@@ -183,7 +183,16 @@ ReactDOM.render(
 )
 
 function exportData() {
-  console.log(calendar.getEvents())
+  var ret = []
+  var events = calendar.getEvents()
+  for (const i in events) {
+    let event = events[i]
+    let _def = event._def
+    let _instance = event._instance
+    let init = { title : _def.title, start : _instance.range.start, end : _instance.range.end }
+    ret.push(init)
+  }
+  console.log(JSON.stringify(ret))
 }
 
 </script>
