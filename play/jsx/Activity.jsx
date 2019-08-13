@@ -85,7 +85,7 @@ function Activity () {
     UI.fetcher.load(subject, { force: true }).then(
       response => {
         let s = null
-        let p = UI.store.sym('urn:string:activity')
+        let p = AS('summary')
         let o = null
         let w = UI.store.sym(subject.split('#')[0])
         let hour = UI.store.statementsMatching(s, p, o, w)
