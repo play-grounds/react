@@ -200,6 +200,10 @@ function ActivityItem (props) {
     icon = 'fa-hand-o-up'
     color = 'YellowGreen'
   }
+  if (props.activity.text.match(/research/)) {
+    icon = 'fa-book'
+    color = 'Lime'
+  }
   icon += ' fa'
   return (
     <div>
