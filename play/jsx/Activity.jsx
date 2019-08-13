@@ -190,7 +190,7 @@ function ActivityItem (props) {
   }
   if (props.activity.text.match(/media/)) {
     icon = 'fa-television'
-    color = 'Orange'
+    color = 'DarkRed'
   }
   if (props.activity.text.match(/issue/)) {
     icon = 'fa-github'
