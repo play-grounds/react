@@ -182,8 +182,9 @@ ReactDOM.render(
   document.getElementById('root')
 )
 
-
-
+function exportData() {
+  console.log(calendar.getEvents())
+}
 
 </script>
 
@@ -191,7 +192,7 @@ ReactDOM.render(
 
 
   <div id='calendar'></div>
-  <a class="button is-large is-info" onClick="console.log(calendar.getEvents())">Export</a>
+  <a class="button is-large is-info" onClick="exportData()">Export</a>
 
 </body>
 
