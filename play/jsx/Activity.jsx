@@ -192,6 +192,10 @@ function ActivityItem (props) {
     icon = 'fa-television'
     color = 'crimson'
   }
+  if (props.activity.text.match(/issue/)) {
+    icon = 'fa-github'
+    color = 'SteelBlue'
+  }
   icon += ' fa'
   return (
     <div>
