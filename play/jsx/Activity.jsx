@@ -170,10 +170,10 @@ function Activity () {
 }
 
 function ActivityItem (props) {
-  var icon = 'fa-random'
+  var icon = 'fa-keyboard-o'
   var color = 'black'
   if (props.activity.text.match(/Developed/)) {
-    icon = 'fa-code'
+    icon = 'fa-rocket'
     color = 'blue'
   }
   if (props.activity.text.match(/code/)) {
@@ -195,6 +195,10 @@ function ActivityItem (props) {
   if (props.activity.text.match(/issue/)) {
     icon = 'fa-github'
     color = 'SteelBlue'
+  }
+  if (props.activity.text.match(/design/)) {
+    icon = 'fa-hand-o-up'
+    color = 'YellowGreen'
   }
   icon += ' fa'
   return (
