@@ -61,10 +61,28 @@
 
   <script>
 
-    var calendar
+    var UI = {}
+    UI.store = $rdf.graph()
+    UI.fetcher = new $rdf.Fetcher(UI.store)
+    UI.updater = new $rdf.UpdateManager(UI.store)
 
-    document.addEventListener('DOMContentLoaded', function () {
+    UI.fetcher.load('https://melvin.solid.live/public/calendar.ttl').tnen
+
+
+    var calendar
+    var subject = new URLSearchParams(document.location.search).get('url') || 'https://melvin.solid.live/public/calendar.ttl'
+
+    UI.fetcher.load(subject).then(() => {
+
       var calendarEl = document.getElementById('calendar');
+
+      let s = UI.store.sym(subject)
+      let p = UI.store.sym('urn:string:stringify')
+      let o = null
+      let w = UI.store.sym(subject.split('#')[0])
+      var stringify = UI.store.anyValue(s, p, o, w) || JSON.stringify([])
+      var parse = JSON.parse(stringify)
+      console.log('parse', parse)
 
       calendar = new FullCalendar.Calendar(calendarEl, {
         plugins: ['interaction', 'dayGrid', 'timeGrid'],
@@ -75,58 +93,14 @@
           center: 'title',
           right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
-        events: [
-          {
-            title: 'All Day Event',
-            start: '2019-08-01'
-          },
-          {
-            title: 'Long Event',
-            start: '2019-08-07',
-            end: '2019-08-10'
-          },
-          {
-            groupId: '999',
-            title: 'Repeating Event',
-            start: '2019-08-09T16:00:00'
-          },
-          {
-            groupId: '999',
-            title: 'Repeating Event',
-            start: '2019-08-16T16:00:00'
-          },
-          {
-            title: 'Conference',
-            start: '2019-08-11',
-            end: '2019-08-13'
-          },
-          {
-            title: 'Meeting',
-            start: '2019-08-12T10:30:00',
-            end: '2019-08-12T12:30:00'
-          },
-          {
-            title: 'Lunch',
-            start: '2019-08-12T12:00:00'
-          },
-          {
-            title: 'Meeting',
-            start: '2019-08-12T14:30:00'
-          },
-          {
-            title: 'Birthday Party',
-            start: '2019-08-13T07:00:00'
-          },
-          {
-            title: 'Click for Google',
-            url: 'http://google.com/',
-            start: '2019-08-28'
-          }
-        ]
+        events: parse
       });
 
       calendar.render();
-    });
+
+
+    })
+
 
   </script>
 
@@ -140,10 +114,6 @@
 
   <script type="text/babel">
 
-var UI = {}
-UI.store = $rdf.graph()
-UI.fetcher = new $rdf.Fetcher(UI.store)
-UI.updater = new $rdf.UpdateManager(UI.store)
 
 class App extends React.Component {
   constructor(props) {
