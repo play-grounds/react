@@ -96,7 +96,7 @@ function Activity () {
         let hourInt = hour[0].object.value
 
         cogoToast.info(hourInt, {
-          position: 'top-right',
+          position: 'top-center',
           heading: 'Melvin Carvalho',
           hideAfter: 60
         })
