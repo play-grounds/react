@@ -67,13 +67,6 @@ const store = () => {
   const reset = (count, updated, activity) => {
     count = count || 0
 
-    activities.push({ time: updated, text: activity })
-    console.log('activities', activities)
-
-    activities = activities.sort(function (a, b) {
-      return b.updated < a.updated ? -1 : b.updated > a.updated ? 1 : 0
-    })
-
     setTemplate({ count: count, updated: updated })
   }
 
@@ -96,7 +89,7 @@ function Activity () {
         let hourInt = hour[0].object.value
 
         cogoToast.info(hourInt, {
-          position: 'top-center',
+          position: 'bottom-right',
           heading: 'Melvin Carvalho',
           hideAfter: 60
         })
@@ -111,8 +104,15 @@ function Activity () {
           p = AS('updated')
           let updated = UI.store.anyValue(s, p)
 
-          reset(summary, updated, summary)
+          activities.push({ time: updated, text: summary })
         }
+
+        console.log('activities', activities)
+
+        activities = activities.sort(function (a, b) {
+          return b.updated < a.updated ? -1 : b.updated > a.updated ? 1 : 0
+        })
+        reset(summary, updated, summary)
       },
       err => {
         console.log(err)
