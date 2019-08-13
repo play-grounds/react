@@ -170,6 +170,29 @@ function Activity () {
 }
 
 function ActivityItem (props) {
+  var icon = 'fa-random'
+  var color = 'black'
+  if (props.activity.text.match(/Developed/)) {
+    icon = 'fa-code'
+    color = 'blue'
+  }
+  if (props.activity.text.match(/code/)) {
+    icon = 'fa-code'
+    color = 'green'
+  }
+  if (props.activity.text.match(/content/)) {
+    icon = 'fa-bar-chart'
+    color = 'red'
+  }
+  if (props.activity.text.match(/shell/)) {
+    icon = 'fa-terminal'
+    color = 'cyan'
+  }
+  if (props.activity.text.match(/media/)) {
+    icon = 'fa-television'
+    color = 'crimson'
+  }
+  icon += ' fa'
   return (
     <div>
       <a
@@ -179,8 +202,10 @@ function ActivityItem (props) {
       >
         Melvin Carvalho
       </a>{' '}
-      {props.activity.text}{' '}
+      <span className={icon} />{' '}
+      <span style={{ color: color }}>{props.activity.text}</span>{' '}
       <sub style={{ color: 'rgb(136,136,136)' }}>
+        {' '}
         ({moment.utc(props.activity.time).fromNow()})
       </sub>
     </div>
