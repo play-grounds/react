@@ -27,18 +27,6 @@ function currentUser () {
     }
   }
   return offlineTestID() // null unless testing
-  // JSON.parse(localStorage['solid-auth-client']).session.webId
-}
-
-function Body (props) {
-  return (
-    <div>
-      <h1 id='welcome' className='title'>
-        WebId
-      </h1>
-      <hr />
-    </div>
-  )
 }
 
 class App extends React.Component {
@@ -75,7 +63,13 @@ class App extends React.Component {
           sourceCode='https://github.com/play-grounds/react/blob/gh-pages/play/webid.html'
         />
         <section className='section'>
-          <Body />
+          <h1 id='welcome' className='title'>
+            WebId
+          </h1>
+          <hr />
+          Info :{' '}
+          <a href='https://www.w3.org/2005/Incubator/webid/spec/'>Specs</a>
+          <hr />
           {this.state.message}
           <hr />
           <div className='buttons'>
