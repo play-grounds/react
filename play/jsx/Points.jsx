@@ -266,6 +266,7 @@ function Points () {
           onClick={() => {
             localStorage.setItem('startTime', new Date().getTime())
             localStorage.setItem('startScore', s + l)
+            cogoToast.info('Times Reset')
           }}
         >
           Reset
