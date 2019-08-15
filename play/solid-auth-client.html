@@ -9,7 +9,6 @@
   <script src="js/rdflib-0.12.2.min.js"></script>
   <script src="js/solid-auth-client.bundle.js"></script>
 
-
   <!-- Don't use this in production: -->
   <script src="js/babel.min.js"></script>
 </head>
@@ -30,7 +29,7 @@ async function login(idp) {
   }
 
   async function popupLogin(idp) {
-  const session = await solid.auth.currentSession();
+    const session = await solid.auth.currentSession();
   if (!session)
     await solid.auth.popupLogin(idp);
   else

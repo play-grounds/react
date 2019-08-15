@@ -50,6 +50,7 @@ function App () {
     { uri: 'groupuris.html', title: 'Group URIs' },
     { uri: 'conference.html', title: 'Conference Call' },
     { uri: 'acl.html', title: 'ACL App' },
+    { uri: 'webid.html', title: 'WebId App' },
     { uri: 'speech.html', title: 'Speech App' },
     { uri: 'calendar.html', title: 'Calendar App' },
     { uri: 'activity.html', title: 'Activity App' }
