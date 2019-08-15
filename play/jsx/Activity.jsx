@@ -181,7 +181,11 @@ function Activity () {
   return (
     <div className='is-info'>
       <h1>
-        Activity Stream : code {code.code} / {code.total} - {code.percent}
+        Activity Stream :{' '}
+        <span style={{ color: '#369' }}>
+          code {code.code} / {code.total}
+        </span>{' '}
+        = <span style={{ color: 'green' }}>{code.percent}</span>
         {'%'}
       </h1>
 
