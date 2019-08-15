@@ -150,6 +150,25 @@ function Activity () {
     }
   }, [])
 
+  function getCodeLinesFromActivies (activities) {
+    var ret = {}
+    let code = 0
+    let total = activities.length
+    for (const i in activities) {
+      let a = activities[i]
+      if (a.text.match(/code/)) {
+        code++
+      }
+    }
+    return {
+      code: code,
+      percent: Math.round((code * 10000) / total) / 100,
+      total: total
+    }
+  }
+
+  const code = getCodeLinesFromActivies(activities)
+
   const reversed = activities.slice().reverse()
   const activityList = reversed.map(function (activity) {
     return (
@@ -161,7 +180,10 @@ function Activity () {
 
   return (
     <div className='is-info'>
-      <h1>Activity Stream</h1>
+      <h1>
+        Activity Stream : code {code.code} / {code.total} - {code.percent}
+        {'%'}
+      </h1>
 
       <hr />
       {activityList}
