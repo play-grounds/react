@@ -66,10 +66,13 @@ class App extends React.Component {
   send() {
     console.log('sending', this.state)
     solid.auth.fetch(this.state.uri,  
-      { 'headers' : 
-        { 'server' : 'this.state.server', 
-          }, 
-        'method' : 'GET' }   )
+      {  
+        
+          body : 'request=' + this.state.server,
+          mode : 'no-cors',
+          headers : { 'Content-Type' : 'application/x-www-form-urlencoded' },
+        'method' : 'POST' }   )
+
   }
 
 
@@ -113,10 +116,10 @@ class App extends React.Component {
         </textarea>
         <hr/>
         Command : <br/>
-        fetch("{this.state.uri}",  { " { 'headers' : { 'Metadata-server' : '" + this.state.server + "'  }, 'method' : 'GET' } " } )
+        fetch("{this.state.uri}",  { "{ mode : 'no-cors', headers : { 'Content-Type', 'application/x-www-form-urlencoded' }, body : 'request="+ this.state.server +"', 'method' : 'POST' } " } )
         <hr/>
         <div className="buttons">
-        <button className="button is-success" onClick={this.send} target='_blank' href='https://solid.github.io/solid-idps/'>Get Info to Console!</button>
+        <button className="button is-success" onClick={this.send} target='_blank' >Get Info to Console!</button>
         
         </div>
         <hr/>
