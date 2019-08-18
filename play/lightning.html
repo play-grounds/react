@@ -100,19 +100,20 @@ class App extends React.Component {
     <div>
       <NavbarSolidLogin
         className="is-link" 
-        title="Lightning" 
+        title="Lightning Network" 
         sourceCode="https://github.com/play-grounds/react/blob/gh-pages/play/lightning.html"/>
       <section className="section">
-        <h2>Lightning</h2>
+        <h2>Lightning Network</h2>
         <hr/>
         {this.state.message}
         <hr/>
-        URI : <input size="60" onChange={this.changeUri} value={this.state.uri} />
+        Server URI : <br />
+        <input style={{ width : '95%' }} onChange={this.changeUri} value={this.state.uri} />
         <a href={this.state.uri} target="_blank"> <img height="10" width="10" src="./image/External.svg" /></a> <hr/>
-        Request : 
+        Payment Request or Destination URI : 
         <br/>
         <br/>
-        <textarea value={this.state.request} onChange={this.changeRequest}>
+        <textarea style={{ width : '95%' }} value={this.state.request} onChange={this.changeRequest}>
         </textarea>
         <hr/>
         Command : <br/>
