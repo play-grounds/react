@@ -118,6 +118,9 @@ class App extends React.Component {
         Command : <br/>
         fetch("{this.state.uri}",  { "{ mode : 'no-cors', headers : { 'Content-Type', 'application/x-www-form-urlencoded' }, body : 'request="+ this.state.server +"', 'method' : 'POST' } " } )
         <hr/>
+        Curl : <br />
+        curl { "-X POST  -H  'Content-Type : application/x-www-form-urlencoded' --data 'request="+ this.state.server +"'  " } '{this.state.uri}'
+        <hr />
         <div className="buttons">
         <button className="button is-success" onClick={this.send} target='_blank' >Get Info to Console!</button>
         
