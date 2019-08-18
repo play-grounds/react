@@ -6,7 +6,12 @@ UI.updater = new $rdf.UpdateManager(UI.store)
 
 var subject =
   new URLSearchParams(document.location.search).get('uri') ||
-  'https://melvin.solid.live/credit/activity.ttl'
+  'https://melvin.solid.live/public/activity/' +
+    new Date()
+      .toISOString()
+      .split('T')[0]
+      .replace(/-/g, '/') +
+    '/activity.ttl'
 
 // Create context for global store assignment
 const StateContext = React.createContext()
