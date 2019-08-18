@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Lightning App</title>
+  <title>Lightning Network App</title>
   <script src="js/react.development.js"></script>
   <script src="js/react-dom.development.js"></script>
   <script src="js/rdflib.min.js"></script>
@@ -32,10 +32,10 @@ class App extends React.Component {
 
     this.state = {
       message: '',
-      server: new URLSearchParams(document.location.search).get('server') || 'abcd',
+      request: new URLSearchParams(document.location.search).get('request') || 'abcd',
       uri: new URLSearchParams(document.location.search).get('uri') || 'https://localhost:8080/v1/getinfo'
     }
-    this.changeServer = this.changeServer.bind(this)
+    this.changeRequest = this.changeRequest.bind(this)
     this.changeUri = this.changeUri.bind(this)
     this.send = this.send.bind(this)
 
@@ -68,7 +68,7 @@ class App extends React.Component {
     solid.auth.fetch(this.state.uri,  
       {  
         
-          body : 'request=' + this.state.server,
+          body : 'request=' + this.state.request,
           mode : 'no-cors',
           headers : { 'Content-Type' : 'application/x-www-form-urlencoded' },
         'method' : 'POST' }   )
@@ -76,8 +76,8 @@ class App extends React.Component {
   }
 
 
-  changeServer(event) {
-    this.setState({ 'server': event.target.value })
+  changeRequest(event) {
+    this.setState({ 'request': event.target.value })
   }
 
   changeUri(event) {
@@ -92,7 +92,7 @@ class App extends React.Component {
 
     let href =  window.location.href.split('?')[0] 
     href += '?uri=' + encodeURIComponent(this.state.uri)
-    //href += '&#server=' + encodeURIComponent(this.state.server)
+    //href += '&#request=' + encodeURIComponent(this.state.request)
     history.pushState({}, 'App', href)
 
 
@@ -109,17 +109,17 @@ class App extends React.Component {
         <hr/>
         URI : <input size="60" onChange={this.changeUri} value={this.state.uri} />
         <a href={this.state.uri} target="_blank"> <img height="10" width="10" src="./image/External.svg" /></a> <hr/>
-        Server : 
+        Request : 
         <br/>
         <br/>
-        <textarea value={this.state.server} onChange={this.changeServer}>
+        <textarea value={this.state.request} onChange={this.changeRequest}>
         </textarea>
         <hr/>
         Command : <br/>
-        fetch("{this.state.uri}",  { "{ mode : 'no-cors', headers : { 'Content-Type', 'application/x-www-form-urlencoded' }, body : 'request="+ this.state.server +"', 'method' : 'POST' } " } )
+        fetch("{this.state.uri}",  { "{ mode : 'no-cors', headers : { 'Content-Type', 'application/x-www-form-urlencoded' }, body : 'request="+ this.state.request +"', 'method' : 'POST' } " } )
         <hr/>
         Curl : <br />
-        curl { "-X POST  -H  'Content-Type : application/x-www-form-urlencoded' --data 'request="+ this.state.server +"'  " } '{this.state.uri}'
+        curl { "-X POST  -H  'Content-Type : application/x-www-form-urlencoded' --data 'request="+ this.state.request +"'  " } '{this.state.uri}'
         <hr />
         <div className="buttons">
         <button className="button is-success" onClick={this.send} target='_blank' >Get Info to Console!</button>
