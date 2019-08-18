@@ -140,6 +140,16 @@ app.post('/pay', (req, res) => {
   lnService.decodePaymentRequest({ lnd, request: request }, (err, result) => {
     console.log('decoded', result)
     amount = result.tokens
+    if (!ledger) {
+      console.log('cant find ledger')
+      res.send('cant find ledger')
+      return
+    }
+    if (!user || !ledger[user]) {
+      console.log('cant find user')
+      res.send('cant find user')
+      return
+    }
     if (amount > ledger[user]) {
       console.log('not enough funds')
       res.send('not enough funds')
