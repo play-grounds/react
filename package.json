@@ -43,6 +43,7 @@
     "npm": "^6.10.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "replace-in-file-webpack-plugin": "^1.0.6"
+    "replace-in-file-webpack-plugin": "^1.0.6",
+    "webid": "^0.3.11"
   }
 }
