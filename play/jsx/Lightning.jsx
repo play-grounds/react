@@ -10,12 +10,13 @@ class App extends React.Component {
     this.state = {
       message: '',
       request:
-        new URLSearchParams(document.location.search).get('request') || 'abcd',
+        new URLSearchParams(document.location.search).get('request') || '',
       uri:
         new URLSearchParams(document.location.search).get('uri') ||
         'https://localhost:8080/v1/getinfo'
     }
     this.changeRequest = this.changeRequest.bind(this)
+    this.changeDestination = this.changeDestination.bind(this)
     this.changeUri = this.changeUri.bind(this)
     this.send = this.send.bind(this)
 
@@ -24,7 +25,10 @@ class App extends React.Component {
         this.setState({ message: 'The user is not logged in' })
       } else {
         if (session.webId) {
-          this.setState({ message: `The user is ${session.webId}` })
+          this.setState({
+            message: `User : ${session.webId}`,
+            user: session.webId
+          })
           this.getProfile(session.webId)
         }
       }
@@ -53,6 +57,10 @@ class App extends React.Component {
     })
   }
 
+  changeDestination (event) {
+    this.setState({ destination: event.target.value })
+  }
+
   changeRequest (event) {
     this.setState({ request: event.target.value })
   }
@@ -68,6 +76,8 @@ class App extends React.Component {
   render () {
     let href = window.location.href.split('?')[0]
     href += '?uri=' + encodeURIComponent(this.state.uri)
+    href += '&request=' + encodeURIComponent(this.state.request)
+    href += '&destination=' + encodeURIComponent(this.state.destination)
     // href += '&#request=' + encodeURIComponent(this.state.request)
     history.pushState({}, 'App', href)
 
@@ -94,13 +104,22 @@ class App extends React.Component {
             <img height='10' width='10' src='./image/External.svg' />
           </a>{' '}
           <hr />
-          Payment Request or Destination URI :
+          Payment Request :
           <br />
           <br />
           <textarea
             style={{ width: '95%' }}
             value={this.state.request}
             onChange={this.changeRequest}
+          />
+          <hr />
+          Destination URI (optional) :
+          <br />
+          <br />
+          <input
+            style={{ width: '95%' }}
+            value={this.state.destination}
+            onChange={this.changeDestination}
           />
           <hr />
           Command : <br />
