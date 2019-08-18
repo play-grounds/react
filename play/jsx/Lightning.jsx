@@ -13,8 +13,12 @@ class App extends React.Component {
         new URLSearchParams(document.location.search).get('request') || '',
       uri:
         new URLSearchParams(document.location.search).get('uri') ||
-        'https://localhost:8080/v1/getinfo'
+        'https://localhost:8888/',
+      destination:
+        new URLSearchParams(document.location.search).get('destination') || '',
+      amount: new URLSearchParams(document.location.search).get('amount') || 0
     }
+    this.changeAmount = this.changeAmount.bind(this)
     this.changeRequest = this.changeRequest.bind(this)
     this.changeDestination = this.changeDestination.bind(this)
     this.changeUri = this.changeUri.bind(this)
@@ -57,6 +61,10 @@ class App extends React.Component {
     })
   }
 
+  changeAmount (event) {
+    this.setState({ amount: event.target.value })
+  }
+
   changeDestination (event) {
     this.setState({ destination: event.target.value })
   }
@@ -76,9 +84,15 @@ class App extends React.Component {
   render () {
     let href = window.location.href.split('?')[0]
     href += '?uri=' + encodeURIComponent(this.state.uri)
-    href += '&request=' + encodeURIComponent(this.state.request)
-    href += '&destination=' + encodeURIComponent(this.state.destination)
-    // href += '&#request=' + encodeURIComponent(this.state.request)
+    if (this.state.request) {
+      href += '&request=' + encodeURIComponent(this.state.request)
+    }
+    if (this.state.destination) {
+      href += '&destination=' + encodeURIComponent(this.state.destination)
+    }
+    if (this.state.amount) {
+      href += '&amount=' + encodeURIComponent(this.state.amount)
+    }
     history.pushState({}, 'App', href)
 
     return (
@@ -119,6 +133,15 @@ class App extends React.Component {
           <input
             style={{ width: '95%' }}
             value={this.state.destination}
+            onChange={this.changeDestination}
+          />
+          <hr />
+          Amount (optional) :
+          <br />
+          <br />
+          <input
+            style={{ width: '95%' }}
+            value={this.state.amount}
             onChange={this.changeDestination}
           />
           <hr />

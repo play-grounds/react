@@ -129,8 +129,15 @@ app.get('/index', (req, res) => {
 app.post('/pay', (req, res) => {
   // console.log('request', req.body)
   const request = req.body.request
-  console.log('req.body', req.body)
+  const destination = req.body.destination
   console.log('request', request)
+  console.log('destination', destination)
+  if (destination) {
+    // transfer code here
+    console.log('destination not yet implemented')
+    res.send('destination not yet implemented')
+    return
+  }
   if (!request) {
     console.log('no request found')
     res.send('add a payment request')
