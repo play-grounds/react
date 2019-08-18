@@ -101,10 +101,10 @@ const store = () => {
     let e = Math.floor((new Date().getTime() - startTime) / 1000)
     let a = (1000 - Math.round((e / (s + l - startScore)) * 100)) / 100
 
-    console.log('day % 360', day % 360, 'a', a)
+    // console.log('day % 360', day % 360, 'a', a)
 
     if (day % 360 === 355) {
-      console.log('###### resetting', count, day, push)
+      // console.log('###### resetting', count, day, push)
 
       if (push) {
         pushLast(a)
