@@ -36,7 +36,7 @@ function getBalance (user) {
 
 // get ledger
 var ledger = require('./ledger.json')
-var user = process.env.USER || 'https://melvincarvalho.com/#me'
+var user = process.env.WEBID || 'https://melvincarvalho.com/#me'
 var balance = getBalance(user)
 console.log('ledger', ledger)
 
@@ -136,6 +136,11 @@ app.post('/pay', (req, res) => {
   console.log('amount', amount)
   console.log('balance', balance)
   console.log('user', user)
+  if (!user) {
+    console.log('no user found')
+    res.send('no user found')
+    return
+  }
   if (destination && amount) {
     if (amount > balance) {
       console.log('not enough funds')
