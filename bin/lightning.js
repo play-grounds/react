@@ -6,7 +6,7 @@ const bodyParser = require('body-parser')
 const lnService = require('ln-service')
 
 // init
-const port = proces.env.PORT || 5010
+const port = process.env.PORT || 5010
 
 // get creds
 const macaroonPath =
@@ -38,7 +38,6 @@ function getBalance (user) {
 var ledger = require('./ledger.json')
 var user = process.env.USER || 'https://melvincarvalho.com/#me'
 var balance = getBalance(user)
-var webId = null
 console.log('ledger', ledger)
 
 var options = {
@@ -130,12 +129,28 @@ app.post('/pay', (req, res) => {
   // console.log('request', req.body)
   const request = req.body.request
   const destination = req.body.destination
+  let amount = req.body.amount
   console.log('request', request)
   console.log('destination', destination)
-  if (destination) {
+  console.log('amount', amount)
+  if (destination && amount) {
+    if (amount > ledger[user]) {
+      console.log('not enough funds')
+      res.send('not enough funds')
+      return
+    }
     // transfer code here
-    console.log('destination not yet implemented')
-    res.send('destination not yet implemented')
+    ledger[destination] += amount
+    ledger[user] -= amount
+    fs.writeFileSync('./ledger.json', JSON.stringify(ledger))
+    res.send(
+      'transfer successful, new balances : ',
+      user,
+      ledger[user],
+      destination,
+      ledger[destination]
+    )
+    console.log('new ledger', ledger)
     return
   }
   if (!request) {
@@ -146,7 +161,7 @@ app.post('/pay', (req, res) => {
   console.log('request', request)
   lnService.decodePaymentRequest({ lnd, request: request }, (err, result) => {
     console.log('decoded', result)
-    amount = result.tokens
+    let amount = result.tokens
     if (!ledger) {
       console.log('cant find ledger')
       res.send('cant find ledger')
