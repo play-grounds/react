@@ -161,6 +161,17 @@ app.post('/pay', (req, res) => {
   console.log('request', request)
   lnService.decodePaymentRequest({ lnd, request: request }, (err, result) => {
     console.log('decoded', result)
+    if (err) {
+      console.error(err)
+      res.send(err)
+      return
+    }
+    console.log('decoded', result)
+    if (!result) {
+      console.log('could not decode', request)
+      res.send('could not decode', request)
+      return
+    }
     let amount = result.tokens
     if (!ledger) {
       console.log('cant find ledger')
