@@ -183,7 +183,7 @@ function Points () {
         if (dayInt % 360 === 0) {
           new Audio('audio/cheer.ogg').play()
         } else if (dayInt % 30 === 0) {
-          new Audio('audio/positive.wav').play()
+          new Audio('audio/heal.ogg').play()
         }
 
         document.title =
