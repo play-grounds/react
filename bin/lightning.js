@@ -217,50 +217,6 @@ app.post('/pay', (req, res) => {
   })
 })
 
-// pay with post
-app.get('/pay', (req, res) => {
-  // console.log('request', req.body)
-  const request = req.body.request
-  console.log('req.body', req.body)
-  console.log('request', request)
-  if (!request) {
-    console.log('no request found')
-    res.send('add a payment request')
-    return
-  }
-  console.log('request', request)
-  lnService.decodePaymentRequest({ lnd, request: request }, (err, result) => {
-    if (err) {
-      console.error(err)
-      res.send(err)
-      return
-    }
-    console.log('decoded', result)
-    if (!result) {
-      console.log('could not decode', request)
-      res.send('could not decode', request)
-      return
-    }
-    amount = result.tokens
-    if (amount > ledger[user]) {
-      console.log('not enough funds')
-      res.send('not enough funds')
-      return
-    }
-    ledger[user] -= amount
-    console.log('ledger', ledger)
-    // @@ not concurrent for now
-    fs.writeFileSync('./ledger.json', JSON.stringify(ledger))
-    lnService.payViaPaymentRequest({ lnd, request: request }, (err, result) => {
-      res.send(
-        `<pre>request = ${request} \n\n${result ? result.toString() : ''}\n\n${
-          err ? err.toString() : ''
-        }`
-      )
-    })
-  })
-})
-
 app.get('/', function (req, res) {
   res.send('hello worlds')
 })
