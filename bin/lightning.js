@@ -140,6 +140,7 @@ app.post('/pay', (req, res) => {
       return
     }
     // transfer code here
+    ledger[destination] = ledger[destination] || 0
     ledger[destination] += amount
     ledger[user] -= amount
     fs.writeFileSync('./ledger.json', JSON.stringify(ledger))

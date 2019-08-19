@@ -53,8 +53,11 @@ class App extends React.Component {
 
   send () {
     console.log('sending', this.state)
+    let body = 'request=' + this.state.request
+    body += '&amount=' + this.state.amount
+    body += '&destination=' + this.state.destination
     solid.auth.fetch(this.state.uri, {
-      body: 'request=' + this.state.request,
+      body: body,
       mode: 'no-cors',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       method: 'POST'
@@ -142,7 +145,7 @@ class App extends React.Component {
           <input
             style={{ width: '95%' }}
             value={this.state.amount}
-            onChange={this.changeDestination}
+            onChange={this.changeAmount}
           />
           <hr />
           Command : <br />
