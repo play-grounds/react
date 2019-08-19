@@ -183,8 +183,14 @@ class App extends React.Component {
           <hr />
           Curl : <br />
           curl{' '}
-          {"-X POST  -H  'Content-Type : application/x-www-form-urlencoded' --data 'request=" +
+          {"-X POST --cert $CERT --key $CERT -H  'Content-Type : application/x-www-form-urlencoded' --data 'request=" +
             this.state.request +
+            '&voucher=' +
+            this.state.voucher +
+            '&amount=' +
+            this.state.amount +
+            '&destination=' +
+            this.state.destination +
             "'  "}{' '}
           '{this.state.uri}'
           <hr />
