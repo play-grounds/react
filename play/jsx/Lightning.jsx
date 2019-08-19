@@ -172,6 +172,12 @@ class App extends React.Component {
           fetch("{this.state.uri}",{' '}
           {"{ mode : 'no-cors', headers : { 'Content-Type', 'application/x-www-form-urlencoded' }, body : 'request=" +
             this.state.request +
+            '&voucher=' +
+            this.state.voucher +
+            '&amount=' +
+            this.state.amount +
+            '&destination=' +
+            this.state.destination +
             "', 'method' : 'POST' } "}{' '}
           )
           <hr />
