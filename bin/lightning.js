@@ -208,6 +208,11 @@ app.post('/pay', (req, res) => {
     // @@ not concurrent for now
     fs.writeFileSync('./ledger.json', JSON.stringify(ledger))
     lnService.payViaPaymentRequest({ lnd, request: request }, (err, result) => {
+      if (err) {
+        console.error(err)
+        res.send(err)
+        return
+      }
       res.send(
         `<pre>request = ${request} \n\n${result ? result.toString() : ''}\n\n${
           err ? err.toString() : ''
