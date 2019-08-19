@@ -6,7 +6,7 @@ const bodyParser = require('body-parser')
 const lnService = require('ln-service')
 
 // init
-const port = 8888
+const port = proces.env.PORT || 5010
 
 // get creds
 const macaroonPath =
