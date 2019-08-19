@@ -130,7 +130,7 @@ app.post('/pay', (req, res) => {
   const request = req.body.request
   const destination = req.body.destination
   let amount = parseInt(req.body.amount)
-  let voucher = parseInt(req.body.voucher)
+  let voucher = req.body.voucher
   let balance = parseInt(ledger[user])
   console.log('request', request)
   console.log('destination', destination)
