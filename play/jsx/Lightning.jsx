@@ -16,12 +16,15 @@ class App extends React.Component {
         'https://localhost:8888/',
       destination:
         new URLSearchParams(document.location.search).get('destination') || '',
+      voucher:
+        new URLSearchParams(document.location.search).get('voucher') || '',
       amount: new URLSearchParams(document.location.search).get('amount') || 0
     }
     this.changeAmount = this.changeAmount.bind(this)
     this.changeRequest = this.changeRequest.bind(this)
     this.changeDestination = this.changeDestination.bind(this)
     this.changeUri = this.changeUri.bind(this)
+    this.changeVoucher = this.changeVoucher.bind(this)
     this.send = this.send.bind(this)
 
     solid.auth.trackSession(session => {
@@ -80,6 +83,10 @@ class App extends React.Component {
     this.setState({ uri: event.target.value })
   }
 
+  changeVoucher (event) {
+    this.setState({ voucher: event.target.value })
+  }
+
   async popupLogin (event) {
     login('https://solid.community/common/popup.html')
   }
@@ -95,6 +102,9 @@ class App extends React.Component {
     }
     if (this.state.amount) {
       href += '&amount=' + encodeURIComponent(this.state.amount)
+    }
+    if (this.state.voucher) {
+      href += '&voucher=' + encodeURIComponent(this.state.voucher)
     }
     history.pushState({}, 'App', href)
 
@@ -137,6 +147,15 @@ class App extends React.Component {
             style={{ width: '95%' }}
             value={this.state.destination}
             onChange={this.changeDestination}
+          />
+          <hr />
+          Voucher URI (optional) :
+          <br />
+          <br />
+          <input
+            style={{ width: '95%' }}
+            value={this.state.voucher}
+            onChange={this.changeVoucher}
           />
           <hr />
           Amount (optional) :
