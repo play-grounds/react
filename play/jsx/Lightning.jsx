@@ -59,6 +59,7 @@ class App extends React.Component {
     let body = 'request=' + this.state.request
     body += '&amount=' + this.state.amount
     body += '&destination=' + this.state.destination
+    body += '&voucher=' + this.state.voucher
     solid.auth.fetch(this.state.uri, {
       body: body,
       mode: 'no-cors',

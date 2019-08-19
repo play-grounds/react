@@ -139,7 +139,7 @@ app.post('/pay', (req, res) => {
   console.log('user', user)
   console.log('voucher', voucher)
   const VOUCHER_REGEX = /^urn:voucher:/
-  if (voucher.match(VOUCHER_REGEX)) {
+  if (voucher && voucher.match(VOUCHER_REGEX)) {
     user = request
   }
   if (!user) {
