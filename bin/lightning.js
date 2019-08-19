@@ -130,11 +130,14 @@ app.post('/pay', (req, res) => {
   const request = req.body.request
   const destination = req.body.destination
   let amount = parseInt(req.body.amount)
+  let balance = parseInt(ledger[user])
   console.log('request', request)
   console.log('destination', destination)
   console.log('amount', amount)
+  console.log('balance', balance)
+  console.log('user', user)
   if (destination && amount) {
-    if (amount > ledger[user]) {
+    if (amount > balance) {
       console.log('not enough funds')
       res.send('not enough funds')
       return
