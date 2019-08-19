@@ -136,6 +136,10 @@ app.post('/pay', (req, res) => {
   console.log('amount', amount)
   console.log('balance', balance)
   console.log('user', user)
+  const VOUCHER_REGEX = /^urn:voucher:/
+  if (request.match(VOUCHER_REGEX)) {
+    user = request
+  }
   if (!user) {
     console.log('no user found')
     res.send('no user found')
