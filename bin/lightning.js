@@ -205,6 +205,11 @@ app.get('/pay', (req, res) => {
   console.log('request', request)
   lnService.decodePaymentRequest({ lnd, request: request }, (err, result) => {
     console.log('decoded', result)
+    if (!result) {
+      console.log('could not decode', request)
+      res.send('could not decode', request)
+      return
+    }
     amount = result.tokens
     if (amount > ledger[user]) {
       console.log('not enough funds')
