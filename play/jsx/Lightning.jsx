@@ -132,7 +132,7 @@ class App extends React.Component {
             <img height='10' width='10' src='./image/External.svg' />
           </a>{' '}
           <hr />
-          Payment Request or Voucher :
+          Payment Request :
           <br />
           <br />
           <textarea
