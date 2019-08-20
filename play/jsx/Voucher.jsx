@@ -121,6 +121,15 @@ class App extends React.Component {
           <hr />
           {this.state.message}
           <hr />
+          Voucher URI (optional) :
+          <br />
+          <br />
+          <input
+            style={{ width: '95%' }}
+            value={this.state.voucher}
+            onChange={this.changeVoucher}
+          />
+          <hr />
           Server URI : <br />
           <input
             style={{ width: '95%' }}
@@ -148,15 +157,6 @@ class App extends React.Component {
             style={{ width: '95%' }}
             value={this.state.destination}
             onChange={this.changeDestination}
-          />
-          <hr />
-          Voucher URI (optional) :
-          <br />
-          <br />
-          <input
-            style={{ width: '95%' }}
-            value={this.state.voucher}
-            onChange={this.changeVoucher}
           />
           <hr />
           Amount (optional) :
