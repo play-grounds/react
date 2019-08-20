@@ -53,7 +53,8 @@ function App () {
     { uri: 'webid.html', title: 'WebId App' },
     { uri: 'speech.html', title: 'Speech App' },
     { uri: 'calendar.html', title: 'Calendar App' },
-    { uri: 'activity.html', title: 'Activity App' }
+    { uri: 'activity.html', title: 'Activity App' },
+    { uri: 'voucher.html', title: 'Web Vouchers' }
   ]
 
   var appList = apps.map(app => {
