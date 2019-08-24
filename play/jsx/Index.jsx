@@ -66,7 +66,11 @@ function App () {
       image: 'image/bookmark.jpg'
     },
     { uri: 'brain.html', title: 'Brain Wallet', image: 'image/brain.jpg' },
-    { uri: 'friends.html', title: 'Friends in RDF' },
+    {
+      uri: 'friends.html',
+      title: 'Friends in RDF',
+      image: 'image/friends.png'
+    },
     { uri: 'solid.html', title: 'Solid App' },
     { uri: 'rdflib.html', title: 'Test RDFLib' },
     { uri: 'tipjar.html', title: 'Tipjars' },
