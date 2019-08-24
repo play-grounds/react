@@ -29,12 +29,16 @@ function Li (props) {
                 <hr />
               </div>
               <figure className='image is-48x48'>
-                <img src='./image/app.jpg' alt='Placeholder image' />
+                <img
+                  style={{ height: '90px', width: '90px' }}
+                  src='./image/app.jpg'
+                  alt='Placeholder image'
+                />
                 <div
                   style={{
                     display: 'inline',
                     verticalAlign: 'top',
-                    paddingLeft: '10px'
+                    paddingLeft: '16px'
                   }}
                   className='content'
                 >
