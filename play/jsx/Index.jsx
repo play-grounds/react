@@ -72,7 +72,17 @@ function App () {
       image: 'image/friends.png'
     },
     { uri: 'tipjar.html', title: 'Tipjars', image: 'image/tipjar.png' },
+    {
+      uri: 'calendar.html',
+      title: 'Calendar App',
+      image: 'image/calendar.png'
+    },
     { uri: 'localStorage.html', title: 'Local Storage' },
+    {
+      uri: 'activity.html',
+      title: 'Activity App',
+      image: 'image/activity.png'
+    },
     { uri: 'bookmarklet.html', title: 'Bookmarklets' },
     { uri: 'solid-auth-client.html', title: 'Solid Auth Client' },
     { uri: 'wallet.html', title: 'Wallet' },
@@ -95,24 +105,35 @@ function App () {
       image: 'image/container.png'
     },
     { uri: 'timeline.html', title: 'Timeline App' },
-    { uri: 'webtorrent.html', title: 'Webtorrent App' },
-    { uri: 'dashboard.html', title: 'Dashboard App' },
+    {
+      uri: 'webtorrent.html',
+      title: 'Webtorrent App',
+      image: 'image/webtorrent.png'
+    },
+    {
+      uri: 'dashboard.html',
+      title: 'Dashboard App',
+      image: 'image/dashboard.png'
+    },
     { uri: 'points.html', title: 'Points App' },
     {
       uri:
         'mind.html?data=%7B%22nodeData%22%3A%7B%22id%22%3A%22root%22%2C%22topic%22%3A%22Lightning%20games%22%2C%22root%22%3Atrue%2C%22children%22%3A%5B%7B%22topic%22%3A%22released%22%2C%22id%22%3A%22c63b8604ff228829%22%2C%22selected%22%3Atrue%2C%22new%22%3Atrue%2C%22children%22%3A%5B%7B%22topic%22%3A%22donner%20dungeon%22%2C%22id%22%3A%22c63b847b05a5686b%22%2C%22selected%22%3Atrue%2C%22new%22%3Atrue%7D%2C%7B%22topic%22%3A%22poker%22%2C%22id%22%3A%22c63b840e2e19d384%22%2C%22selected%22%3Atrue%2C%22new%22%3Atrue%7D%2C%7B%22topic%22%3A%22agar%22%2C%22id%22%3A%22c631c9cb1d7ff3cf%22%2C%22selected%22%3Atrue%2C%22new%22%3Atrue%2C%22style%22%3A%7B%22color%22%3A%22%23c0392c%22%7D%7D%5D%7D%2C%7B%22topic%22%3A%22coming%20soon%22%2C%22id%22%3A%22c63b869ec834af65%22%2C%22selected%22%3Atrue%2C%22new%22%3Atrue%2C%22children%22%3A%5B%7B%22topic%22%3A%22Infinite%20Fleet%22%2C%22id%22%3A%22c63b898f4420b806%22%2C%22selected%22%3Atrue%2C%22new%22%3Atrue%2C%22style%22%3A%7B%22fontSize%22%3A%2232%22%2C%22color%22%3A%22%2327ae61%22%2C%22fontWeight%22%3A%22bold%22%7D%7D%5D%7D%5D%2C%22expanded%22%3Atrue%2C%22style%22%3A%7B%22color%22%3A%22%23f1c40e%22%7D%7D%2C%22linkData%22%3A%7B%7D%7D',
+      image: 'image/mind.png',
       title: 'Mind Map App'
     },
-    { uri: 'groupuris.html', title: 'Group URIs' },
+    {
+      uri: 'groupuris.html',
+      title: 'Group URIs',
+      image: 'image/groupuris.png'
+    },
     { uri: 'conference.html', title: 'Conference Call' },
     { uri: 'acl.html', title: 'ACL App' },
-    { uri: 'webid.html', title: 'WebId App' },
-    { uri: 'speech.html', title: 'Speech App' },
+    { uri: 'webid.html', title: 'WebId App', image: 'image/webid.png' },
+    { uri: 'speech.html', title: 'Speech App', image: 'image/speech.png' },
     { uri: 'solid.html', title: 'Solid App' },
     { uri: 'rdflib.html', title: 'Test RDFLib' },
-    { uri: 'calendar.html', title: 'Calendar App' },
-    { uri: 'activity.html', title: 'Activity App' },
-    { uri: 'voucher.html', title: 'Web Vouchers' }
+    { uri: 'voucher.html', title: 'Web Vouchers', image: 'image/vaoucher.png' }
   ]
 
   var appList = apps.map(app => {
