@@ -29,10 +29,7 @@ function Li (props) {
                 <hr />
               </div>
               <figure className='image is-48x48'>
-                <img
-                  src='https://bulma.io/images/placeholders/96x96.png'
-                  alt='Placeholder image'
-                />
+                <img src='./image/app.jpg' alt='Placeholder image' />
                 <div
                   style={{
                     display: 'inline',
