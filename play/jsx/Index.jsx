@@ -68,12 +68,10 @@ function App () {
     { uri: 'brain.html', title: 'Brain Wallet', image: 'image/brain.jpg' },
     {
       uri: 'friends.html',
-      title: 'Friends in RDF',
+      title: 'Social Graph',
       image: 'image/friends.png'
     },
-    { uri: 'solid.html', title: 'Solid App' },
-    { uri: 'rdflib.html', title: 'Test RDFLib' },
-    { uri: 'tipjar.html', title: 'Tipjars' },
+    { uri: 'tipjar.html', title: 'Tipjars', image: 'image/tipjar.png' },
     { uri: 'localStorage.html', title: 'Local Storage' },
     { uri: 'bookmarklet.html', title: 'Bookmarklets' },
     { uri: 'solid-auth-client.html', title: 'Solid Auth Client' },
@@ -102,6 +100,8 @@ function App () {
     { uri: 'acl.html', title: 'ACL App' },
     { uri: 'webid.html', title: 'WebId App' },
     { uri: 'speech.html', title: 'Speech App' },
+    { uri: 'solid.html', title: 'Solid App' },
+    { uri: 'rdflib.html', title: 'Test RDFLib' },
     { uri: 'calendar.html', title: 'Calendar App' },
     { uri: 'activity.html', title: 'Activity App' },
     { uri: 'voucher.html', title: 'Web Vouchers' }
