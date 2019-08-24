@@ -62,10 +62,10 @@ function App () {
     {
       uri: 'bookmark.html',
       title: 'Bookmarks',
-      description: 'Bookmarking App with collections',
+      description: 'Social Bookmarking',
       image: 'image/bookmark.jpg'
     },
-    { uri: 'brain.html', title: 'Brain Wallet' },
+    { uri: 'brain.html', title: 'Brain Wallet', image: 'image/brain.jpg' },
     { uri: 'friends.html', title: 'Friends in RDF' },
     { uri: 'solid.html', title: 'Solid App' },
     { uri: 'rdflib.html', title: 'Test RDFLib' },
