@@ -34,7 +34,7 @@ function Li (props) {
                 <a target='_blank' href={props.href}>
                   <img
                     style={{ height: '90px', width: '90px' }}
-                    src='./image/app.jpg'
+                    src={props.image || './image/app.jpg'}
                     alt='Placeholder image'
                   />
                 </a>
@@ -62,7 +62,8 @@ function App () {
     {
       uri: 'bookmark.html',
       title: 'Bookmarks',
-      description: 'Bookmarking App'
+      description: 'Bookmarking App with collections',
+      image: 'image/bookmark.jpg'
     },
     { uri: 'brain.html', title: 'Brain Wallet' },
     { uri: 'friends.html', title: 'Friends in RDF' },
@@ -103,7 +104,14 @@ function App () {
   ]
 
   var appList = apps.map(app => {
-    return <Li href={app.uri} text={app.title} description={app.description} />
+    return (
+      <Li
+        href={app.uri}
+        text={app.title}
+        image={app.image}
+        description={app.description}
+      />
+    )
   })
 
   return (
