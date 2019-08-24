@@ -2,7 +2,7 @@ function Body (props) {
   return (
     <div>
       <h1 id='welcome' className='title'>
-        Play apps!
+        App Gallery!
       </h1>
     </div>
   )
@@ -24,16 +24,20 @@ function Li (props) {
             <div className='media-left'>
               <div className='media-content'>
                 <p className='title is-5'>
-                  <a href={props.href}>{props.text}</a>
+                  <a target='_blank' href={props.href}>
+                    {props.text}
+                  </a>
                 </p>
                 <hr />
               </div>
               <figure className='image is-48x48'>
-                <img
-                  style={{ height: '90px', width: '90px' }}
-                  src='./image/app.jpg'
-                  alt='Placeholder image'
-                />
+                <a target='_blank' href={props.href}>
+                  <img
+                    style={{ height: '90px', width: '90px' }}
+                    src='./image/app.jpg'
+                    alt='Placeholder image'
+                  />
+                </a>
                 <div
                   style={{
                     display: 'inline',
