@@ -65,7 +65,6 @@ function App () {
       description: 'Social Bookmarking',
       image: 'image/bookmark.jpg'
     },
-    { uri: 'brain.html', title: 'Brain Wallet', image: 'image/brain.jpg' },
     {
       uri: 'friends.html',
       title: 'Social Graph',
@@ -77,6 +76,7 @@ function App () {
       title: 'Calendar App',
       image: 'image/calendar.png'
     },
+    { uri: 'person.html', title: 'Profile App', image: 'image/person.png' },
     {
       uri: 'webtorrent.html',
       title: 'Webtorrent App',
@@ -88,6 +88,7 @@ function App () {
       image: 'image/activity.png'
     },
     { uri: 'localStorage.html', title: 'Local Storage' },
+    { uri: 'brain.html', title: 'Brain Wallet', image: 'image/brain.jpg' },
     { uri: 'bookmarklet.html', title: 'Bookmarklets' },
     { uri: 'solid-auth-client.html', title: 'Solid Auth Client' },
     { uri: 'wallet.html', title: 'Wallet' },
@@ -100,10 +101,16 @@ function App () {
     { uri: 'counter.html', title: 'Counter App', image: 'image/counter.png' },
     { uri: 'seed.html', title: 'Seed App', image: 'image/seed.png' },
     { uri: 'inbox.html', title: 'Inbox App', image: 'image/inbox.png' },
+    { uri: 'webid.html', title: 'WebId App', image: 'image/webid.png' },
+    { uri: 'speech.html', title: 'Speech App', image: 'image/speech.png' },
+    {
+      uri: 'groupuris.html',
+      title: 'Group URIs',
+      image: 'image/groupuris.png'
+    },
     { uri: 'patch.html', title: 'Patch App' },
     { uri: 'touch.html', title: 'Touch App' },
     { uri: 'put.html', title: 'Put App' },
-    { uri: 'person.html', title: 'Profile App', image: 'image/person.png' },
     {
       uri: 'container.html',
       title: 'Container App',
@@ -122,15 +129,8 @@ function App () {
       image: 'image/mind.png',
       title: 'Mind Map App'
     },
-    {
-      uri: 'groupuris.html',
-      title: 'Group URIs',
-      image: 'image/groupuris.png'
-    },
     { uri: 'conference.html', title: 'Conference Call' },
     { uri: 'acl.html', title: 'ACL App' },
-    { uri: 'webid.html', title: 'WebId App', image: 'image/webid.png' },
-    { uri: 'speech.html', title: 'Speech App', image: 'image/speech.png' },
     { uri: 'solid.html', title: 'Solid App' },
     { uri: 'rdflib.html', title: 'Test RDFLib' },
     { uri: 'voucher.html', title: 'Web Vouchers', image: 'image/vaoucher.png' }
