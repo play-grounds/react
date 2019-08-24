@@ -77,12 +77,17 @@ function App () {
       title: 'Calendar App',
       image: 'image/calendar.png'
     },
-    { uri: 'localStorage.html', title: 'Local Storage' },
+    {
+      uri: 'webtorrent.html',
+      title: 'Webtorrent App',
+      image: 'image/webtorrent.png'
+    },
     {
       uri: 'activity.html',
       title: 'Activity App',
       image: 'image/activity.png'
     },
+    { uri: 'localStorage.html', title: 'Local Storage' },
     { uri: 'bookmarklet.html', title: 'Bookmarklets' },
     { uri: 'solid-auth-client.html', title: 'Solid Auth Client' },
     { uri: 'wallet.html', title: 'Wallet' },
@@ -105,11 +110,6 @@ function App () {
       image: 'image/container.png'
     },
     { uri: 'timeline.html', title: 'Timeline App' },
-    {
-      uri: 'webtorrent.html',
-      title: 'Webtorrent App',
-      image: 'image/webtorrent.png'
-    },
     {
       uri: 'dashboard.html',
       title: 'Dashboard App',
