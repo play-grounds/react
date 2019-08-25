@@ -87,6 +87,7 @@ function App () {
       title: 'Activity App',
       image: 'image/activity.png'
     },
+    { uri: 'points.html', title: 'Points App', image: 'image/points.png' },
     { uri: 'localStorage.html', title: 'Local Storage' },
     { uri: 'brain.html', title: 'Brain Wallet', image: 'image/brain.jpg' },
     { uri: 'bookmarklet.html', title: 'Bookmarklets' },
@@ -129,7 +130,6 @@ function App () {
       title: 'Dashboard App',
       image: 'image/dashboard.png'
     },
-    { uri: 'points.html', title: 'Points App' },
     { uri: 'conference.html', title: 'Conference Call' },
     { uri: 'acl.html', title: 'ACL App' },
     { uri: 'solid.html', title: 'Solid App' },
