@@ -248,7 +248,7 @@ function Points () {
 
   return (
     <div className='is-info'>
-      <h1>England Win % Chance</h1>
+      <h1>England vs Australia 3rd Test - Griggometer</h1>
       <hr />
 
       <Circle rad={ball} count={ball} />
