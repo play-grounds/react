@@ -19,7 +19,7 @@ if (!localStorage.getItem('localScore')) {
 
 var subject =
   new URLSearchParams(document.location.search).get('uri') ||
-  'https://melvin.solid.live/credit/count.ttl'
+  'https://melvin.solid.live/grigget/grigget.ttl'
 
 // Create context for global store assignment
 const StateContext = React.createContext()
@@ -246,7 +246,7 @@ function Points () {
       <h1>England Win % Chance</h1>
       <hr />
 
-      <Circle rad={template.count} count={template.day % 360} />
+      <Circle rad={240} count={240} />
 
       <hr />
 
