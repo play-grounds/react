@@ -267,7 +267,7 @@ function Points () {
       <button
         className='button is-large is-info'
         onClick={() => {
-          console.log(1)
+          location.reload()
         }}
       >
         Refresh
