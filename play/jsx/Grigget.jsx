@@ -237,16 +237,21 @@ function Points () {
   let startTime = localStorage.getItem('startTime') || 0
   let startScore = localStorage.getItem('startScore') || 0
 
-  var w = 62
+  let c = template.day % 360
+  let s = template.day % 30
+
+  var w = template.count
   var d = 0
-  var l = 38
+  var l = template.day
+
+  var ball = w * 3.6
 
   return (
     <div className='is-info'>
       <h1>England Win % Chance</h1>
       <hr />
 
-      <Circle rad={240} count={240} />
+      <Circle rad={ball} count={ball} />
 
       <hr />
 
