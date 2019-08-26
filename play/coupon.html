@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Local Storage</title>
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://solid.github.io/releases/rdflib.js/rdflib-0.12.2.min.js"></script>
+  <script src="https://solid.github.io/solid-auth-client/dist/solid-auth-client.bundle.js"></script>
+
+  <!-- Don't use this in production: -->
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial;
+    }
+
+    .coupon {
+      border: 5px dotted #bbb;
+      width: 80%;
+      border-radius: 15px;
+      margin: 0 auto;
+      max-width: 600px;
+    }
+
+    .container {
+      padding: 2px 16px;
+      background-color: #f1f1f1;
+    }
+
+    .promo {
+      background: #ccc;
+      padding: 3px;
+    }
+
+    .expire {
+      color: red;
+    }
+  </style>
+</head>
+
+
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel" src="../src/components/bulma/Navbar.jsx"></script>
+
+  <script type="text/babel">
+
+function Body(props) {
+    return (
+    <div>
+
+      <div className="coupon">
+  <div className="container">
+    <h3>My Coupon</h3>
+  </div>
+  <img src="image/hamburger.jpg" alt="Avatar" style={{width : "100%"}} />
+  <div className="container" style={{ backgroundColor: 'white'}}>
+    <h2><b>20% OFF YOUR PURCHASE</b></h2>
+    <p>Lorem ipsum dolor sit amet, et nam pertinax gloriatur. Sea te minim soleat senserit, ex quo luptatum tacimates
+      voluptatum, salutandi delicatissimi eam ea. In sed nullam laboramus appellantur, mei ei omnis dolorem
+      mnesarchum.</p>
+  </div>
+  <div className="container">
+    <p>Use Promo Code: <span className="promo">BOH232</span></p>
+    <p className="expire">Expires: Jan 03, 2021</p>
+  </div>
+</div>
+
+    </div>
+  );
+}
+
+
+function App() {
+  return (
+    <div>
+      <NavbarSolidLogin 
+        className="is-link" 
+        title="Coupon" 
+        sourceCode="https://github.com/play-grounds/react/blob/gh-pages/play/coupon.html"/>
+      <section className="section">
+        <Body/>
+      </section>
+
+    </div>
+  );
+}
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('root')
+)
+    </script>
+
+  <link rel="stylesheet" href="css/bulma.css" defer>
+
+</body>
+
+</html>
+
+<!DOCTYPE html>
+<html>
