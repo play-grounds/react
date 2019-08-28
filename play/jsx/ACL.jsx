@@ -28,7 +28,12 @@ function Body (props) {
     a               acl:Authorization;
     acl:agentClass  foaf:Agent;                               # everyone
     acl:mode        acl:Read;                                 # has Read-only access
-    acl:accessTo    <https://alice.databox.me/profile/card>.  # to the public profile`
+    acl:accessTo    <https://alice.databox.me/profile/card>.  # to the public profile
+    
+    # default says: this authorization (the statements above) 
+    #   will also be inherited by any resource within that container 
+    #   that doesn't have its own ACL.
+    acl:default  <https://alice.databox.me/profile/>.`
 
   var aclpriv = `# Contents of https://alice.databox.me/docs/file1.acl
 @prefix  acl:  <http://www.w3.org/ns/auth/acl#>  .
