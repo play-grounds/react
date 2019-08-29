@@ -76,6 +76,11 @@ function App () {
       title: 'Calendar App',
       image: 'image/calendar.png'
     },
+    {
+      uri: 'video.html',
+      title: 'Video App',
+      image: 'image/video.png'
+    },
     { uri: 'person.html', title: 'Profile App', image: 'image/person.png' },
     {
       uri: 'webtorrent.html',
