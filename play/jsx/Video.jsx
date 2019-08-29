@@ -2,9 +2,9 @@ class App extends React.Component {
   constructor (props) {
     super(props)
     let youtube =
-      new URLSearchParams(document.location.search.get('youtube')) ||
+      new URLSearchParams(document.location.search).get('youtube') ||
       'bTqVqk7FSmY'
-    this.setState({ youtube: youtube })
+    this.state = { youtube: youtube }
   }
 
   render () {
@@ -28,13 +28,7 @@ ReactDOM.render(
       sourceCode='https://github.com/play-grounds/react/blob/gh-pages/play/video.html'
     />
 
-    <div className='container'>
-      <div
-        id='player'
-        data-plyr-provider='youtube'
-        data-plyr-embed-id='bTqVqk7FSmY'
-      />
-    </div>
+    <App />
   </div>,
 
   document.getElementById('root')
