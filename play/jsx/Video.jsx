@@ -1,4 +1,4 @@
-class App extends React.Component {
+class Video extends React.Component {
   constructor (props) {
     super(props)
     let youtube =
@@ -28,7 +28,7 @@ ReactDOM.render(
       sourceCode='https://github.com/play-grounds/react/blob/gh-pages/play/video.html'
     />
 
-    <App />
+    <Video />
   </div>,
 
   document.getElementById('root')
