@@ -1,22 +1,41 @@
 class Video extends React.Component {
   constructor (props) {
     super(props)
-    let youtube =
-      new URLSearchParams(document.location.search).get('youtube') ||
-      'bTqVqk7FSmY'
-    this.state = { youtube: youtube }
+    let youtube = new URLSearchParams(document.location.search).get('youtube')
+    let video = new URLSearchParams(document.location.search).get('video')
+    let embedId = youtube || video || '3AjXgY35iZg'
+
+    let provider = 'youtube'
+    if (youtube) provider = 'youtube'
+    if (video) provider = 'video'
+    this.state = { embedId: embedId, provider: provider }
   }
 
   render () {
-    return (
-      <div className='container'>
-        <div
-          id='player'
-          data-plyr-provider='youtube'
-          data-plyr-embed-id={this.state.youtube}
-        />
-      </div>
-    )
+    console.log(this.state)
+    if (this.state.provider === 'youtube') {
+      return (
+        <div className='container'>
+          <div
+            id='player'
+            data-plyr-provider={this.state.provider}
+            data-plyr-embed-id={this.state.embedId}
+          />
+        </div>
+      )
+    }
+
+    if (this.state.provider === 'video') {
+      return (
+        <div className='container'>
+          <video controls crossOrigin playsInline>
+            <source src={this.state.embedId} type='video/mp4' />>
+          </video>
+        </div>
+      )
+    }
+
+    return <div>No Video Found</div>
   }
 }
 
