@@ -13,6 +13,10 @@ const FOAF = $rdf.Namespace('http://xmlns.com/foaf/0.1/')
 const SOLID = $rdf.Namespace('http://www.w3.org/ns/solid/terms#')
 const VCARD = $rdf.Namespace('http://www.w3.org/2006/vcard/ns#')
 
+/** An idividual item in a post
+ * 
+ * @param {*} props 
+ */
 function PostItem(props) {
   const AUDIO_EXTENSIONS = /\.(m4a|mp4a|mpga|mp2|mp2a|mp3|m2a|m3a|wav|weba|aac|oga|spx)($|\?)/i
   const VIDEO_EXTENSIONS = /\.(mp4|og[gv]|webm|mov|m4v|mkv)($|\?)/i
