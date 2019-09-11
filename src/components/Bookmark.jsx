@@ -24,6 +24,11 @@ function getObject (subject, predicate) {
   return UI.store.anyValue(s, p, o, w)
 }
 
+/**
+ * gets the subject value form predicate and object
+ * @param {} predicate 
+ * @param {*} object 
+ */
 function getSubject (predicate, object) {
   if (!predicate || !object) return
   let s = null
