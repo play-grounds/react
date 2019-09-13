@@ -61,6 +61,11 @@ function getProfileFromUri (uri) {
   }
 }
 
+/**
+ * Gets the actual bookmark object from a pointer
+ * 
+ * @param {string} uri 
+ */
 function getBookmarkFromUri (uri) {
   function g (p) {
     return getObject(uri, p)
