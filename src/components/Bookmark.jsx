@@ -26,8 +26,8 @@ function getObject (subject, predicate) {
 
 /**
  * gets the subject value form predicate and object
- * @param {} predicate
- * @param {*} object
+ * @param {string} predicate
+ * @param {string} object
  */
 function getSubject (predicate, object) {
   if (!predicate || !object) return
