@@ -26,8 +26,8 @@ function getObject (subject, predicate) {
 
 /**
  * gets the subject value form predicate and object
- * @param {} predicate 
- * @param {*} object 
+ * @param {} predicate
+ * @param {*} object
  */
 function getSubject (predicate, object) {
   if (!predicate || !object) return
@@ -63,8 +63,8 @@ function getProfileFromUri (uri) {
 
 /**
  * Gets the actual bookmark object from a pointer
- * 
- * @param {string} uri 
+ *
+ * @param {string} uri
  */
 function getBookmarkFromUri (uri) {
   function g (p) {
@@ -73,8 +73,8 @@ function getBookmarkFromUri (uri) {
   return {
     '@id': uri,
     '@type': g(RDF('type')),
-    recalls: g(BOOK('recalls')) || 'lorem',
-    title: g(DCT('title')) || 'lorem',
+    recalls: g(BOOK('recalls')),
+    title: g(DCT('title')) || 'bookmark',
     maker: g(FOAF('maker')),
     created: g(DCT('created')),
     subject: uri
