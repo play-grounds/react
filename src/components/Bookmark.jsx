@@ -38,6 +38,10 @@ function getSubject (predicate, object) {
   return UI.store.anyValue(s, p, o, w)
 }
 
+/**
+ * gets a profile object from a uri
+ * @param {string} uri
+ */
 function getProfileFromUri (uri) {
   function g (p) {
     return getObject(uri, p)
