@@ -85,6 +85,11 @@ function getBookmarkFromUri (uri) {
   }
 }
 
+/**
+ * get a type for a given URI
+ * 
+ * @param {string} uri 
+ */
 function getTypeFromUri (uri) {
   function g (p) {
     return getObject(uri, p)
