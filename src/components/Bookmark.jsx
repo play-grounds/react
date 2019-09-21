@@ -97,6 +97,11 @@ function getTypeFromUri (uri) {
   return g(RDF('type'))
 }
 
+/**
+ * get bookmark doc from a type index
+ * 
+ * @param {string} uri 
+ */
 function getBookmarkDocFromTypeIndex (uri) {
   if (!uri) return
 
