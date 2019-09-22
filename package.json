@@ -37,6 +37,7 @@
   "dependencies": {
     "@solid/query-ldflex": "^2.5.1",
     "babel-polyfill": "^6.26.0",
+    "cheerio": "^1.0.0-rc.3",
     "install": "^0.13.0",
     "ldflex": "^2.2.1",
     "ln-service": "^40.1.3",
