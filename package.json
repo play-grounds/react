@@ -37,7 +37,9 @@
   "dependencies": {
     "@solid/query-ldflex": "^2.5.1",
     "babel-polyfill": "^6.26.0",
+    "base58check": "^2.0.0",
     "cheerio": "^1.0.0-rc.3",
+    "crypto": "^1.0.1",
     "install": "^0.13.0",
     "ldflex": "^2.2.1",
     "ln-service": "^40.1.3",
@@ -45,6 +47,7 @@
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "replace-in-file-webpack-plugin": "^1.0.6",
+    "secp256k1": "^3.8.0",
     "webid": "^0.3.11"
   }
 }
