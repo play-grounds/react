@@ -329,7 +329,7 @@ function Circle ({ rad, count, ...props }) {
   // console.log(rad, percent, count, p, factor)
 
   return (
-    <svg width='100%' height='100%' viewBox='-25 -25 400 400'>
+    <svg width='300' height='300' viewBox='-25 -25 400 400'>
       <circle
         cx='175'
         cy='175'
