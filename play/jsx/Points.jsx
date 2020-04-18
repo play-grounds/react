@@ -172,6 +172,7 @@ function Points () {
         let o = null
         let w = UI.store.sym(subject.split('#')[0])
         let hour = UI.store.statementsMatching(s, p, o, w)
+        console.log('hour', hour)
         let hourInt = parseInt(hour[0].object.value)
         console.log('hour', hour[0].object.value)
 
@@ -249,7 +250,9 @@ function Points () {
       <h1>Burndown Chart (hourly work)</h1>
       <hr />
 
-      <Circle rad={template.count} count={template.day % 360} />
+      <div>
+        <Circle rad={template.count} count={template.day % 360} />
+      </div>
 
       <hr />
 
@@ -326,20 +329,46 @@ function Circle ({ rad, count, ...props }) {
   // console.log(rad, percent, count, p, factor)
 
   return (
-    <svg width='300' height='300'>
+    <svg width='100%' height='100%' viewBox='-25 -25 400 400'>
       <circle
-        cx='150'
-        cy='150'
+        cx='175'
+        cy='175'
+        stroke='Moccasin'
+        fill='none'
+        strokeWidth='30'
+        r={175}
+        //        r={rad / factor}
+      ></circle>
+      <circle
+        cx='175'
+        cy='175'
+        strokeDashoffset='1100'
+        strokeDasharray='1100'
+        stroke='Maroon'
+        transform='rotate(-90 175 175)'
+        fill='none'
+        strokeLinecap='round'
+        strokeWidth='30'
         style={{
-          fill: 'rgb(' + red + ', ' + green + ', 0)',
-          stroke: 'gold',
-          strokeWidth: 11,
-          strokeDasharray: p + '% ' + q + '%'
+          strokeDashoffset: ((360 - count) * 1100) / 360,
+          transition: '1s ease-out 0s'
         }}
-        r={rad / factor}
+        r={175}
+        //        r={rad / factor}
+      ></circle>
+      <text
+        fill='Maroon'
+        x='50%'
+        y='50%'
+        dx='-25'
+        textAnchor='middle'
+        style={{
+          font: 'bold 5rem Helvetica, Arial, sans-serif'
+        }}
       >
-        <title>Pie</title>
-      </circle>
+        {Math.round((count * 100) / 360)}
+        <tspan dx='10'>%</tspan>
+      </text>
     </svg>
   )
 }
