@@ -357,7 +357,9 @@ function Circle ({ rad, count, ...props }) {
         //        r={rad / factor}
       ></circle>
       <text
-        fill={'rgb(' + red + ', ' + green + ', 0)'}
+        fill={
+          'rgb(' + (count % 30) * 8 + ', ' + (30 - (count % 30)) * 8 + ', 0)'
+        }
         x='50%'
         y='50%'
         dx='-25'
