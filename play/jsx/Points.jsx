@@ -344,7 +344,7 @@ function Circle ({ rad, count, ...props }) {
         cy='175'
         strokeDashoffset='1100'
         strokeDasharray='1100'
-        stroke='Maroon'
+        stroke={'rgb(' + red + ', ' + green + ', 0)'}
         transform='rotate(-90 175 175)'
         fill='none'
         strokeLinecap='round'
@@ -357,7 +357,7 @@ function Circle ({ rad, count, ...props }) {
         //        r={rad / factor}
       ></circle>
       <text
-        fill='Maroon'
+        fill={'rgb(' + red + ', ' + green + ', 0)'}
         x='50%'
         y='50%'
         dx='-25'
