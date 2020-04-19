@@ -345,7 +345,7 @@ function Circle ({ rad, count, ...props }) {
         strokeDashoffset='1100'
         strokeDasharray='1100'
         stroke={'rgb(' + red + ', ' + green + ', 0)'}
-        transform='rotate(-90 175 175)'
+        transform='rotate(-270 175 175)'
         fill='none'
         strokeLinecap='round'
         strokeWidth='30'
