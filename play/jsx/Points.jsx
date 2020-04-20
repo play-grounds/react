@@ -247,9 +247,6 @@ function Points () {
 
   return (
     <div className='is-info'>
-      <h1>Burndown Chart (hourly work)</h1>
-      <hr />
-
       <div>
         <Circle rad={template.count} count={template.day % 360} />
       </div>
@@ -358,7 +355,11 @@ function Circle ({ rad, count, ...props }) {
       ></circle>
       <text
         fill={
-          'rgb(' + (count % 30) * 8 + ', ' + (30 - (count % 30)) * 8 + ', 0)'
+          'rgb(' +
+          ((count % 30) * 255) / 30.0 +
+          ', ' +
+          ((30 - (count % 30)) * 255) / 30.0 +
+          ', 0)'
         }
         x='50%'
         y='50%'
@@ -368,8 +369,7 @@ function Circle ({ rad, count, ...props }) {
           font: 'bold 5rem Helvetica, Arial, sans-serif'
         }}
       >
-        {Math.round((count * 100) / 360)}
-        <tspan dx='10'>%</tspan>
+        {Math.floor((count * 12) / 360)}
       </text>
     </svg>
   )
