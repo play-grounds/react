@@ -233,6 +233,12 @@ function Points () {
     w.onopen = function () {
       w.send('sub ' + subject)
     }
+    w.onerror = function () {
+      console.log('websocket error')
+    }
+    w.onclose = function () {
+      console.log('websocket closed')
+    }
   }, [])
 
   let startTime = localStorage.getItem('startTime') || 0
