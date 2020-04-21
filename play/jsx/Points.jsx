@@ -283,10 +283,10 @@ function Points () {
       <hr />
 
       <div className='buttons'>
-        <span className='button is-large is-warning'>S : {s}</span>
-        <span className='button is-large is-success'>C : {l}</span>
-        <span className='button is-large is-info'>H : {t}</span>
-        <span className='button is-large is-link'>D : {d}</span>
+        <span className='button is-large is-warning'>Sprint : {c}</span>
+        {/* <span className='button is-large is-success'>C : {l}</span> */}
+        <span className='button is-large is-info'>Hour : {t}</span>
+        <span className='button is-large is-link'>Day : {d}</span>
 
         {/* <span className='button is-large is-danger'>E : {e}</span>
         <span className='button is-large is-light'>A : {a}</span>
