@@ -4,6 +4,9 @@ UI.store = $rdf.graph()
 UI.fetcher = new $rdf.Fetcher(UI.store)
 UI.updater = new $rdf.UpdateManager(UI.store)
 
+var cycle = { start: new Date().getTime() }
+var subcycle = { start: new Date().getTime() }
+
 if (!localStorage.getItem('startTime')) {
   localStorage.setItem('startTime', new Date().getTime())
 }
@@ -133,10 +136,10 @@ const store = () => {
       let a = Math.round(e / 300) / 100
       localStorage.setItem('localTime', new Date().getTime())
       localStorage.setItem('localScore', day % 30)
-      cogoToast.info('Pace', {
-        heading: Math.round(1000 - a * 100) / 100,
-        hideAfter: 60
-      })
+      // cogoToast.info('Pace', {
+      //   heading: Math.round(1000 - a * 100) / 100,
+      //   hideAfter: 60
+      // })
       // cogoToast.info('Elapsed', { heading: e })
     }
   }
@@ -156,6 +159,30 @@ function pushLast (val) {
   if (val !== ret[ret.length - 1]) {
     ret.push(val)
     localStorage.setItem('last', JSON.stringify(ret))
+  }
+}
+
+function processPoints (points) {
+  console.log('subcycle', subcycle)
+  if (points % 360 === 0) {
+    cycle.end = new Date().getTime()
+    console.log('cycle diff', cycle.end - cycle.start)
+    cycle = { start: new Date().getTime() }
+    new Audio('audio/cheer.ogg').play()
+  } else if (points % 30 === 0) {
+    subcycle.end = new Date().getTime()
+    let diff = subcycle.end - subcycle.start
+    console.log('subcycle diff', diff, 'subcycle', subcycle)
+    if (diff && diff > 0) {
+      let displayTime = Math.round(diff / 1000) + ' seconds'
+      cogoToast.info(displayTime, {
+        heading: 'Segment complete',
+        hideAfter: 15
+      })
+    }
+
+    subcycle = { start: new Date().getTime() }
+    new Audio('audio/heal.ogg').play()
   }
 }
 
@@ -181,11 +208,7 @@ function Points () {
         let dayInt = parseInt(day[0].object.value)
         console.log('day', day[0].object.value)
 
-        if (dayInt % 360 === 0) {
-          new Audio('audio/cheer.ogg').play()
-        } else if (dayInt % 30 === 0) {
-          new Audio('audio/heal.ogg').play()
-        }
+        processPoints(dayInt)
 
         document.title =
           (dayInt % 30) +
