@@ -284,11 +284,11 @@ function Points () {
 
       <div className='buttons'>
         <span className='button is-large is-warning'>
-          Cycle : {Math.floor(c / 30) + '.' + Math.floor(s / 5)}
+          Cycle {Math.floor(c / 30) + ':' + Math.floor(s * 2)}
         </span>
         {/* <span className='button is-large is-success'>C : {l}</span> */}
-        <span className='button is-large is-info'>Hour : {t}</span>
-        <span className='button is-large is-link'>Day : {d}</span>
+        <span className='button is-large is-info'>Hour {t}</span>
+        <span className='button is-large is-link'>Day {d}</span>
 
         {/* <span className='button is-large is-danger'>E : {e}</span>
         <span className='button is-large is-light'>A : {a}</span>
