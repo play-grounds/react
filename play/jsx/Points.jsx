@@ -284,10 +284,11 @@ function Points () {
 
       <div className='buttons'>
         <span className='button is-large is-warning'>S : {s}</span>
-        <span className='button is-large is-success'>L : {l}</span>
-        <span className='button is-large is-info'>T : {t}</span>
+        <span className='button is-large is-success'>C : {l}</span>
+        <span className='button is-large is-info'>H : {t}</span>
         <span className='button is-large is-link'>D : {d}</span>
-        <span className='button is-large is-danger'>E : {e}</span>
+
+        {/* <span className='button is-large is-danger'>E : {e}</span>
         <span className='button is-large is-light'>A : {a}</span>
 
         <button
@@ -299,14 +300,14 @@ function Points () {
           }}
         >
           Reset
-        </button>
+        </button> */}
       </div>
 
       <hr />
-      {JSON.parse(localStorage.getItem('last') || JSON.stringify([]))
+      {/* {JSON.parse(localStorage.getItem('last') || JSON.stringify([]))
         .reverse()
         .join(' | ')}
-      <hr />
+      <hr /> */}
     </div>
   )
 }
