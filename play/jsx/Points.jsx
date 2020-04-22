@@ -167,13 +167,14 @@ function Points () {
 
   // play a sound if there is a transition
   function processPoints (points) {
-    console.log('subcycle', subcycle)
-    if (points % 360 === 0) {
+    let lastPoints = localStorage.getItem('localScore')
+    console.log('subcycle', subcycle, 'lastPoints', lastPoints)
+    if (Math.floor(points / 360) !== Math.floor(lastPoints / 360)) {
       cycle.end = new Date().getTime()
       console.log('cycle diff', cycle.end - cycle.start)
       cycle = { start: new Date().getTime() }
       new Audio('audio/cheer.ogg').play()
-    } else if (points % 30 === 0) {
+    } else if (Math.floor(points / 30) !== Math.floor(lastPoints / 30)) {
       subcycle.end = new Date().getTime()
       let diff = subcycle.end - subcycle.start
       console.log('subcycle diff', diff, 'subcycle', subcycle)
@@ -188,6 +189,7 @@ function Points () {
       subcycle = { start: new Date().getTime() }
       new Audio('audio/heal.ogg').play()
     }
+    localStorage.setItem('localScore', points)
   }
 
   function fetchCount (subject) {
