@@ -162,32 +162,33 @@ function pushLast (val) {
   }
 }
 
-function processPoints (points) {
-  console.log('subcycle', subcycle)
-  if (points % 360 === 0) {
-    cycle.end = new Date().getTime()
-    console.log('cycle diff', cycle.end - cycle.start)
-    cycle = { start: new Date().getTime() }
-    new Audio('audio/cheer.ogg').play()
-  } else if (points % 30 === 0) {
-    subcycle.end = new Date().getTime()
-    let diff = subcycle.end - subcycle.start
-    console.log('subcycle diff', diff, 'subcycle', subcycle)
-    if (diff && diff > 0) {
-      let displayTime = Math.round(diff / 1000) + ' seconds'
-      cogoToast.info(displayTime, {
-        heading: 'Segment complete',
-        hideAfter: 15
-      })
-    }
-
-    subcycle = { start: new Date().getTime() }
-    new Audio('audio/heal.ogg').play()
-  }
-}
-
 function Points () {
   const { template, reset, touch } = useStore(store)
+
+  // play a sound if there is a transition
+  function processPoints (points) {
+    console.log('subcycle', subcycle)
+    if (points % 360 === 0) {
+      cycle.end = new Date().getTime()
+      console.log('cycle diff', cycle.end - cycle.start)
+      cycle = { start: new Date().getTime() }
+      new Audio('audio/cheer.ogg').play()
+    } else if (points % 30 === 0) {
+      subcycle.end = new Date().getTime()
+      let diff = subcycle.end - subcycle.start
+      console.log('subcycle diff', diff, 'subcycle', subcycle)
+      if (diff && diff > 0) {
+        let displayTime = Math.round(diff / 1000) + ' seconds'
+        cogoToast.info(displayTime, {
+          heading: 'Segment complete',
+          hideAfter: 120
+        })
+      }
+
+      subcycle = { start: new Date().getTime() }
+      new Audio('audio/heal.ogg').play()
+    }
+  }
 
   function fetchCount (subject) {
     console.log('fetching', subject)
