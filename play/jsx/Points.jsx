@@ -111,7 +111,7 @@ const store = () => {
 
       if (push) {
         pushLast(a)
-        console.log(localStorage.getItem('startTime'))
+        // console.log(localStorage.getItem('startTime'))
       }
       localStorage.setItem('startTime', new Date().getTime())
       localStorage.setItem('startScore', 0)
@@ -149,7 +149,7 @@ const store = () => {
 
 function pushLast (val) {
   if (!val) return
-  console.log('###### pushing', val)
+  // console.log('###### pushing', val)
 
   let last = localStorage.getItem('last')
   if (!last) {
@@ -168,16 +168,16 @@ function Points () {
   // play a sound if there is a transition
   function processPoints (points) {
     let lastPoints = localStorage.getItem('localScore')
-    console.log('subcycle', subcycle, 'lastPoints', lastPoints)
+    // console.log('subcycle', subcycle, 'lastPoints', lastPoints)
     if (Math.floor(points / 360) !== Math.floor(lastPoints / 360)) {
       cycle.end = new Date().getTime()
-      console.log('cycle diff', cycle.end - cycle.start)
+      // console.log('cycle diff', cycle.end - cycle.start)
       cycle = { start: new Date().getTime() }
       new Audio('audio/cheer.ogg').play()
     } else if (Math.floor(points / 30) !== Math.floor(lastPoints / 30)) {
       subcycle.end = new Date().getTime()
       let diff = subcycle.end - subcycle.start
-      console.log('subcycle diff', diff, 'subcycle', subcycle)
+      // console.log('subcycle diff', diff, 'subcycle', subcycle)
       if (diff && diff > 0) {
         let displayTime = Math.round(diff / 1000) + ' seconds'
         let segment = Math.floor(lastPoints / 30) % 12
@@ -185,6 +185,7 @@ function Points () {
           heading: 'Segment ' + segment + ' complete',
           hideAfter: 150
         })
+        console.log('Segment', segment, 'complete in', displayTime)
       }
 
       subcycle = { start: new Date().getTime() }
@@ -194,7 +195,7 @@ function Points () {
   }
 
   function fetchCount (subject) {
-    console.log('fetching', subject)
+    // console.log('fetching', subject)
 
     UI.fetcher.load(subject, { force: true }).then(
       response => {
@@ -203,14 +204,14 @@ function Points () {
         let o = null
         let w = UI.store.sym(subject.split('#')[0])
         let hour = UI.store.statementsMatching(s, p, o, w)
-        console.log('hour', hour)
+        // console.log('hour', hour)
         let hourInt = parseInt(hour[0].object.value)
-        console.log('hour', hour[0].object.value)
+        // console.log('hour', hour[0].object.value)
 
         p = UI.store.sym('urn:query:day')
         let day = UI.store.statementsMatching(s, p, o, w)
         let dayInt = parseInt(day[0].object.value)
-        console.log('day', day[0].object.value)
+        // console.log('day', day[0].object.value)
 
         processPoints(dayInt)
 
@@ -247,7 +248,7 @@ function Points () {
     let w = new WebSocket('wss://melvin.solid.live/')
     w.onmessage = function (m) {
       let data = m.data
-      console.log('data', data)
+      // console.log('data', data)
       cogoToast.success(data, { position: 'top-right' })
 
       if (data.match(/pub .*/)) {
