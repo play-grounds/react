@@ -181,7 +181,7 @@ function Points () {
         let displayTime = Math.round(diff / 1000) + ' seconds'
         cogoToast.info(displayTime, {
           heading: 'Segment complete',
-          hideAfter: 120
+          hideAfter: 150
         })
       }
 
