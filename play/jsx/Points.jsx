@@ -180,8 +180,9 @@ function Points () {
       console.log('subcycle diff', diff, 'subcycle', subcycle)
       if (diff && diff > 0) {
         let displayTime = Math.round(diff / 1000) + ' seconds'
+        let segment = Math.floor(lastPoints / 30) % 12
         cogoToast.info(displayTime, {
-          heading: 'Segment complete',
+          heading: 'Segment ' + segment + ' complete',
           hideAfter: 150
         })
       }
